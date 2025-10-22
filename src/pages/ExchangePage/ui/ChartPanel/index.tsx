@@ -12,6 +12,7 @@ import { FC, useState } from "react";
 import Table, { Row } from "@/components/Table";
 import { formatPrice } from "@/shared/utils/format";
 import Filter from "@/components/Filter";
+import clsx from "clsx";
 
 interface ChartPanelProps {
      name: string;
@@ -44,7 +45,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                               {/* header info */}
                               <div className="chart-panel__header-info">
                                    <span className="chart-panel__header-price">${formatPrice(price)}</span>
-                                   <div className={`chart-panel__header-change ${change >= 0 ? "chart-panel__header-change--positive" : "chart-panel__header-change--negative"}`}>
+                                   <div className={clsx("chart-panel__header-change", change >= 0 ? "chart-panel__header-change--positive" : "chart-panel__header-change--negative")}>
                                         {
                                              change > 0 ? <TrendingUp width={16} height={16} className="chart-panel__header-change-icon" /> : <TrendingDown width={16} height={16} className="chart-panel__header-change-icon" />
                                         }
@@ -60,8 +61,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                               {CHART_RANGES.map((range) => (
                                    <button
                                         key={range}
-                                        className={`chart-panel__periods-button ${range === activeRange ? "chart-panel__periods-button--active" : ""
-                                             }`}
+                                        className={clsx("chart-panel__periods-button", range === activeRange ? "chart-panel__periods-button--active" : "")}
                                         onClick={() => setActiveRange(range)}>
                                         {range}
                                    </button>

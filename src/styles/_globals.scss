@@ -32,3 +32,9 @@ ol {
 button {
      transition-duration: var(--transition-delay);
 }
+
+img,
+video {
+     max-width: 100%;
+     height: auto;
+}

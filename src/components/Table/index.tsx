@@ -1,5 +1,6 @@
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import "./Table.scss";
+import clsx from "clsx";
 
 export type Column = {
      name: string;
@@ -20,7 +21,7 @@ interface TableProps {
 
 const Table: FC<TableProps> = ({ columns, rows, className }) => {
      return (
-          <div className={`table ${className ?? ""}`}>
+          <div className={clsx("table", className)}>
                <div className="table__head">
                     <div className="table__row table__row--head">
                          {columns.map((column, index) => (
@@ -35,12 +36,12 @@ const Table: FC<TableProps> = ({ columns, rows, className }) => {
                     {rows.map((row) => (
                          <div className="table__row" key={row.id}>
                               <div
-                                   className={`table__cell table__cell--body table__cell--right ${row.type === "buy"
-                                        ? "table__cell--buy"
-                                        : row.type === "sell"
-                                             ? "table__cell--sell"
-                                             : ""
-                                        }`}
+                                   className={
+                                        clsx("table__cell",
+                                             "table__cell--body",
+                                             "table__cell--right",
+                                             row.type === "buy" ? "table__cell--buy" : row.type === "sell" ? "table__cell--sell" : ""
+                                        )}
                               >
                                    ${row.price.toLocaleString("fr-FR")}
                               </div>

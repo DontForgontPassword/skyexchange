@@ -1,5 +1,9 @@
-import { filterType } from "./filter"
+import {
+     filterType,
+     rarityType
+} from "./filter"
 
 export {
-     filterType
+     filterType,
+     rarityType
 }

@@ -80,12 +80,10 @@
      }
 
      &__periods-button {
-          @include reset-button;
+          @include button;
           padding: 4px 12px;
-          border-radius: var(--radius);
           background-color: var(--secondary);
           color: var(--muted-foreground);
-          transition: background-color 0.2s ease;
 
           &--active {
                background-color: var(--primary);

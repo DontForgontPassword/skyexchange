@@ -16,16 +16,16 @@ const TradingPanel = () => {
                          <label className="trading-panel__form-label" htmlFor="amount-input">
                               Amount
                          </label>
-                         <Input id="amount-input" type="number" />
+                         <Input className="trading-panel__form-input" id="amount-input" type="number" />
                     </div>
                     <div className="trading-panel__form-block">
-                         <label className="trading-panel__form-label" htmlFor="amount-input">
+                         <label className="trading-panel__form-label" htmlFor="price-input">
                               Price (USDT)
                          </label>
-                         <Input id="amount-input" type="number" />
+                         <Input className="trading-panel__form-input" id="price-input" type="number" />
                     </div>
                     <div className="trading-panel__form-block">
-                         <label className="trading-panel__form-label" htmlFor="amount-input">
+                         <label className="trading-panel__form-label" htmlFor="total-input">
                               Total (USDT)
                          </label>
                          <Input className="trading-panel__form-input" id="amount-input" type="number" />

@@ -1,6 +1,7 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { filterType } from "@/shared/types";
 import "./Filter.scss";
+import clsx from "clsx";
 
 type filter = {
      type: filterType;
@@ -18,10 +19,10 @@ const Filter: FC<FilterProps> = ({
      filters, className, filterType, setFilterType
 }) => {
      return (
-          <div className={`filter ${className ?? ""}`}>
+          <div className={clsx("filter", className)}>
                {
                     filters.map((filter) =>
-                         <button key={filter.type} className={`filter__button ${filterType === filter.type ? "filter__button--active" : ""}`} onClick={() => setFilterType((prev) => prev === filter.type ? "all" : filter.type)}>{filter.label}</button>)
+                         <button key={filter.type} className={clsx("filter__button", filterType === filter.type ? "filter__button--active" : "")} onClick={() => setFilterType((prev) => prev === filter.type ? "all" : filter.type)}>{filter.label}</button>)
                }
           </div>
      );

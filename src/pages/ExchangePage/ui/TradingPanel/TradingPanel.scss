@@ -23,19 +23,13 @@
           color: var(--muted-foreground);
      }
 
-     &__form-input {
-          margin-top: 8px;
-     }
-
      &__submit-button {
-          @include reset-button;
+          @include button;
 
-          min-width: 100%;
-          border-radius: var(--radius);
-          padding: 8px 16px;
+          width: 100%;
           background-color: var(--primary);
           color: var(--primary-foreground);
-          box-shadow: 0 0 20px var(--emerald);
+          box-shadow: var(--emerald-shadow);
 
           &:hover {
                background-color: var(--emerald-hover);

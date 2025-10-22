@@ -1,6 +1,7 @@
 import { Bitcoin } from "lucide-react";
 import "./TradingPairButton.scss";
 import { formatPrice } from "@/shared/utils/format";
+import clsx from "clsx";
 
 interface TradingPairsPanelProps {
      name: string;
@@ -12,7 +13,7 @@ interface TradingPairsPanelProps {
 
 const TradingPairButton = ({ name, price, change, isActive, onClick }: TradingPairsPanelProps) => {
      return (
-          <button className={`trading-pair ${isActive ? "trading-pair--active" : ""}`} onClick={onClick}>
+          <button className={clsx("trading-pair", isActive ?? "trading-pair--active")} onClick={onClick}>
                <div className="trading-pair__header">
                     <Bitcoin className="trading-pair__icon" />
                     <p className="trading-pair__pair-name">{name}</p>
@@ -23,13 +24,13 @@ const TradingPairButton = ({ name, price, change, isActive, onClick }: TradingPa
                               formatPrice(price)
                          }
                     </p>
-                    <p className={`trading-pair__change ${change >= 0 ? 'trading-pair__change--positive' : 'trading-pair__change--negative'}`}>
+                    <p className={clsx("trading-pair__change", change >= 0 ? "trading-pair__change--positive" : "trading-pair__change--negative")}>
                          {
-                              change > 0 ? `+${change}%` : `${change}%`
+                              change > 0 ? `+ ${change}%` : `${change}%`
                          }
                     </p>
                </div>
-          </button>
+          </button >
      );
 };
 
