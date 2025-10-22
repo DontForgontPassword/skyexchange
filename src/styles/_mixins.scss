@@ -1,0 +1,9 @@
+@mixin bg-opacity($color, $opacity) {
+     background-color: color-mix(in oklab, $color $opacity, transparent);
+}
+
+@mixin reset-button {
+     border: none;
+     outline: none;
+     cursor: pointer;
+}

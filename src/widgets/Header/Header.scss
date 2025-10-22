@@ -1,0 +1,10 @@
+.header {
+     border-bottom: 1px solid var(--primary);
+     background-color: var(--card);
+
+     &__inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+     }
+}

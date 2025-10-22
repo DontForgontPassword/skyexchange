@@ -1,0 +1,22 @@
+.filter {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     background-color: var(--secondary);
+     border-radius: var(--radius);
+     padding: 0.25rem;
+
+     &__button {
+          @include reset-button;
+
+          padding: 8px 16px;
+          border-radius: var(--radius);
+          background: transparent;
+          color: var(--muted-foreground);
+          font-weight: 500;
+
+          &--active {
+               background-color: var(--card);
+               color: var(--foreground);
+          }
+     }
+}

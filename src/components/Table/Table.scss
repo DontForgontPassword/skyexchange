@@ -1,0 +1,46 @@
+.table {
+     width: 100%;
+
+     .table__head .table__row {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.75rem;
+          color: var(--muted-foreground);
+          margin-bottom: 8px;
+          text-align: right;
+     }
+
+
+     &__body {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+     }
+
+     &__row {
+          display: flex;
+          justify-content: space-between;
+     }
+
+     &__cell {
+          font-size: 14px;
+          flex: 1;
+
+          &:first-child {
+               flex: 1;
+               text-align: left;
+          }
+
+          &--right {
+               text-align: right;
+          }
+
+          &--buy {
+               color: var(--primary);
+          }
+
+          &--sell {
+               color: var(--destructive);
+          }
+     }
+}

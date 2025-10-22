@@ -1,0 +1,36 @@
+import { Bitcoin } from "lucide-react";
+import "./TradingPairButton.scss";
+import { formatPrice } from "@/shared/utils/format";
+
+interface TradingPairsPanelProps {
+     name: string;
+     price: number;
+     change: number;
+     isActive: boolean;
+     onClick: () => void;
+}
+
+const TradingPairButton = ({ name, price, change, isActive, onClick }: TradingPairsPanelProps) => {
+     return (
+          <button className={`trading-pair ${isActive ? "trading-pair--active" : ""}`} onClick={onClick}>
+               <div className="trading-pair__header">
+                    <Bitcoin className="trading-pair__icon" />
+                    <p className="trading-pair__pair-name">{name}</p>
+               </div>
+               <div className="trading-pair__bottom">
+                    <p className="trading-pair__price">
+                         ${
+                              formatPrice(price)
+                         }
+                    </p>
+                    <p className={`trading-pair__change ${change >= 0 ? 'trading-pair__change--positive' : 'trading-pair__change--negative'}`}>
+                         {
+                              change > 0 ? `+${change}%` : `${change}%`
+                         }
+                    </p>
+               </div>
+          </button>
+     );
+};
+
+export default TradingPairButton;
