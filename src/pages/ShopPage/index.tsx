@@ -3,6 +3,8 @@ import clsx from "clsx";
 import "./ShopPage.scss";
 import NftCard from "./ui/NtfCard";
 import { rarityType } from "@/shared/types";
+import { Wallet } from "lucide-react";
+import InfoCard from "./ui/InfoCard";
 
 type shopFilter = "all" | "popular" | "new" | "my";
 
@@ -96,6 +98,7 @@ const ShopPage = () => {
                               }
                          </div>
                     </div>
+                    <InfoCard />
                </div>
           </section>
      );
