@@ -10,11 +10,20 @@ export interface ITradingPair {
      change: number;
 }
 
+interface IUserData {
+     currency: number;
+     setCurrency: React.Dispatch<React.SetStateAction<number>>;
+     nfts: Array<any>;
+}
+
 interface IServerContext {
-     serverData: ITradingPair[];
-     setServerData: React.Dispatch<React.SetStateAction<ITradingPair[]>>;
-     currentCoin: ITradingPair;
-     setCurrentCoin: React.Dispatch<React.SetStateAction<ITradingPair>>
+     server: {
+          serverData: ITradingPair[];
+          setServerData: React.Dispatch<React.SetStateAction<ITradingPair[]>>;
+          currentCoin: ITradingPair;
+          setCurrentCoin: React.Dispatch<React.SetStateAction<ITradingPair>>
+     },
+     user: IUserData;
 }
 
 interface ServerContextProviderProps {
@@ -36,13 +45,21 @@ const ServerContextProvider: FC<ServerContextProviderProps> = ({
      children
 }) => {
      const [serverData, setServerData] = useState<ITradingPair[]>(Trading);
-
      const [currentCoin, setCurrentCoin] = useState(serverData[0]);
+
+     const [currency, setCurrency] = useState(0);
 
      return (
           <ServerContext.Provider
                value={{
-                    serverData, setServerData, currentCoin, setCurrentCoin
+                    server: {
+                         serverData, setServerData, currentCoin, setCurrentCoin
+                    },
+                    user: {
+                         currency,
+                         setCurrency,
+                         nfts: []
+                    }
                }}>
                {
                     children

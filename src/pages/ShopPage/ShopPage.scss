@@ -3,6 +3,7 @@
           display: grid;
           grid-template-columns: repeat(12, 1fr);
           gap: 24px;
+          padding: 24px;
      }
 
      &__content {
@@ -41,5 +42,9 @@
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
           margin-top: 24px;
+     }
+
+     &__sidebar {
+          grid-column: span 3;
      }
 }

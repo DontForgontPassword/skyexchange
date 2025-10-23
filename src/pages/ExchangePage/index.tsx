@@ -5,7 +5,8 @@ import { useServerContext } from "@/shared/contexts/ServerContext";
 import ChartPanel from "./ui/ChartPanel";
 
 const ExchangePage = () => {
-     const { currentCoin } = useServerContext();
+     const { server } = useServerContext();
+     const currentCoin = server.currentCoin;
 
      return (
           <section className="exchange">

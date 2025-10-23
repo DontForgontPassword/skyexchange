@@ -98,7 +98,9 @@ const ShopPage = () => {
                               }
                          </div>
                     </div>
-                    <InfoCard />
+                    <aside className="shop__sidebar">
+                         <InfoCard />
+                    </aside>
                </div>
           </section>
      );

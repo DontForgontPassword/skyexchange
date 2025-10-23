@@ -25,8 +25,7 @@
 
      &__submit-button {
           @include button;
-
-          width: 100%;
+          
           background-color: var(--primary);
           color: var(--primary-foreground);
           box-shadow: var(--emerald-shadow);
