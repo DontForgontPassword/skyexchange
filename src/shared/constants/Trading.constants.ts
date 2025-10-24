@@ -8,7 +8,7 @@ const Trading: ITradingPair[] = [
           change: 24.45
      },
      {
-          type: "etherium",
+          type: "ethereum",
           name: "ETH/USDT",
           price: 1943.23,
           change: -94.45

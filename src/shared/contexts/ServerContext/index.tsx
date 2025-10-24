@@ -1,8 +1,6 @@
 import { Trading } from "@/shared/constants";
 import { createContext, useContext, useState, type FC, type ReactNode } from "react";
 
-type coin = "BTC/USDT" | "ETH/USDT" | "SOL/USDT" | "SMG/USDT";
-
 export interface ITradingPair {
      type: string;
      name: coin;

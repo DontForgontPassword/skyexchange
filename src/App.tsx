@@ -6,6 +6,7 @@ import {
 import { Header } from "./widgets"
 import ServerContextProvider from "./shared/contexts/ServerContext"
 import { ShopPage } from "./pages"
+import { Toaster } from "sonner"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<ExchangePage />}></Route>
           <Route path="/shop" element={<ShopPage />}></Route>
         </Routes>
+        <Toaster position="top-right" richColors />
       </BrowserRouter>
     </ServerContextProvider>
   )

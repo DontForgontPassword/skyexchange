@@ -1,13 +1,15 @@
-import { rarityType } from "@/shared/types";
 import clsx from "clsx";
 import { ShoppingCart } from "lucide-react";
 import { FC } from "react";
 import "./NtfCard.scss";
+import { firstUpper } from "@/shared/utils/string";
+import { RarityType } from "@/shared/types";
 
 interface NftCardProps {
-     rarity: rarityType,
+     rarity: RarityType,
      name: string;
      price: number;
+     type: string;
      className?: string;
 }
 
@@ -15,10 +17,11 @@ const NftCard: FC<NftCardProps> = ({
      rarity,
      name,
      price,
+     type,
      className
 }) => {
 
-     const parseRarity = (rarity: rarityType) => {
+     const parseRarity = (rarity: RarityType) => {
           return rarity.toLowerCase();
      }
 
@@ -26,8 +29,9 @@ const NftCard: FC<NftCardProps> = ({
           <div className={clsx("nft-card", className)}>
                <div className="nft-card__image-wrapper">
                     <img src="/src/assets/images/nft-image.jpg" alt="SkyExchange" className="nft-card__image" />
-                    <div className="nft-card__rarity">
+                    <div className="nft-card__info">
                          <span className={clsx("nft-card__rarity-text", `nft-card__rarity-text--${parseRarity(rarity)}`)}>{rarity}</span>
+                         <span className={clsx("nft-card__type-text")}>{firstUpper(type)}</span>
                     </div>
                </div>
                <div className="nft-card__order">

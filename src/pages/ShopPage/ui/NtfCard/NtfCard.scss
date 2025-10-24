@@ -17,15 +17,21 @@
           object-fit: cover;
      }
 
-     &__rarity {
+     &__info {
+          display: flex;
           position: absolute;
           padding: 4px 12px;
           border-radius: 9999px;
+          gap: 12px;
           font-size: 0.75rem;
           background-color: #000000b3;
           backdrop-filter: blur(4px);
           top: 12px;
           right: 12px;
+     }
+
+     &__type-text {
+          color: var(--muted-foreground);
      }
 
      &__rarity-text {

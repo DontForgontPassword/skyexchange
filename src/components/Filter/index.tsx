@@ -1,17 +1,17 @@
 import { type FC } from "react";
-import { filterType } from "@/shared/types";
+import { FilterType } from "@/shared/types";
 import "./Filter.scss";
 import clsx from "clsx";
 
 type filter = {
-     type: filterType;
+     type: FilterType;
      label: string;
 }
 
 interface FilterProps {
      filters: filter[];
-     filterType: filterType;
-     setFilterType: React.Dispatch<React.SetStateAction<filterType>>;
+     filterType: FilterType;
+     setFilterType: React.Dispatch<React.SetStateAction<FilterType>>;
      className?: string;
 }
 

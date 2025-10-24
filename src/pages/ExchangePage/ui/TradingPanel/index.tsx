@@ -6,6 +6,7 @@ import { filterType } from "@/shared/types";
 import Input from "@/components/Input";
 import { useServerContext } from "@/shared/contexts/ServerContext";
 import { toast } from "sonner";
+import { firstUpper } from "@/shared/utils/string";
 
 const TradingPanel = () => {
      const { server, user } = useServerContext();
@@ -50,7 +51,7 @@ const TradingPanel = () => {
                               </label>
                               <Input className="trading-panel__form-input" id="amount-input" type="number" />
                          </div>
-                         <button type="submit" className="trading-panel__submit-button">Buy Ethereum</button>
+                         <button type="submit" onClick={handleBuy} className="trading-panel__submit-button">Buy {firstUpper(server.currentCoin.type)}</button>
                     </form>
                     <div className="trading-panel__info">
                          <div className="trading-panel__info-row">
