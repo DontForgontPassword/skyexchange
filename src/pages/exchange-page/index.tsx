@@ -1,18 +1,17 @@
 import TradingPairsPanel from "./ui/TradingPairsPanel";
 import TradingPanel from "./ui/TradingPanel";
 import "./ExchangePage.scss"
-import { useServerContext } from "@/shared/contexts/ServerContext";
 import ChartPanel from "./ui/ChartPanel";
+import { useExchangeStore } from "./model/useExchangeStore";
 
 const ExchangePage = () => {
-     const { server } = useServerContext();
-     const currentCoin = server.currentCoin;
+     const coin = useExchangeStore((s) => s.currentCoin);
 
      return (
-          <section className="exchange">
-               <div className="exchange__inner container">
+          <section className="exchange-page">
+               <div className="exchange-page__inner container">
                     <TradingPairsPanel />
-                    <ChartPanel name={currentCoin.name} price={currentCoin.price} change={currentCoin.change} />
+                    <ChartPanel />
                     <TradingPanel />
                </div>
           </section>

@@ -1,10 +1,10 @@
-import { useServerContext } from "@/shared/contexts/ServerContext";
+import { useExchangeStore } from "../../model/useExchangeStore";
 import TradingPairButton from "../TradingPairButton";
 
 const TradingPairsPanel = () => {
-     const { server } = useServerContext();
-     const serverData = server.serverData;
-     const currentCoin = server.currentCoin;
+     const coins = useExchangeStore((s) => s.coins);
+     const coin = useExchangeStore((s) => s.currentCoin);
+     const setCurrentCoin = useExchangeStore((s) => s.setCurrentCoin);
 
      return (
           <div className="trading-pairs">
@@ -12,14 +12,14 @@ const TradingPairsPanel = () => {
                     <h3 className="trading-pairs__subtitle subtitle">Trading Pairs</h3>
                     <div className="trading-pairs__list">
                          {
-                              serverData.map((data) => <TradingPairButton
+                              coins.map((data) => <TradingPairButton
                                    key={data.name}
                                    name={data.name}
                                    price={data.price}
                                    change={data.change}
-                                   isActive={currentCoin.name === data.name}
+                                   isActive={coin.name === data.name}
                                    onClick={() => {
-                                        server.setCurrentCoin(data);
+                                        setCurrentCoin(data);
                                    }}
                               />)
                          }

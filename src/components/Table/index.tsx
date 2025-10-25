@@ -1,21 +1,16 @@
 import type { FC } from "react";
 import "./Table.scss";
 import clsx from "clsx";
+import { ITradeOrder } from "@/pages/exchange-page/model/useExchangeStore";
 
 export type Column = {
      name: string;
 };
 
-export type Row = {
-     id: number;
-     price: number;
-     amount: number;
-     total: number;
-     type?: "buy" | "sell";
-};
+
 interface TableProps {
      columns: Column[];
-     rows: Row[];
+     rows: ITradeOrder[];
      className?: string;
 }
 
@@ -34,7 +29,7 @@ const Table: FC<TableProps> = ({ columns, rows, className }) => {
 
                <div className="table__body">
                     {rows.map((row) => (
-                         <div className="table__row" key={row.id}>
+                         <div className="table__row" key={row.type}>
                               <div
                                    className={
                                         clsx("table__cell",

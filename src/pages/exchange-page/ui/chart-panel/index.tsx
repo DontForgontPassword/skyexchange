@@ -3,40 +3,24 @@ import "./ChartPanel.scss";
 import {
      BOOK_FILTER_OPTIONS,
      CHART_RANGES,
-     ORDER_BOOK_DATA,
      ORDER_COLUMNS,
      TRADE_COLUMNS,
-     TRADE_DATA,
-} from "@/shared/constants/Chart.constants";
-import { FC, useEffect, useState } from "react";
-import Table, { Row } from "@/components/Table";
+} from "@/shared/constants";
+import { useState } from "react";
+import Table from "@/components/table";
 import { formatPrice } from "@/shared/utils/format";
-import Filter from "@/components/Filter";
+import Filter from "@/components/filter";
 import clsx from "clsx";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { ITradingPair, useServerContext } from "@/shared/contexts/ServerContext";
-import axios from "axios";
-import { toast } from "sonner";
-import useCoinCapGraphQL from "./hooks/useCoinCapGraphQL";
+import { useExchangeStore } from "../../model/useExchangeStore";
 
-interface ChartPanelProps {
-     name: string;
-     price: number;
-     change: number;
-}
-
-const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
-     const { server } = useServerContext();
-     const [tradeData] = useState<Row[]>(TRADE_DATA);
-     const [orderBookData] = useState<Row[]>(ORDER_BOOK_DATA);
+const ChartPanel = () => {
+     const trades = useExchangeStore((s) => s.trades);
+     const orders = useExchangeStore((s) => s.orders);
+     const coin = useExchangeStore((s) => s.currentCoin);
+     const coinChange = coin.change;
      const [filterType, setFilterType] = useState<"buy" | "sell" | "all">("all");
      const [activeRange, setActiveRange] = useState("1H");
-     interface ChartPoint {
-          time: string;
-          price: number;
-     }
-
-     const chartData = useCoinCapGraphQL(server, activeRange);
 
      const onSort = <T extends { type?: string },>(array: T[], type: string): T[] => {
           if (type === "all") return array;
@@ -52,18 +36,18 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                               <div className="chart-panel__header">
                                    <div className="chart-panel__header-title">
                                         <Bitcoin className="chart-panel__header-icon" />
-                                        <h2 className="chart-panel__header-pair">{name}</h2>
+                                        <h2 className="chart-panel__header-pair">{coin.name}</h2>
                                    </div>
 
                                    {/* header info */}
                                    <div className="chart-panel__header-info">
-                                        <span className="chart-panel__header-price">${formatPrice(server.currentCoin.price)}</span>
-                                        <div className={clsx("chart-panel__header-change", change >= 0 ? "chart-panel__header-change--positive" : "chart-panel__header-change--negative")}>
+                                        <span className="chart-panel__header-price">${formatPrice(coin.price)}</span>
+                                        <div className={clsx("chart-panel__header-change", coinChange >= 0 ? "chart-panel__header-change--positive" : "chart-panel__header-change--negative")}>
                                              {
-                                                  change > 0 ? <TrendingUp width={16} height={16} className="chart-panel__header-change-icon" /> : <TrendingDown width={16} height={16} className="chart-panel__header-change-icon" />
+                                                  coinChange > 0 ? <TrendingUp width={16} height={16} className="chart-panel__header-change-icon" /> : <TrendingDown width={16} height={16} className="chart-panel__header-change-icon" />
                                              }
                                              <span className="chart-panel__header-change-text">{
-                                                  change > 0 ? `+${change}` : `${change}`
+                                                  coinChange > 0 ? `+${coinChange}` : `${coinChange}`
                                              }%</span>
                                         </div>
                                    </div>
@@ -82,7 +66,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                               </div>
                          </div>
                          <div className="chart-container">
-                              <ResponsiveContainer width="100%" height="100%">
+                              {/* <ResponsiveContainer width="100%" height="100%">
                                    <LineChart data={chartData}>
                                         <CartesianGrid
                                              strokeDasharray="3 3"
@@ -115,7 +99,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                                              dot={false}
                                         />
                                    </LineChart>
-                              </ResponsiveContainer>
+                              </ResponsiveContainer> */}
                          </div>
                     </div>
 
@@ -133,7 +117,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                          <Table
                               className="chart-panel__table"
                               columns={ORDER_COLUMNS}
-                              rows={onSort(orderBookData, filterType)}
+                              rows={onSort(orders, filterType)}
                          />
                     </div>
 
@@ -142,7 +126,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ name, price, change }) => {
                          <Table
                               className="chart-panel__table"
                               columns={TRADE_COLUMNS}
-                              rows={tradeData}
+                              rows={trades}
                          />
                     </div>
                </div>

@@ -1,9 +1,9 @@
 import {
-     filterType,
-     rarityType
+     FilterType,
+     RarityType
 } from "./filter"
 
 export {
-     filterType,
-     rarityType
+     FilterType,
+     RarityType
 }

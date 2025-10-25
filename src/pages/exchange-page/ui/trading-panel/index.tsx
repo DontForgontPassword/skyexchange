@@ -1,29 +1,31 @@
-import Filter from "@/components/Filter";
+import Filter from "@/components/filter";
 import "./TradingPanel.scss"
 import { useEffect, useState } from "react";
 import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart.constants";
-import { filterType } from "@/shared/types";
-import Input from "@/components/Input";
-import { useServerContext } from "@/shared/contexts/ServerContext";
+import { FilterType } from "@/shared/types";
+import Input from "@/components/input";
 import { toast } from "sonner";
 import { firstUpper } from "@/shared/utils/string";
+import { useExchangeStore } from "../../model/useExchangeStore";
+import { useUser } from "@/store/useUser";
 
 const TradingPanel = () => {
-     const { server, user } = useServerContext();
-     const currentPrice = server.currentCoin.price;
-     const [buyPrice, setBuyPrice] = useState(currentPrice);
+     const coin = useExchangeStore((s) => s.currentCoin);
+     const coinPrice = coin.price;
+     const user = useUser((s) => s);
+     const [buyPrice, setBuyPrice] = useState(coinPrice);
      const [buyAmount, setBuyAmount] = useState(0)
-     const [actionType, setActionType] = useState<filterType>("sell")
+     const [actionType, setActionType] = useState<FilterType>("sell")
 
      useEffect(() => {
-          setBuyPrice(currentPrice);
-     }, [currentPrice]);
+          setBuyPrice(coinPrice);
+     }, [coinPrice]);
 
-     const handleBuy = (e) => {
+     const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
           const total = buyPrice * buyAmount;
 
-          if (total > user.currency) {
-               toast.error("Insufficient USDT balance");
+          if (total > user.currency.balance) {
+               toast.error(`Insufficient ${user.currency.id} balance`);
                return;
           }
      }
@@ -51,7 +53,7 @@ const TradingPanel = () => {
                               </label>
                               <Input className="trading-panel__form-input" id="amount-input" type="number" />
                          </div>
-                         <button type="submit" onClick={handleBuy} className="trading-panel__submit-button">Buy {firstUpper(server.currentCoin.type)}</button>
+                         <button type="submit" onClick={handleBuy} className="trading-panel__submit-button">Buy {firstUpper(coin.type)}</button>
                     </form>
                     <div className="trading-panel__info">
                          <div className="trading-panel__info-row">

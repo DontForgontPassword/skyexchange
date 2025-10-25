@@ -70,7 +70,7 @@ const useCoinCapGraphQL = (server: any, activeRange: string) => {
 
                 setChartData(parsedPrices);
             } catch (error) {
-                toast.error("Failed to fetch coin data");
+                // toast.error("Failed to fetch coin data");
                 console.error(error);
             }
         };

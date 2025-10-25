@@ -3,7 +3,7 @@ import { ShoppingCart } from "lucide-react";
 import { FC } from "react";
 import "./NtfCard.scss";
 import { firstUpper } from "@/shared/utils/string";
-import { RarityType } from "@/shared/types";
+import { RarityType } from "@/shared/types/filter";
 
 interface NftCardProps {
      rarity: RarityType,

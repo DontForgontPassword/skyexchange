@@ -26,7 +26,7 @@ const TradingPairButton = ({ name, price, change, isActive, onClick }: TradingPa
                     </p>
                     <p className={clsx("trading-pair__change", change >= 0 ? "trading-pair__change--positive" : "trading-pair__change--negative")}>
                          {
-                              change > 0 ? `+ ${change}%` : `${change}%`
+                              change > 0 ? `+${change}%` : `${change}%`
                          }
                     </p>
                </div>

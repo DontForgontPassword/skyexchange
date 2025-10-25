@@ -1,16 +1,14 @@
-import ExchangePage from "./pages/ExchangePage"
+import ExchangePage from "./pages/exchange-page"
 
 import {
   BrowserRouter, Routes, Route
 } from "react-router-dom"
 import { Header } from "./widgets"
-import ServerContextProvider from "./shared/contexts/ServerContext"
-import { ShopPage } from "./pages"
+  import { ShopPage } from "./pages"
 import { Toaster } from "sonner"
 
 function App() {
   return (
-    <ServerContextProvider>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -19,7 +17,6 @@ function App() {
         </Routes>
         <Toaster position="top-right" richColors />
       </BrowserRouter>
-    </ServerContextProvider>
   )
 }
 

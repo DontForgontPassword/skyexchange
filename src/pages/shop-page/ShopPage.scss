@@ -1,3 +1,23 @@
+@use "sass:map";
+
+$rarities: (
+     legendary: (main: var(--primary),
+          color: rgba(80, 200, 120, 0.3),
+     ),
+     epic: (main: #a78bfa,
+          color: rgba(167, 139, 250, 0.3),
+     ),
+     rare: (main: #60a5fa,
+          color: rgba(96, 165, 250, 0.3),
+     ),
+     common: (main: #9ca3af,
+          color: rgba(156, 163, 175, 0.3),
+     ),
+     all: (main: var(--primary),
+          color: rgba(80, 200, 120, 0.3),
+     ),
+);
+
 .shop-page {
      &__container {
           display: grid;
@@ -39,7 +59,6 @@
 
      &__filter-card {
           display: flex;
-          flex-direction: column;
           gap: 12px;
           margin-bottom: 24px;
           padding: 16px;
@@ -50,18 +69,40 @@
                display: flex;
                align-items: center;
                gap: 8px;
-
-               .shop-page__filter-icon {
-                    stroke: var(--muted-foreground);
-               }
           }
 
           &-buttons {
                display: flex;
                gap: 8px;
+          }
+     }
 
-               .shop-page__filter-button {
-                    @include button;
+     &__filter-icon {
+          stroke: var(--muted-foreground);
+     }
+
+     &__filter-button {
+          @include button;
+          background-color: transparent;
+
+          @each $name, $data in $rarities {
+               $main: map.get($data, main);
+               $color: map.get($data, color);
+
+               &--#{$name} {
+                    border: 1px solid $color;
+
+                    &:hover {
+                         border-color: $main;
+                         color: $main;
+                         box-shadow: 0 0 15px $color;
+                    }
+
+                    &.shop-page__filter-button--active {
+                         background-color: $color;
+                         color: $main;
+                         border-color: $main;
+                    }
                }
           }
      }
