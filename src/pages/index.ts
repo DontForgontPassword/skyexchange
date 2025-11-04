@@ -1,5 +1,5 @@
 import ExchangePage from "./exchange-page";
-import ShopPage from "./ShopPage";
+import ShopPage from "./shop-page";
 
 export {
      ExchangePage,

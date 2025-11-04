@@ -1,5 +1,5 @@
-import Logo from "./ui/Logo";
-import Menu from "./ui/Menu";
+import Logo from "./ui/logo";
+import Menu from "./ui/menu";
 import "./Header.scss"
 
 const Header = () => {

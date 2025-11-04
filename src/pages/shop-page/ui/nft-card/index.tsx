@@ -10,6 +10,7 @@ interface NftCardProps {
      name: string;
      price: number;
      type: string;
+     image: string;
      className?: string;
 }
 
@@ -18,6 +19,7 @@ const NftCard: FC<NftCardProps> = ({
      name,
      price,
      type,
+     image,
      className
 }) => {
 
@@ -28,7 +30,7 @@ const NftCard: FC<NftCardProps> = ({
      return (
           <div className={clsx("nft-card", className)}>
                <div className="nft-card__image-wrapper">
-                    <img src="/src/assets/images/nft-image.jpg" alt="SkyExchange" className="nft-card__image" />
+                    <img src={image} alt="SkyExchange" className="nft-card__image" />
                     <div className="nft-card__info">
                          <span className={clsx("nft-card__rarity-text", `nft-card__rarity-text--${parseRarity(rarity)}`)}>{rarity}</span>
                          <span className={clsx("nft-card__type-text")}>{firstUpper(type)}</span>

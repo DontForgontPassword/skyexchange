@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import "./Table.scss";
 import clsx from "clsx";
-import { ITradeOrder } from "@/pages/exchange-page/model/useExchangeStore";
+import { ITradeOrder } from "@/store/useExchangeStore";
 
 export type Column = {
      name: string;
@@ -28,8 +28,8 @@ const Table: FC<TableProps> = ({ columns, rows, className }) => {
                </div>
 
                <div className="table__body">
-                    {rows.map((row) => (
-                         <div className="table__row" key={row.type}>
+                    {rows.map((row, index) => (
+                         <div className="table__row" key={`${index}-${row.amount}-${row.type}`}>
                               <div
                                    className={
                                         clsx("table__cell",

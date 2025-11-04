@@ -11,16 +11,16 @@ import Table from "@/components/table";
 import { formatPrice } from "@/shared/utils/format";
 import Filter from "@/components/filter";
 import clsx from "clsx";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { useExchangeStore } from "../../model/useExchangeStore";
+import { useExchangeStore } from "../../../../store/useExchangeStore";
 
 const ChartPanel = () => {
-     const trades = useExchangeStore((s) => s.trades);
-     const orders = useExchangeStore((s) => s.orders);
-     const coin = useExchangeStore((s) => s.currentCoin);
-     const coinChange = coin.change;
      const [filterType, setFilterType] = useState<"buy" | "sell" | "all">("all");
      const [activeRange, setActiveRange] = useState("1H");
+     const trades = useExchangeStore(s => s.trades);
+     const orders = useExchangeStore(s => s.orders);
+     const coin = useExchangeStore(s => s.currentCoin);
+
+     const coinChange = coin.change;
 
      const onSort = <T extends { type?: string },>(array: T[], type: string): T[] => {
           if (type === "all") return array;
@@ -66,38 +66,21 @@ const ChartPanel = () => {
                               </div>
                          </div>
                          <div className="chart-container">
-                              {/* <ResponsiveContainer width="100%" height="100%">
+                              {/* <ResponsiveContainer width="100%" height={280}>
                                    <LineChart data={chartData}>
-                                        <CartesianGrid
-                                             strokeDasharray="3 3"
-                                             stroke="#21262D"
-                                        />
-                                        <XAxis
-                                             dataKey="time"
-                                             stroke="#8B949E"
-                                             style={{ fontSize: "12px" }}
-                                        />
-                                        <YAxis
-                                             stroke="#8B949E"
-                                             style={{ fontSize: "12px" }}
-                                             domain={["auto", "auto"]}
-                                        />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#21262D" />
+                                        <XAxis dataKey="time" stroke="#8B949E" style={{ fontSize: "12px" }} />
+                                        <YAxis stroke="#8B949E" style={{ fontSize: "12px" }} domain={["auto", "auto"]} />
                                         <Tooltip
                                              contentStyle={{
                                                   backgroundColor: "#161B22",
-                                                  border:
-                                                       "1px solid rgba(80, 200, 120, 0.2)",
+                                                  border: "1px solid rgba(80, 200, 120, 0.2)",
                                                   borderRadius: "8px",
                                                   color: "#E6EDF3",
                                              }}
+                                             formatter={(value: any) => [`$${Number(value).toFixed(2)}`, "Price"]}
                                         />
-                                        <Line
-                                             type="monotone"
-                                             dataKey="price"
-                                             stroke="#50C878"
-                                             strokeWidth={2}
-                                             dot={false}
-                                        />
+                                        <Line type="monotone" dataKey="price" stroke="#50C878" strokeWidth={2} dot={false} />
                                    </LineChart>
                               </ResponsiveContainer> */}
                          </div>

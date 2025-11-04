@@ -1,5 +1,5 @@
 import type { Column } from "@/components/table";
-import { filterType } from "../types";
+import { FilterType } from "../types";
 
 const ORDER_COLUMNS: Column[] = [
      { name: "Price" },
@@ -13,13 +13,13 @@ const TRADE_COLUMNS: Column[] = [
      { name: "Total" }
 ];
 
-const BOOK_FILTER_OPTIONS: { label: string, type: filterType }[] = [
+const BOOK_FILTER_OPTIONS: { label: string, type: FilterType }[] = [
      { label: "Buy Orders", type: "buy" },
      { label: "Sell Orders", type: "sell" },
 ]
 
 const TRADE_FILTER_OPTIONS: {
-     label: string, type: filterType
+     label: string, type: FilterType
 }[] = [
           { label: "Sell", type: "sell" },
           { label: "Buy", type: "buy" }

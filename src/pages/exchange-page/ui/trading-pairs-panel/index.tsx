@@ -1,5 +1,5 @@
-import { useExchangeStore } from "../../model/useExchangeStore";
-import TradingPairButton from "../TradingPairButton";
+import { useExchangeStore } from "../../../../store/useExchangeStore";
+import TradingPairButton from "../trading-pair-button";
 
 const TradingPairsPanel = () => {
      const coins = useExchangeStore((s) => s.coins);

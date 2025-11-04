@@ -1,12 +1,9 @@
-import TradingPairsPanel from "./ui/TradingPairsPanel";
-import TradingPanel from "./ui/TradingPanel";
+import TradingPairsPanel from "./ui/trading-pairs-panel";
+import TradingPanel from "./ui/trading-panel";
+import ChartPanel from "./ui/chart-panel";
 import "./ExchangePage.scss"
-import ChartPanel from "./ui/ChartPanel";
-import { useExchangeStore } from "./model/useExchangeStore";
 
 const ExchangePage = () => {
-     const coin = useExchangeStore((s) => s.currentCoin);
-
      return (
           <section className="exchange-page">
                <div className="exchange-page__inner container">

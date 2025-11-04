@@ -6,7 +6,7 @@ import {
      TRADE_COLUMNS,
      TRADE_FILTER_OPTIONS
 } from "./Chart.constants";
-import { NFT_COLLECTION, RARITY_FILTERS, SHOP_FILTERS, ShopFilterType, ShopRarityFilterType } from "./Shop.constants";
+import { RARITY_FILTERS, SHOP_FILTERS } from "./Shop.constants";
 
 
 export {
@@ -16,7 +16,6 @@ export {
      ORDER_COLUMNS,
      TRADE_COLUMNS,
      TRADE_FILTER_OPTIONS,
-     NFT_COLLECTION,
      RARITY_FILTERS,
      SHOP_FILTERS
 }

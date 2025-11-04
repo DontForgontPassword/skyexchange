@@ -6,9 +6,10 @@ import { useUser } from "@/store/useUser";
 
 interface InfoCardProps {
      className?: string;
+     setFundsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InfoCard: FC<InfoCardProps> = ({ className }) => {
+const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen, className }) => {
      const coin = useUser((s) => s.currency);
 
      return (
@@ -44,7 +45,7 @@ const InfoCard: FC<InfoCardProps> = ({ className }) => {
                          </div>
                     </div>
                </div>
-               <button className="info-card__button">Add Funds</button>
+               <button className="info-card__button" onClick={() => setFundsModalOpen(true)}>Add Funds</button>
           </div>
      );
 }

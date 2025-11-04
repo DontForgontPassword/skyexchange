@@ -18,6 +18,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.546.0",
     "react": "^19.1.1",
+    "react-cryptocoins": "^1.0.11",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
     "recharts": "^3.3.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@svgr/core": "^8.1.0",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
@@ -39,7 +41,8 @@
     "sass-embedded": "^1.93.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
-    "vite": "npm:rolldown-vite@7.1.14"
+    "vite": "npm:rolldown-vite@7.1.14",
+    "vite-plugin-svgr": "^4.5.0"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"

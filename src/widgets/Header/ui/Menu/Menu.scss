@@ -13,5 +13,10 @@
                padding-bottom: 4px;
                border-bottom: 2px solid var(--primary);
           }
+
+          &--active {
+               padding-bottom: 4px;
+               border-bottom: 2px solid var(--primary);
+          }
      }
 }

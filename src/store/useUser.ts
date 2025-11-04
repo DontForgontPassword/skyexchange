@@ -40,10 +40,12 @@ export const useUser = create<IUser>((set) => ({
      username: "",
      email: "",
      currency: {
-          id: "USD",
-          balance: 0,
+          id: "BTC",
+          balance: 150,
      },
-     nfts: [],
+     nfts: [
+          
+     ],
      game: { score: 0, rank: 0 },
      createdAt: new Date().toISOString(),
      addBalance(coinId: string, amount: number) {
@@ -56,4 +58,10 @@ export const useUser = create<IUser>((set) => ({
 
           return 0;
      },
+     addNft(nft: INFT) {
+          set((state) => {
+               state.nfts.push(nft);
+               return state;
+          })
+     }
 }))

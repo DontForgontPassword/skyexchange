@@ -6,7 +6,7 @@ import { FilterType } from "@/shared/types";
 import Input from "@/components/input";
 import { toast } from "sonner";
 import { firstUpper } from "@/shared/utils/string";
-import { useExchangeStore } from "../../model/useExchangeStore";
+import { useExchangeStore } from "../../../../store/useExchangeStore";
 import { useUser } from "@/store/useUser";
 
 const TradingPanel = () => {
@@ -39,19 +39,19 @@ const TradingPanel = () => {
                               <label className="trading-panel__form-label" htmlFor="amount-input">
                                    Amount
                               </label>
-                              <Input onChange={(e) => setBuyAmount(Number(e.target.value))} className="trading-panel__form-input" id="amount-input" type="number" />
+                              <Input placeholder="0.00" onChange={(e) => setBuyAmount(Number(e.target.value))} className="trading-panel__form-input" id="amount-input" type="number" />
                          </div>
                          <div className="trading-panel__form-block">
                               <label className="trading-panel__form-label" htmlFor="price-input">
                                    Price (USDT)
                               </label>
-                              <Input onChange={(e) => setBuyPrice(Number(e.target.value))} className="trading-panel__form-input" value={buyPrice} id="price-input" type="number" />
+                              <Input placeholder="0.00" onChange={(e) => setBuyPrice(Number(e.target.value))} className="trading-panel__form-input" value={buyPrice} id="price-input" type="number" />
                          </div>
                          <div className="trading-panel__form-block">
                               <label className="trading-panel__form-label" htmlFor="total-input">
                                    Total (USDT)
                               </label>
-                              <Input className="trading-panel__form-input" id="amount-input" type="number" />
+                              <Input placeholder="0.00" className="trading-panel__form-input" id="amount-input" type="number" />
                          </div>
                          <button type="submit" onClick={handleBuy} className="trading-panel__submit-button">Buy {firstUpper(coin.type)}</button>
                     </form>
