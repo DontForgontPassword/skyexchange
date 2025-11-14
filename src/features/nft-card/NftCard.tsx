@@ -36,7 +36,7 @@ const NftCard: FC<NftCardProps> = ({
      }
 
      const handlePurchaseNft = () => {
-          if (price <= user.balance) {
+          if (price <= user.balance.amount) {
                nfts.setPurchased(name, true);
                user.removeBalance(price);
                user.saveNft({
@@ -49,7 +49,7 @@ const NftCard: FC<NftCardProps> = ({
                });
                toast.success(`Successfully purchased ${name}`)
           }
-          else toast.error(`Insufficient funds. You need ${(price - user.balance).toFixed(2)} more`)
+          else toast.error(`Insufficient funds. You need ${(price - user.balance.amount).toFixed(2)} more`)
      }
 
      useEffect(() => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import "./ShopPage.scss";
 import { Funnel } from "lucide-react";
-import { RARITY_FILTERS, SHOP_FILTERS, ShopFilterType, ShopRarityFilterType } from "@/shared/constants/Shop.constants";
+import { RARITY_FILTERS, SHOP_FILTERS, ShopFilterType, ShopRarityFilterType } from "@/shared/constants/Shop";
 import AddFundsModal from "@/widgets/add-funds-modal/AddFundsModal";
 import { useNftStore } from "@/shared/store/useNftStore";
 import NftCard from "@/features/nft-card/NftCard";
@@ -80,7 +80,7 @@ export const ShopPage = () => {
                                                        `shop-page__filter-button--${filter.type}`,
                                                        currentRarity === filter.type && "shop-page__filter-button--active"
                                                   )}
-                                                  color="var(--secondary)"
+                                                  variant="secondary"
                                                   onClick={() => setCurrentRarity(filter.type)}>
                                                   {filter.label}
                                              </Button>

@@ -11,7 +11,7 @@ interface InfoCardProps {
 }
 
 const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen, className }) => {
-     const coin = useUser((s) => s.balance);
+     const coin = useUser((s) => s.balance.amount);
 
      return (
           <div className={clsx("info-card", "card", className)}>

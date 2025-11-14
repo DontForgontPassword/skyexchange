@@ -1,24 +1,15 @@
 import {
-  BrowserRouter, Routes, Route,
+  BrowserRouter
 } from "react-router-dom"
-import { Header } from "./widgets"
 import { Toaster } from "sonner"
-
-import {
-  Links
-} from "./shared/constants/Menu.constants"
+import Header from "./widgets/Header"
+import { AppRoutes } from "./shared/routes/AppRoutes"
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        {
-          Links.map(({
-            to, page: Page
-          }) => Page && <Route key={to} path={to} element={<Page />}></Route>)
-        }
-      </Routes>
+      <AppRoutes />
       <Toaster position="top-right" richColors />
     </BrowserRouter>
   )

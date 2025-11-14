@@ -1,6 +1,6 @@
 import "./TradingPanel.scss";
-import { useEffect, useState } from "react";
-import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart.constants";
+import { act, useEffect, useState } from "react";
+import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart";
 import { FilterType } from "@/shared/types";
 import { toast } from "sonner";
 import { firstUpper } from "@/shared/utils/string";
@@ -26,7 +26,7 @@ const TradingPanel = () => {
      const handleBuy = () => {
           const total = buyPrice * buyAmount;
 
-          if (total > user.balance) {
+          if (total > user.balance.amount) {
                toast.error(`Insufficient balance`);
                return;
           }
@@ -95,11 +95,7 @@ const TradingPanel = () => {
                               className={clsx("trade-panel__action-button", {
                                    "trade-panel__action-button--sell": actionType === "sell",
                               })}
-                              color={
-                                   actionType === "sell"
-                                        ? "var(--destructive)"
-                                        : "var(--primary)"
-                              }
+                              variant={actionType === "buy" ? "primary" : "destructive"}
                          >
                               {firstUpper(actionType)} {coin.type}
                          </Button>
@@ -109,7 +105,7 @@ const TradingPanel = () => {
                          <div className="trade-panel__summary-row">
                               <p className="trade-panel__summary-label">Available USDT:</p>
                               <span className="trade-panel__summary-value">
-                                   {user.balance.toFixed(2)}
+                                   {user.balance.amount.toFixed(2)}
                               </span>
                          </div>
                          <div className="trade-panel__summary-row">

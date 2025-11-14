@@ -15,7 +15,7 @@ const TradingPairButton = ({ name, price, change, icon, isActive, onClick }: Tra
      return (
           <button className={clsx("trading-pair", isActive ? "trading-pair--active" : "")} onClick={onClick}>
                <div className="trading-pair__header">
-                    <img src={icon} alt="Sky Exchange" />
+                    <img width={24} height={24} src={icon} alt="Sky Exchange" />
                     <p className="trading-pair__pair-name">{name}</p>
                </div>
                <div className="trading-pair__bottom">

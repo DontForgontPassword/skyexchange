@@ -4,24 +4,37 @@ import CloudIcon from "@/shared/assets/icons/game/cloud.svg";
 import ThunderIcon from "@/shared/assets/icons/game/thunder.svg";
 import ThunderStormIcon from "@/shared/assets/icons/game/thunderstorm.svg";
 import ClickIconImage from "@/shared/assets/icons/game/hand.svg";
+import BasketIconSVG from "@/shared/assets/icons/game/basket.svg";
 import "./GamePage.scss";
 
 type Cloud = { x: number; y: number; speedX: number; speedY: number; visible: boolean };
-type Storm = { x: number; y: number; speed: number; hits: number };
+type Storm = { x: number; y: number; speed: number; hits: number; zigzag?: number };
 type Spark = { x: number; y: number; alpha: number };
 type ClickIcon = { x: number; y: number; alpha: number };
+type Basket = { x: number; width: number; height: number; speed: number };
 
 export function GamePage() {
      const canvasRef = useRef<HTMLCanvasElement | null>(null);
      const [points, setPoints] = useState(0);
      const [lives, setLives] = useState(3);
      const [gameOver, setGameOver] = useState(false);
+     const [combo, setCombo] = useState(0);
+     const [timer, setTimer] = useState(60); // 60 секунд таймер
 
      const clouds = useRef<Cloud[]>([]);
      const storms = useRef<Storm[]>([]);
      const thunderstorms = useRef<Storm[]>([]);
      const sparks = useRef<Spark[]>([]);
      const clickIcons = useRef<ClickIcon[]>([]);
+
+     const basket = useRef<Basket>({
+          x: 340,
+          width: 120,
+          height: 40,
+          speed: 6
+     });
+     const keys = useRef<{ left: boolean; right: boolean }>({ left: false, right: false });
+     const mouseX = useRef<number | null>(null);
 
      const cloudIcon = useRef(new Image()).current;
      cloudIcon.src = CloudIcon;
@@ -35,13 +48,34 @@ export function GamePage() {
      const clickIconImg = useRef(new Image()).current;
      clickIconImg.src = ClickIconImage;
 
-     const isOverCursor = (c: { x: number, y: number }, x: number, y: number, width: number, height: number) => {
-          return x >= c.x - width / 2 &&
-               x <= c.x + width / 2 &&
-               y >= c.y - height / 2 &&
-               y <= c.y + height / 2;
-     };
+     const basketIconImg = useRef(new Image()).current;
+     basketIconImg.src = BasketIconSVG;
 
+     // ------------------- KEYBOARD & MOUSE -------------------
+     useEffect(() => {
+          const handleKeyDown = (e: KeyboardEvent) => {
+               if (e.key === "ArrowLeft" || e.key === "a") keys.current.left = true;
+               if (e.key === "ArrowRight" || e.key === "d") keys.current.right = true;
+          };
+          const handleKeyUp = (e: KeyboardEvent) => {
+               if (e.key === "ArrowLeft" || e.key === "a") keys.current.left = false;
+               if (e.key === "ArrowRight" || e.key === "d") keys.current.right = false;
+          };
+          const handleMouseMove = (e: MouseEvent) => {
+               mouseX.current = e.clientX - canvasRef.current!.getBoundingClientRect().left;
+          };
+          window.addEventListener("keydown", handleKeyDown);
+          window.addEventListener("keyup", handleKeyUp);
+          window.addEventListener("mousemove", handleMouseMove);
+
+          return () => {
+               window.removeEventListener("keydown", handleKeyDown);
+               window.removeEventListener("keyup", handleKeyUp);
+               window.removeEventListener("mousemove", handleMouseMove);
+          };
+     }, []);
+
+     // ------------------- SPAWN FUNCTIONS -------------------
      useEffect(() => {
           const canvas = canvasRef.current!;
           if (!canvas) return;
@@ -55,18 +89,9 @@ export function GamePage() {
                clouds.current.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * -100,
-                    speedX: (Math.random() - 0.5) * 4,
-                    speedY: 1 + Math.random() * 2,
+                    speedX: (Math.random() - 0.5) * 2,
+                    speedY: 0.5 + Math.random() * 1.2,
                     visible: true
-               });
-          }
-
-          function spawnThunderStorm() {
-               thunderstorms.current.push({
-                    x: Math.random() * canvas.width,
-                    y: -60,
-                    speed: 2 + Math.random() * 2,
-                    hits: 0
                });
           }
 
@@ -74,7 +99,17 @@ export function GamePage() {
                storms.current.push({
                     x: Math.random() * canvas.width,
                     y: -60,
-                    speed: 2 + Math.random() * 2,
+                    speed: 1.2 + Math.random() * 1.5,
+                    hits: 0,
+                    zigzag: Math.random() > 0.5 ? 1 : -1
+               });
+          }
+
+          function spawnThunderStorm() {
+               thunderstorms.current.push({
+                    x: Math.random() * canvas.width,
+                    y: -60,
+                    speed: 1.2 + Math.random() * 1.5,
                     hits: 0
                });
           }
@@ -83,21 +118,42 @@ export function GamePage() {
           let lastStormSpawn = 0;
           let lastThunderStormSpawn = 0;
 
+          // ------------------- ANIMATE -------------------
           function animate(time: number) {
                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-               // Clouds
+               // ------------------- CLOUDS -------------------
                clouds.current.forEach((c, i) => {
                     c.x += c.speedX;
                     c.y += c.speedY;
                     if (c.x < 0 || c.x > canvas.width) c.speedX *= -1;
-                    if (c.visible) ctx.drawImage(cloudIcon, c.x - 30, c.y - 30, 60, 60);
+                    if (c.visible) {
+                         ctx.shadowColor = "rgba(0,0,0,0.3)";
+                         ctx.shadowBlur = 10;
+                         ctx.drawImage(cloudIcon, c.x - 30, c.y - 30, 60, 60);
+                         ctx.shadowBlur = 0;
+                    }
+
+                    // ------------------- Catch basket -------------------
+                    const bx = basket.current.x;
+                    const by = canvas.height - basket.current.height - 10;
+                    if (c.y + 30 >= by && c.x >= bx && c.x <= bx + basket.current.width) {
+                         clouds.current.splice(i, 1);
+                         setPoints(p => p + 1 + combo); // combo bonus
+                         setCombo(c => c + 1);
+                         sparks.current.push({ x: c.x, y: by, alpha: 1 });
+                         const audio = new Audio("/sounds/catch.mp3");
+                         audio.play();
+                         return;
+                    }
+
                     if (c.y > canvas.height) clouds.current.splice(i, 1);
                });
 
-               // Storms
+               // ------------------- STORMS -------------------
                storms.current.forEach((s, i) => {
                     s.y += s.speed;
+                    s.x += (s.zigzag || 1) * 0.5;
                     s.speed += 0.001;
                     ctx.drawImage(thunderIcon, s.x - 40, s.y - 40, 60, 60);
                     if (s.y > canvas.height) storms.current.splice(i, 1);
@@ -110,7 +166,7 @@ export function GamePage() {
                     if (s.y > canvas.height) thunderstorms.current.splice(i, 1);
                });
 
-               // Sparks
+               // ------------------- SPARKS -------------------
                sparks.current.forEach((spark, i) => {
                     spark.alpha -= 0.05;
                     ctx.fillStyle = `rgba(255, 215, 0, ${spark.alpha})`;
@@ -120,7 +176,7 @@ export function GamePage() {
                     if (spark.alpha <= 0) sparks.current.splice(i, 1);
                });
 
-               // Click icons
+               // ------------------- CLICK ICONS -------------------
                clickIcons.current.forEach((icon, i) => {
                     icon.alpha -= 0.07;
                     ctx.globalAlpha = icon.alpha;
@@ -129,62 +185,78 @@ export function GamePage() {
                     if (icon.alpha <= 0) clickIcons.current.splice(i, 1);
                });
 
-               // Если проиграли — затемнение и текст
+               // ------------------- BASKET MOVEMENT -------------------
+               if (keys.current.left) basket.current.x -= basket.current.speed;
+               if (keys.current.right) basket.current.x += basket.current.speed;
+
+               // Mouse follow
+               if (mouseX.current !== null) {
+                    const diff = mouseX.current - (basket.current.x + basket.current.width / 2);
+                    basket.current.x += diff * 0.1; // плавная анимация
+               }
+
+               // Ограничения
+               if (basket.current.x < 0) basket.current.x = 0;
+               if (basket.current.x > canvas.width - basket.current.width)
+                    basket.current.x = canvas.width - basket.current.width;
+
+               // ------------------- DRAW BASKET -------------------
+               ctx.drawImage(
+                    basketIconImg,
+                    basket.current.x,
+                    canvas.height - basket.current.height - 10,
+                    basket.current.width,
+                    basket.current.height
+               );
+
+               // ------------------- GAME OVER -------------------
                if (gameOver) {
                     ctx.fillStyle = "rgba(0,0,0,0.7)";
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
                     ctx.fillStyle = "#ffffff";
                     ctx.font = "bold 32px Arial";
                     ctx.textAlign = "center";
                     ctx.fillText("Вы проиграли!", canvas.width / 2, canvas.height / 2 - 20);
-
                     ctx.font = "20px Arial";
                     ctx.fillText("Попробуйте позже через 24 часа", canvas.width / 2, canvas.height / 2 + 20);
                }
 
+               // ------------------- SPAWN -------------------
                if (!gameOver) {
-                    if (time - lastSpawn > 2400) { spawnCloud(); lastSpawn = time; }
-                    if (time - lastStormSpawn > 500) { spawnStorm(); lastStormSpawn = time; }
-                    if (time - lastThunderStormSpawn > 900) { spawnThunderStorm(); lastThunderStormSpawn = time; }
+                    if (time - lastSpawn > 3000) { spawnCloud(); lastSpawn = time; }
+                    if (time - lastStormSpawn > 1100) { spawnStorm(); lastStormSpawn = time; }
+                    if (time - lastThunderStormSpawn > 1500) { spawnThunderStorm(); lastThunderStormSpawn = time; }
                }
 
                requestAnimationFrame(animate);
           }
 
           requestAnimationFrame(animate);
+
+          // ------------------- TIMER -------------------
+          const timerInterval = setInterval(() => {
+               if (!gameOver) {
+                    setTimer(t => {
+                         if (t <= 0) {
+                              setGameOver(true);
+                              return 0;
+                         }
+                         return t - 1;
+                    });
+               }
+          }, 1000);
+
+          return () => clearInterval(timerInterval);
+
      }, [gameOver]);
 
+     // ------------------- HANDLE CANVAS CLICK -------------------
      function handleClick(e: MouseEvent<HTMLCanvasElement>) {
-          if (gameOver) return; // запрет кликов после конца игры
-
+          if (gameOver) return;
           const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-
           clickIcons.current.push({ x, y, alpha: 1 });
-
-          clouds.current.forEach((c, i) => {
-               if (isOverCursor(c, x, y, 30, 30)) {
-                    clouds.current.splice(i, 1);
-                    setPoints(p => p + 1);
-                    sparks.current.push({ x: c.x, y: c.y, alpha: 1 });
-               }
-          });
-
-          storms.current.forEach((s, i) => {
-               if (isOverCursor(s, x, y, 60, 60)) {
-                    storms.current.splice(i, 1);
-                    setLives(p => {
-                         const newLives = p - 1;
-                         if (newLives <= 0) setGameOver(true);
-                         return newLives;
-                    });
-                    const audio = new Audio("/sounds/crack.mp3");
-                    audio.play();
-                    sparks.current.push({ x: s.x, y: s.y, alpha: 1 });
-               }
-          });
      }
 
      return (
@@ -202,6 +274,12 @@ export function GamePage() {
                                    <Heart className="game-page__stat-icon game-page__stat-icon--heart" />
                                    <p className="game-page__stat-value">{lives}</p>
                                    <p className="game-page__stat-label primary-text">Lives</p>
+                              </div>
+                              <div className="game-page__stat">
+                                   <p className="game-page__stat-label primary-text">Combo: {combo}</p>
+                              </div>
+                              <div className="game-page__stat">
+                                   <p className="game-page__stat-label primary-text">Time: {timer}s</p>
                               </div>
                          </div>
                     </div>

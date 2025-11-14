@@ -38,7 +38,7 @@ const AddFundsModal: FC<AddFundsModalProps> = ({ setFundsModalOpen }) => {
                return;
           }
 
-          if (user.balance < amount) {
+          if (user.balance.amount < amount) {
                toast.error(
                     `Insufficient funds: you have ${user.balance} SMG.`
                );

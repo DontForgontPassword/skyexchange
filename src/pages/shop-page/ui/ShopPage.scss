@@ -80,7 +80,7 @@ $rarities: (
      }
 
      &__filter-button {
-          color: var(--muted-foreground);;
+          color: var(--muted-foreground);
 
           @each $name, $data in $rarities {
                $main: map.get($data, main);

@@ -4,13 +4,13 @@ import "./Button.scss";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
      children: ReactNode;
-     variant?: "primary";
+     variant?: "destructive" | "primary" | "secondary";
      size?: "sm" | "md" | "lg";
 }
 
 const Button: FC<ButtonProps> = ({
      children,
-     variant = "primary",
+     variant,
      size = "md",
      className,
      ...props
@@ -18,7 +18,7 @@ const Button: FC<ButtonProps> = ({
      return (
           <button
                {...props}
-               className={clsx("button", variant ?? `button--${variant}`, `button--${size}`, className)}
+               className={clsx("button", variant ? `button--${variant}` : "", `button--${size}`, className)}
           >
                {children}
           </button>

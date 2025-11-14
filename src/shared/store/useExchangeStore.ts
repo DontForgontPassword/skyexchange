@@ -2,9 +2,10 @@ import { create } from "zustand";
 import { getStorage, setStorage } from "@/shared/utils/localStorage";
 import { useUser } from "./useUser";
 
-import BitcoinIcon from "@/shared/assets/icons/bitcoin.svg";
-import EthereumIcon from "@/shared/assets/icons/ethereum.svg";
-import SolanaIcon from "@/shared/assets/icons/solana.svg";
+import BitcoinIcon from "@/shared/assets/icons/bitcoin.png";
+import EthereumIcon from "@/shared/assets/icons/ethereum.png";
+import SolanaIcon from "@/shared/assets/icons/solana.png";
+import SmaragdIcon from "@/shared/assets/icons/smg.png";
 
 type CoinType = "BTC/USDT" | "ETH/USDT" | "SOL/USDT" | "SMG/USDT";
 type TradeType = "sell" | "buy";
@@ -46,7 +47,7 @@ const initialCoins: ICoin[] = [
      { icon: BitcoinIcon, type: "BTC/USDT", name: "BTC", fullName: "Bitcoin", price: 30000, change: 0, rate: 0 },
      { icon: EthereumIcon, type: "ETH/USDT", name: "ETH", fullName: "Ethereum", price: 2000, change: 0, rate: 0 },
      { icon: SolanaIcon, type: "SOL/USDT", name: "SOL", fullName: "Solana", price: 40, change: 0, rate: 0 },
-     { icon: SolanaIcon, type: "SMG/USDT", name: "SMG", fullName: "Smaragd", price: 125, change: 0, rate: 0 },
+     { icon: SmaragdIcon, type: "SMG/USDT", name: "SMG", fullName: "Smaragd", price: 125, change: 0, rate: 0 },
 ];
 
 const persistedCoins = getStorage<ICoin[]>("coins", null);
@@ -56,8 +57,48 @@ const persistedOrders = getStorage<ITradeOrder[]>("orders", null);
 export const useExchangeStore = create<IExchangeStore>((set, get) => ({
      currentCoin: initialCoins[0],
      coins: persistedCoins || initialCoins,
-     orders: persistedOrders || [],
-     trades: persistedTrades || [],
+     orders: persistedOrders || [
+          {
+               amount: 12,
+               coin: "BTC",
+               price: 999,
+               total: 1.43,
+               type: "buy"
+          }, {
+               amount: 12,
+               coin: "BTC",
+               price: 999,
+               total: 1.43,
+               type: "buy"
+          }, {
+               amount: 12,
+               coin: "SOL",
+               price: 999,
+               total: 1.43,
+               type: "sell"
+          }
+     ],
+     trades: persistedTrades || [
+          {
+               amount: 12,
+               coin: "BTC",
+               price: 999,
+               total: 1.43,
+               type: "buy"
+          }, {
+               amount: 12,
+               coin: "BTC",
+               price: 999,
+               total: 1.43,
+               type: "buy"
+          }, {
+               amount: 12,
+               coin: "SOL",
+               price: 999,
+               total: 1.43,
+               type: "sell"
+          }
+     ],
 
      setCurrentCoin: (coin) => set({ currentCoin: coin }),
      setCoins: (coins) => {
@@ -80,7 +121,7 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => ({
      buyCoin: (coinName, price, amount) => {
           const total = price * amount;
           const user = useUser.getState();
-          if (total > user.balance) return false;
+          if (total > user.balance.amount) return false;
 
           const coin = get().coins.find((c) => c.name === coinName);
           if (!coin) return false;

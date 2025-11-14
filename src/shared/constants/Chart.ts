@@ -1,4 +1,3 @@
-import { Column } from "@/features/table/Table";
 import { FilterType } from "../types";
 
 const ORDER_COLUMNS: Column[] = [

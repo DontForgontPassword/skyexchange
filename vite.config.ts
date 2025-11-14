@@ -13,6 +13,9 @@ export default defineConfig({
       '@app': path.resolve(__dirname, './src/components'),
     }
   },
+  build: {
+    sourcemap: true
+  },
   css: {
     preprocessorOptions: {
       scss: {

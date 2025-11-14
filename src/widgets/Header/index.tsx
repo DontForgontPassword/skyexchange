@@ -1,12 +1,18 @@
 import "./Header.scss"
 import clsx from "clsx";
 import { useUser } from "@/shared/store/useUser";
-import { Links } from "@/shared/constants/Menu.constants";
+import { Links } from "@/shared/constants/Menu";
 import { WalletIcon } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import Button from "@/shared/ui/button/Button";
 
 const Header = () => {
-     const balance = useUser((s) => s.balance);
+     const user = useUser.getState();
+
+     useEffect(() => {
+          console.log(`User token is ${user.token}`)
+     })
 
      return (
           <header className="header">
@@ -29,13 +35,22 @@ const Header = () => {
                                         </li>
                                    )
                               }
-                              <div className="wallet">
-                                   <WalletIcon />
-                                   <div>
-                                        <p className="wallet__title">Balance</p>
-                                        <span className="wallet__balance">{balance} SMG</span>
-                                   </div>
-                              </div>
+                              {
+                                   user.token !== null ? (
+                                        <div className="wallet">
+                                             <WalletIcon />
+                                             <div>
+                                                  <p className="wallet__title">Balance</p>
+                                                  <span className="wallet__balance">{user.balance.amount} SMG</span>
+                                             </div>
+                                        </div>
+                                   ) : (
+                                        <Button
+                                        variant="primary">
+                                             Login
+                                        </Button>
+                                   )
+                              }
                          </ul>
                     </nav>
                </div>

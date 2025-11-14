@@ -3,7 +3,7 @@ import clsx from "clsx";
 import "./Input.scss";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-     labelIcon: ReactNode;
+     labelIcon?: ReactNode;
      label?: string;
      error?: string;
      icon?: ReactNode;

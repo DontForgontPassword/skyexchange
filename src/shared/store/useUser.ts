@@ -19,7 +19,7 @@ export interface IUser {
      id: string;
      username: string;
      email: string;
-     token?: string;
+     token?: string | null;
      avatarNftId: string;
      balance: IBalance;
      nfts: INFT[];
@@ -45,7 +45,7 @@ export const useUser = create<IUser>()(
                id: "player-none",
                username: "Guest",
                email: "guest@example.com",
-               token: undefined,
+               token: null,
                avatarNftId: "",
                balance:
                {
@@ -100,7 +100,7 @@ export const useUser = create<IUser>()(
                          id: `player-none`,
                          username: "Guest",
                          email: "guest@example.com",
-                         token: undefined,
+                         token: null,
                          avatarNftId: undefined,
                          balance: {
                               id: "smg",

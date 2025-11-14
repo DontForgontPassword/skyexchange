@@ -24,11 +24,19 @@
 
      &--primary {
           background-color: var(--primary);
-          color: white;
 
           &:hover:not(:disabled) {
                background-color: var(--primary-dark);
           }
+     }
+
+     &--destructive {
+          background-color: var(--destructive);
+          color: white;
+     }
+
+     &--secondary {
+          background-color: var(--card);
      }
 
      &:disabled {

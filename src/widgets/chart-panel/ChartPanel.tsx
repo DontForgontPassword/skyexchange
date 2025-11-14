@@ -5,7 +5,7 @@ import {
      CHART_RANGES,
      ORDER_COLUMNS,
      TRADE_COLUMNS,
-} from "@/shared/constants/Chart.constants";
+} from "@/shared/constants/Chart";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { formatPrice } from "@/shared/utils/format";
 import clsx from "clsx";
