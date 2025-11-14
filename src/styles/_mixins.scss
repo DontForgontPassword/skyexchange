@@ -4,20 +4,7 @@
 
 @mixin reset-button {
      border-radius: var(--radius);
-     color: var(--muted-foreground);
      border: none;
      outline: none;
      cursor: pointer;
-}
-
-@mixin button {
-     @include reset-button();
-
-     padding: 8px 16px;
-}
-
-@mixin button-sm {
-     @include reset-button();
-
-     padding: 6px 12px;
 }

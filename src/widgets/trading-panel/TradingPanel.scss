@@ -1,0 +1,65 @@
+.trade-panel {
+     grid-column: span 3;
+
+     &__header {
+          button {
+               text-align: left;
+          }
+     }
+
+     &__order-form {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 16px;
+     }
+
+     &__field-group {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+     }
+
+     &__field-input {
+          margin-top: 8px;
+     }
+
+     &__field-label {
+          font-size: 0.875rem;
+          color: var(--muted-foreground);
+     }
+
+     &__action-button {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+
+          &--sell {
+               background-color: var(--destructive);
+               color: var(--destructive-foreground);
+          }
+     }
+
+     /* summary block */
+     &__summary {
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+     }
+
+     &__summary-row {
+          display: flex;
+          justify-content: space-between;
+     }
+
+     &__summary-label {
+          color: var(--muted-foreground);
+     }
+
+     &__summary-label,
+     &__summary-value {
+          font-size: 0.875rem;
+     }
+}

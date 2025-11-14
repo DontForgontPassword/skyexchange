@@ -1,0 +1,58 @@
+.profile-page {
+     &__inner {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+     }
+
+     &__registration-card {
+          width: 100%;
+          max-width: 500px;
+          padding: 40px;
+     }
+}
+
+.registration-card {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+
+     &__icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 80px;
+          aspect-ratio: 1;
+          border: 2px solid var(--primary);
+          border-radius: 50%;
+          background-color: rgba(80, 200, 120, 0.1);
+          color: var(--primary);
+     }
+
+     &__header {
+          margin-top: 20px;
+
+          &-title {
+               text-align: center;
+               font-size: 1.5rem;
+               font-weight: 500;
+               color: var(--primary);
+               text-shadow: 0 0 10px rgba(80, 200, 120, 0.3);
+          }
+
+          &-subtitle {
+               font-size: 1rem;
+               color: var(--muted-foreground);
+               margin-top: 4px;
+          }
+     }
+
+     &__form {
+          width: 100%;
+          margin-top: 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+     }
+}
