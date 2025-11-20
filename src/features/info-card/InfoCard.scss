@@ -40,9 +40,44 @@
      }
 
      &__button {
-          @include reset-button;;
+          @include reset-button;
+          ;
           margin-top: 32px;
           background-color: var(--primary);
           color: var(--primary-foreground);
+     }
+
+     &__not-auth {
+          margin-top: 24px;
+          display: flex;
+          justify-content: center;
+     }
+
+     &__not-auth-box {
+          background: var(--card-muted);
+          padding: 10px;
+          border-radius: 12px;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+     }
+
+     &__not-auth-title {
+          font-size: 1rem;
+          font-weight: 600;
+     }
+
+     &__not-auth-subtitle {
+          color: var(--muted-foreground);
+          font-size: 0.85rem;
+          max-width: 260px;
+     }
+
+     &__login-button {
+          width: 100%;
+          margin-top: 12px;
      }
 }

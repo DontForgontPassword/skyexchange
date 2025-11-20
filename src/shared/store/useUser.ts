@@ -57,12 +57,23 @@ export const useUser = create<IUser>()(
                createdAt: "",
 
                registerUser: (username: string, email: string, password: string) => {
-                    set({
+                    const safePassword = btoa(unescape(encodeURIComponent(password)));
+
+                    set(() => ({
                          id: `player-${crypto.randomUUID()}`,
                          username,
                          email,
-                         token: btoa(`${username}:${password}`),
-                    });
+                         token: `${username}:${safePassword}`,
+                         avatarNftId: "",
+                         balance: {
+                              id: "smg",
+                              amount: 0
+                         },
+                         nfts: [],
+                         game: { score: 0, rank: 0, playedCount: 0 },
+                         createdAt: new Date().toISOString(),
+                         lastLogin: new Date().toISOString(),
+                    }));
                },
                getCurrentProfileCoin: () => {
                     return get().balance;

@@ -14,7 +14,8 @@ import Button from "@/shared/ui/button/Button";
 const TradingPanel = () => {
      const coin = useExchangeStore((s) => s.currentCoin);
      const coinPrice = coin.price;
-     const user = useUser();
+     const user = useUser.getState();
+     const userBalance = user.balance.amount || 0;
      const [buyPrice, setBuyPrice] = useState(coinPrice);
      const [buyAmount, setBuyAmount] = useState(0);
      const [actionType, setActionType] = useState<FilterType>("sell");
@@ -26,7 +27,7 @@ const TradingPanel = () => {
      const handleBuy = () => {
           const total = buyPrice * buyAmount;
 
-          if (total > user.balance.amount) {
+          if (total > userBalance) {
                toast.error(`Insufficient balance`);
                return;
           }
@@ -105,7 +106,7 @@ const TradingPanel = () => {
                          <div className="trade-panel__summary-row">
                               <p className="trade-panel__summary-label">Available USDT:</p>
                               <span className="trade-panel__summary-value">
-                                   {user.balance.amount.toFixed(2)}
+                                   {userBalance.toFixed(2)}
                               </span>
                          </div>
                          <div className="trade-panel__summary-row">

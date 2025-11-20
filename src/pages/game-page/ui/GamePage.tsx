@@ -61,17 +61,13 @@ export function GamePage() {
                if (e.key === "ArrowLeft" || e.key === "a") keys.current.left = false;
                if (e.key === "ArrowRight" || e.key === "d") keys.current.right = false;
           };
-          const handleMouseMove = (e: MouseEvent) => {
-               mouseX.current = e.clientX - canvasRef.current!.getBoundingClientRect().left;
-          };
+
           window.addEventListener("keydown", handleKeyDown);
           window.addEventListener("keyup", handleKeyUp);
-          window.addEventListener("mousemove", handleMouseMove);
 
           return () => {
                window.removeEventListener("keydown", handleKeyDown);
                window.removeEventListener("keyup", handleKeyUp);
-               window.removeEventListener("mousemove", handleMouseMove);
           };
      }, []);
 

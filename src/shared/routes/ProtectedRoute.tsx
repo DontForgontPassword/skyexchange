@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react"
 import { Navigate } from "react-router-dom";
+import { useUser } from "../store/useUser";
 
 interface ProtectedRouteProps {
     children: ReactNode;
@@ -8,7 +9,7 @@ interface ProtectedRouteProps {
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
     children
 }) => {
-    const isLoggedIn = Boolean(localStorage.getItem("token"));
+    const isLoggedIn = useUser((s) => s.token);
     if (!isLoggedIn) return <Navigate to="/login" />;
     return <>{children}</>;
 }

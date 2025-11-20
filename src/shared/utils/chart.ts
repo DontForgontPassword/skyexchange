@@ -1,4 +1,4 @@
-import { RANGE_TO_MS } from "../constants/Chart.constants";
+import { RANGE_TO_MS } from "../constants/Chart";
 
 /**
  * Сортирует данные графика для выбранного диапазона времени.

@@ -3,6 +3,17 @@
     flex-direction: column;
     align-items: center;
 
+    &__inner {
+        max-width: 500px;
+        max-height: calc(100vh - 120px);
+        margin-top: 50px;
+        box-shadow: var(--emerald-shadow);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     &__icon {
         display: flex;
         justify-content: center;

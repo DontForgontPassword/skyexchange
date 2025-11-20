@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useUser } from "@/shared/store/useUser";
 import { useNftStore } from "@/shared/store/useNftStore";
 import Button from "@/shared/ui/button/Button";
+import { useNavigate } from "react-router-dom";
 
 interface NftCardProps {
      rarity: RarityType,
@@ -30,12 +31,18 @@ const NftCard: FC<NftCardProps> = ({
 }) => {
      const nfts = useNftStore();
      const user = useUser();
+     const navigate = useNavigate();
 
      const parseRarity = (rarity: RarityType) => {
           return rarity.toLowerCase();
      }
 
      const handlePurchaseNft = () => {
+          if (!user.token) {
+               toast.error("Please sign in to purchase NFTs");
+               return navigate("/login")
+          }
+
           if (price <= user.balance.amount) {
                nfts.setPurchased(name, true);
                user.removeBalance(price);

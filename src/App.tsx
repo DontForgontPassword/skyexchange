@@ -2,7 +2,7 @@ import {
   BrowserRouter
 } from "react-router-dom"
 import { Toaster } from "sonner"
-import Header from "./widgets/Header"
+import Header from "./widgets/header/Header"
 import { AppRoutes } from "./shared/routes/AppRoutes"
 
 function App() {

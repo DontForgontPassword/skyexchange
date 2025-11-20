@@ -1,4 +1,5 @@
 import { FilterType } from "../types";
+import { Column } from "../ui/table/Table";
 
 const ORDER_COLUMNS: Column[] = [
      { name: "Coin" },

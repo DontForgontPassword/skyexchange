@@ -21,13 +21,9 @@ $rarities: (
 .shop-page {
      &__container {
           display: grid;
-          grid-template-columns: repeat(12, 1fr);
+          grid-template-columns: 9fr 3fr;
           gap: 24px;
           padding: 24px;
-     }
-
-     &__main {
-          grid-column: span 9;
      }
 
      &__header {
@@ -108,9 +104,5 @@ $rarities: (
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
-     }
-
-     &__sidebar {
-          grid-column: span 3;
      }
 }

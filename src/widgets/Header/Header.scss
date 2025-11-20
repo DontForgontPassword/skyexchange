@@ -1,6 +1,7 @@
 .header {
      border-bottom: 1px solid var(--primary);
      background-color: var(--card);
+     padding: 15px;
 
      &__inner {
           display: flex;

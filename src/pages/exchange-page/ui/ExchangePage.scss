@@ -3,21 +3,18 @@
 
      &__inner {
           display: grid;
-          grid-template-columns: repeat(12, 1fr);
+          grid-template-columns: 2fr 7fr 3fr;
           gap: 24px;
      }
 }
 
 .trading-panel {
-     grid-column: span 3;
-
      &__filter button {
           text-align: left;
      }
 }
 
 .trading-pairs {
-     grid-column: span 2;
 
      &__list {
           display: flex;

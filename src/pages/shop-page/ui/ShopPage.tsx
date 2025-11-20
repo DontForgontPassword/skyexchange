@@ -49,7 +49,7 @@ export const ShopPage = () => {
                }
                <section className="shop-page">
                     <div className="shop-page__container container">
-                         <div className="shop-page__main">
+                         <div className="shop-page__wrapper">
                               <div className="shop-page__header">
                                    {SHOP_FILTERS.map((filter) => (
                                         <Button
