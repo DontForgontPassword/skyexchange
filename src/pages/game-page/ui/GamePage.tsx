@@ -138,8 +138,6 @@ export function GamePage() {
                          setPoints(p => p + 1 + combo); // combo bonus
                          setCombo(c => c + 1);
                          sparks.current.push({ x: c.x, y: by, alpha: 1 });
-                         const audio = new Audio("/sounds/catch.mp3");
-                         audio.play();
                          return;
                     }
 
