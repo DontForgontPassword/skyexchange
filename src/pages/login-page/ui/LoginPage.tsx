@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Lock, Mail, User } from "lucide-react"
-import Input from "@/shared/ui/input/Input"
-import Button from "@/shared/ui/button/Button"
-import "./LoginPage.scss"
+import { Input } from "@/shared/ui/input"
+import { Button } from "@/shared/ui/button"
 import { useUser } from "@/shared/store/useUser"
+import "./LoginPage.scss"
 
 export const LoginPage = () => {
     const registerUser = useUser((s) => s.registerUser)
@@ -91,7 +91,7 @@ export const LoginPage = () => {
                     {error && <p className="error">{error}</p>}
                     {success && <p className="success">{success}</p>}
 
-                    <Button variant="primary" size="lg">
+                    <Button variant="default" size="lg">
                         Create Account
                     </Button>
                 </form>

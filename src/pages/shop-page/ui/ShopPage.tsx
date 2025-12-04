@@ -1,14 +1,14 @@
-import { useState } from "react";
-import clsx from "clsx";
-import "./ShopPage.scss";
-import { Funnel } from "lucide-react";
+import { Funnel, Wallet } from "lucide-react";
 import { RARITY_FILTERS, SHOP_FILTERS, ShopFilterType, ShopRarityFilterType } from "@/shared/constants/Shop";
-import AddFundsModal from "@/widgets/add-funds-modal/AddFundsModal";
+import { AddFundsModal } from "@/features/add-funds-modal/ui/AddFundsModal";
 import { useNftStore } from "@/shared/store/useNftStore";
-import NftCard from "@/features/nft-card/NftCard";
-import InfoCard from "@/features/info-card/InfoCard";
+import { NftCard } from "@/features/nft-card/NftCard";
 import { useUser } from "@/shared/store/useUser";
-import Button from "@/shared/ui/button/Button";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./ShopPage.scss";
+import { Button } from "@/shared/ui/button";
+import clsx from "clsx";
 
 export const ShopPage = () => {
      const [currentFilter, setCurrentFilter] = useState<ShopFilterType>("all");
@@ -17,6 +17,11 @@ export const ShopPage = () => {
 
      const userNfts = useUser((s) => s.nfts);
      const nfts = useNftStore((s) => s.nfts);
+     const navigate = useNavigate();
+     const user = useUser();
+
+     const userBalance = user.balance?.amount || 0;
+     const isAuth = !!user.token;
 
      const userNftNames = new Set(userNfts.map((nft) => nft.name))
 
@@ -59,8 +64,7 @@ export const ShopPage = () => {
                                                   "shop-page__header-button",
                                                   currentFilter === filter.type && "shop-page__header-button--active"
                                              )}
-                                             color={""}
-                                             size="md">
+                                        >
                                              {filter.label}
                                         </Button>
                                    ))}
@@ -108,7 +112,76 @@ export const ShopPage = () => {
                          </div>
 
                          <aside className="shop-page__sidebar">
-                              <InfoCard setFundsModalOpen={setFundsModalOpen} />
+                              <div className="info-card card">
+                                   <div className="info-card__header">
+                                        <div className="info-card__wallet-icon">
+                                             <Wallet className="info-card__icon" width={24} height={24} />
+                                        </div>
+                                        <div className="info-card__title">
+                                             <h3 className="info-card__wallet-title">
+                                                  {isAuth ? "Your Wallet" : "Wallet Access"}
+                                             </h3>
+                                             <p className="info-card__wallet-status">
+                                                  {isAuth ? "Connected" : "Not Connected"}
+                                             </p>
+                                        </div>
+                                   </div>
+
+                                   {!isAuth ? (
+                                        <div className="info-card__not-auth">
+                                             <div className="info-card__not-auth-box">
+                                                  <p className="info-card__not-auth-title">You are not logged in</p>
+                                                  <p className="info-card__not-auth-subtitle">
+                                                       Sign in to access your wallet, balance and NFTs.
+                                                  </p>
+                                                  <Button
+                                                       className="info-card__button info-card__login-button"
+                                                       variant="default"
+                                                       onClick={() => navigate("/login")}
+                                                  >
+                                                       Login
+                                                  </Button>
+                                             </div>
+                                        </div>
+                                   ) : (
+                                        <>
+                                             <div className="info-card__wallet-stats">
+                                                  <div className="info-card__wallet-box wallet-box">
+                                                       <p className="wallet-box__title primary-text">Balance</p>
+                                                       <div className="wallet-box__content">
+                                                            <span className="wallet-box__stat-value wallet-box__balance">
+                                                                 {userBalance.toFixed(2)}
+                                                            </span>
+                                                            <p className="primary-text">SMG Coins</p>
+                                                       </div>
+                                                  </div>
+
+                                                  <div className="info-card__wallet-box wallet-box">
+                                                       <p className="wallet-box__title primary-text">Owned NFTs</p>
+                                                       <div className="wallet-box__content">
+                                                            <span className="wallet-box__stat-value">0</span>
+                                                       </div>
+                                                  </div>
+
+                                                  <div className="info-card__wallet-box wallet-box">
+                                                       <p className="wallet-box__title primary-text">Total Value</p>
+                                                       <div className="wallet-box__content">
+                                                            <span className="wallet-box__stat-value">0.00 SMARAGD</span>
+                                                            <span className="primary-text">$0.00</span>
+                                                       </div>
+                                                  </div>
+                                             </div>
+
+                                             <Button
+                                                  className="info-card__button"
+                                                  size={"sm"}
+                                                  onClick={() => setFundsModalOpen(true)}
+                                             >
+                                                  Add Funds
+                                             </Button>
+                                        </>
+                                   )}
+                              </div>
                          </aside>
                     </div>
                </section>

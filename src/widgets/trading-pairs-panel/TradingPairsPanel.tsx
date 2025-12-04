@@ -1,5 +1,5 @@
-import TradingPairButton from "@/features/trading-pair-button/TradingPairButton";
 import { useExchangeStore } from "../../shared/store/useExchangeStore";
+import { TradingPairButton } from "@/shared/ui/trading-pair-button";
 
 const TradingPairsPanel = () => {
      const coins = useExchangeStore((s) => s.coins);

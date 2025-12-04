@@ -1,5 +1,4 @@
-import { Bitcoin, TrendingUp, TrendingDown } from "lucide-react";
-import "./ChartPanel.scss";
+import { TrendingUp, TrendingDown } from "lucide-react";
 import {
      BOOK_FILTER_OPTIONS,
      CHART_RANGES,
@@ -8,7 +7,6 @@ import {
 } from "@/shared/constants/Chart";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { formatPrice } from "@/shared/utils/format";
-import clsx from "clsx";
 import { useExchangeStore } from "@/shared/store/useExchangeStore";
 import {
      ResponsiveContainer,
@@ -21,8 +19,10 @@ import {
 } from "recharts";
 import { getStorage, setStorage } from "@/shared/utils/localStorage";
 import { filterByRange, sortRows } from "@/shared/utils/chart";
-import Filter from "@/shared/ui/filter/Filter";
-import Table from "@/shared/ui/table/Table";
+import { Filter } from "@/shared/ui/filter/Filter";
+import { Table } from "@/shared/ui/table/Table";
+import clsx from "clsx";
+import "./ChartPanel.scss";
 
 const zoneTime = new Intl.DateTimeFormat("ru-RU", {
      hour: "2-digit",

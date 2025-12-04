@@ -1,14 +1,14 @@
-import clsx from "clsx";
 import { Check, ShoppingCart } from "lucide-react";
 import { FC, useEffect } from "react";
-import "./NtfCard.scss";
 import { firstUpper } from "@/shared/utils/string";
 import { RarityType } from "@/shared/types/filter";
 import { toast } from "sonner";
 import { useUser } from "@/shared/store/useUser";
 import { useNftStore } from "@/shared/store/useNftStore";
-import Button from "@/shared/ui/button/Button";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/shared/ui/button";
+import clsx from "clsx";
+import "./NtfCard.scss";
 
 interface NftCardProps {
      rarity: RarityType,
@@ -20,7 +20,7 @@ interface NftCardProps {
      className?: string;
 }
 
-const NftCard: FC<NftCardProps> = ({
+export const NftCard: FC<NftCardProps> = ({
      rarity,
      name,
      price,
@@ -91,7 +91,7 @@ const NftCard: FC<NftCardProps> = ({
                          </div>
                          <Button
                               disabled={purchased}
-                              size="sm"
+                              size="lg"
                               onClick={handlePurchaseNft}
                               className={clsx("nft-card__card-purchase-button", purchased && "nft-card__card-purchase-button--owned")}
                          >
@@ -107,5 +107,3 @@ const NftCard: FC<NftCardProps> = ({
           </div>
      );
 }
-
-export default NftCard;

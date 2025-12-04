@@ -11,7 +11,7 @@ interface TradingPairsPanelProps {
      onClick: () => void;
 }
 
-const TradingPairButton = ({ name, price, change, icon, isActive, onClick }: TradingPairsPanelProps) => {
+export const TradingPairButton = ({ name, price, change, icon, isActive, onClick }: TradingPairsPanelProps) => {
      return (
           <button className={clsx("trading-pair", isActive ? "trading-pair--active" : "")} onClick={onClick}>
                <div className="trading-pair__header">
@@ -33,5 +33,3 @@ const TradingPairButton = ({ name, price, change, icon, isActive, onClick }: Tra
           </button >
      );
 };
-
-export default TradingPairButton;

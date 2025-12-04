@@ -1,11 +1,11 @@
-import "./Header.scss"
-import clsx from "clsx";
 import { useUser } from "@/shared/store/useUser";
 import { Links } from "@/shared/constants/Menu";
 import { WalletIcon } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
-import Button from "@/shared/ui/button/Button";
+import { Button } from "@/shared/ui/button";
+import clsx from "clsx";
+import "./Header.scss"
 
 const Header = () => {
      const user = useUser.getState();
@@ -46,7 +46,7 @@ const Header = () => {
                                         </div>
                                    ) : (
                                         <Button
-                                             variant="primary">
+                                             variant="default">
                                              Login
                                         </Button>
                                    )

@@ -1,15 +1,15 @@
-import "./TradingPanel.scss";
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart";
 import { FilterType } from "@/shared/types";
 import { toast } from "sonner";
 import { firstUpper } from "@/shared/utils/string";
 import { useExchangeStore } from "../../shared/store/useExchangeStore";
 import { useUser } from "@/shared/store/useUser";
+import { Input } from "@/shared/ui/input";
+import { Filter } from "@/shared/ui/filter";
+import { Button } from "@/shared/ui/button";
 import clsx from "clsx";
-import Input from "@/shared/ui/input/Input";
-import Filter from "@/shared/ui/filter/Filter";
-import Button from "@/shared/ui/button/Button";
+import "./TradingPanel.scss";
 
 const TradingPanel = () => {
      const coin = useExchangeStore((s) => s.currentCoin);
@@ -96,7 +96,7 @@ const TradingPanel = () => {
                               className={clsx("trade-panel__action-button", {
                                    "trade-panel__action-button--sell": actionType === "sell",
                               })}
-                              variant={actionType === "buy" ? "primary" : "destructive"}
+                              variant={actionType === "buy" ? "default" : "destructive"}
                          >
                               {firstUpper(actionType)} {coin.type}
                          </Button>

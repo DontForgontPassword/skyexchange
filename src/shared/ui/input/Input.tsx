@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
      wrapperClassName?: string;
 }
 
-const Input: FC<InputProps> = ({ label, error, labelIcon, icon, className, wrapperClassName, ...props }) => {
+export const Input: FC<InputProps> = ({ label, error, labelIcon, icon, className, wrapperClassName, ...props }) => {
      return (
           <div className={clsx("input", wrapperClassName)}>
                {label && <label className="input__label">
@@ -31,5 +31,3 @@ const Input: FC<InputProps> = ({ label, error, labelIcon, icon, className, wrapp
           </div>
      );
 }
-
-export default Input;

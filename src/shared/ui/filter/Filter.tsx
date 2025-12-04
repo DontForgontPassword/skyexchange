@@ -1,8 +1,8 @@
 import { type FC } from "react";
 import { FilterType } from "@/shared/types";
-import "./Filter.scss";
+import { Button } from "@/shared/ui/button";
 import clsx from "clsx";
-import Button from "../button/Button";
+import "./Filter.scss";
 
 type FilterOption = {
      type: FilterType;
@@ -18,7 +18,7 @@ interface FilterProps {
      defaultValue: FilterType;
 }
 
-const Filter: FC<FilterProps> = ({
+export const Filter: FC<FilterProps> = ({
      filters,
      className,
      filterType,
@@ -44,7 +44,6 @@ const Filter: FC<FilterProps> = ({
                               "filter__button",
                               filterType === filter.type && "filter__button--active"
                          )}
-                         size="md"
                          onClick={() => handleClick(filter.type)}
                     >
                          {filter.label}
@@ -53,5 +52,3 @@ const Filter: FC<FilterProps> = ({
           </div>
      );
 };
-
-export default Filter;

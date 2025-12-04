@@ -21,10 +21,12 @@
      &__title {
           color: var(--primary);
           text-shadow: 0 0 10px rgba(80, 200, 120, 0.3);
+          font-size: 1.5rem;
      }
 
      &__subtitle {
           margin-top: 8px;
+          font-size: 1rem
      }
 
      &__header-close-button {
@@ -53,6 +55,10 @@
           margin-top: 8px;
      }
 
+     &__exchange-label {
+          font-size: 0.875rem;
+     }
+
      &__exchange-form {
           display: flex;
           flex-direction: column;
@@ -61,14 +67,14 @@
      }
 
      &__exchange-button {
-          @include reset-button;
           padding: 16px;
-          width: 100%;
+          height: fit-content;
           display: flex;
           align-items: center;
           gap: 16px;
           background-color: var(--secondary);
           border: 2px solid transparent;
+          border-radius: 12px;
 
           &--active {
                background-color: rgba(80, 200, 120, 0.1);
@@ -140,8 +146,6 @@
      }
 
      &__exchange-submit {
-          @include reset-button;;
-
           padding: 14px;
           margin-top: 8px;
           background-color: var(--primary);

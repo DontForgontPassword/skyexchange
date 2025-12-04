@@ -51,6 +51,10 @@ $rarities: (
           }
      }
 
+     &__header-button {
+          padding: 8px 16px;
+     }
+
      &__filter-card {
           display: flex;
           gap: 12px;
@@ -76,6 +80,7 @@ $rarities: (
      }
 
      &__filter-button {
+          padding: 6px 14px;
           color: var(--muted-foreground);
 
           @each $name, $data in $rarities {
@@ -104,5 +109,87 @@ $rarities: (
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
+     }
+}
+
+.info-card {
+     display: flex;
+
+     flex-direction: column;
+
+     &__header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+     }
+
+     &__wallet-icon {
+          width: 48px;
+          height: 48px;
+          background-color: var(--emerald);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+     }
+
+     &__icon {
+          color: var(--primary);
+     }
+
+     &__wallet-title {
+          font-size: 1rem;
+     }
+
+     &__wallet-status {
+          font-size: 0.75rem;
+          color: var(--muted-foreground);
+     }
+
+     &__wallet-stats {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 24px;
+     }
+
+     &__button {
+          margin-top: 32px;
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+     }
+
+     &__not-auth {
+          margin-top: 24px;
+          display: flex;
+          justify-content: center;
+     }
+
+     &__not-auth-box {
+          background: var(--card-muted);
+          padding: 10px;
+          border-radius: 12px;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+     }
+
+     &__not-auth-title {
+          font-size: 1rem;
+          font-weight: 600;
+     }
+
+     &__not-auth-subtitle {
+          color: var(--muted-foreground);
+          font-size: 0.85rem;
+          max-width: 260px;
+     }
+
+     &__login-button {
+          width: 100%;
+          margin-top: 12px;
      }
 }

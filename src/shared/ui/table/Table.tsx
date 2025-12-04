@@ -15,7 +15,7 @@ interface TableProps {
      maxHeight?: number;
 }
 
-const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) => {
+export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) => {
      return (
           <div className={clsx("table", className)}>
                <div className="table__inner">
@@ -60,5 +60,3 @@ const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) => {
           </div >
      );
 };
-
-export default Table;
