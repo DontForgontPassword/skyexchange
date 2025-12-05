@@ -1,6 +1,6 @@
-import TradingPairsPanel from "@/widgets/trading-pairs-panel/TradingPairsPanel";
+import TradingPairsPanel from "../TradingPairsPanel/TradingPairsPanel";
+import ChartPanel from "../ChartPanel/ChartPanel";
 import TradingPanel from "@/features/trading-panel/TradingPanel";
-import ChartPanel from "@/widgets/chart-panel/ChartPanel";
 import "./ExchangePage.scss"
 
 export const ExchangePage = () => {

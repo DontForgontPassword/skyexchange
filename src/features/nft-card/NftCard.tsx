@@ -91,7 +91,7 @@ export const NftCard: FC<NftCardProps> = ({
                          </div>
                          <Button
                               disabled={purchased}
-                              size="lg"
+                              size="sm"
                               onClick={handlePurchaseNft}
                               className={clsx("nft-card__card-purchase-button", purchased && "nft-card__card-purchase-button--owned")}
                          >

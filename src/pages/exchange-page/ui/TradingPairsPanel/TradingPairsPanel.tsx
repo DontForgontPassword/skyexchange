@@ -1,4 +1,4 @@
-import { useExchangeStore } from "../../shared/store/useExchangeStore";
+import { useExchangeStore } from "../../../../shared/store/useExchangeStore";
 import { TradingPairButton } from "@/shared/ui/trading-pair-button";
 
 const TradingPairsPanel = () => {
