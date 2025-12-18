@@ -1,0 +1,96 @@
+.info-card {
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__wallet-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--emerald);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            color: var(--primary);
+        }
+    }
+
+    &__title {
+        font-size: 1rem;
+    }
+
+    &__status {
+        font-size: 0.75rem;
+        color: var(--muted-foreground);
+    }
+
+    &__auth-warning {
+        margin-top: 24px;
+        padding: 12px;
+        background: var(--card-muted);
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    &__auth-title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    &__auth-subtitle {
+        margin-top: 4px;
+        font-size: 0.85rem;
+        color: var(--muted-foreground);
+    }
+
+    &__login-button {
+        margin-top: 12px;
+        width: 100%;
+    }
+
+    &__stats {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__stat {
+        padding: 16px;
+        background: rgba(33, 38, 45, 0.5);
+        border-radius: var(--radius-md);
+
+        &:first-child {
+            border: 1px solid var(--border);
+        }
+    }
+
+    &__stat-title {
+        font-size: 0.8rem;
+    }
+
+    &__stat-value {
+        display: block;
+        font-size: 1.5rem;
+        margin-top: 4px;
+
+        &--balance {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(80, 200, 120, 0.5);
+        }
+    }
+
+    &__add-funds {
+        margin-top: 32px;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        box-shadow: var(--shadow);
+    }
+}

@@ -1,1 +1,1 @@
-export {TradingPairButton} from "./TradingPairButton";
+export {TradingPairButton} from './TradingPairButton'

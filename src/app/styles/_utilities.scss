@@ -1,0 +1,27 @@
+.container {
+     width: 100%;
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 1rem 1.5rem;
+}
+
+.subtitle {
+     font-size: 1rem;
+     color: var(--muted-foreground);
+}
+
+.card {
+     background-color: var(--card);
+     border: 1px solid var(--border);
+     border-radius: 8px;
+     padding: 16px;
+}
+
+.primary-text {
+     font-size: 0.75rem;
+     color: var(--muted-foreground);
+}
+
+.title {
+     font-size: 1.25rem;
+}

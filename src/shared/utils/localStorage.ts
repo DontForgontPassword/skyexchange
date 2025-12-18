@@ -5,9 +5,9 @@
  * @returns данные из localStorage или значение по умолчанию
  */
 function getStorage<T>(key: string, fallback: T | null = null): T | null {
-     const data = localStorage.getItem(key);
-     if (!data) return fallback;
-     return JSON.parse(data) as T;
+     const data = localStorage.getItem(key)
+     if (!data) return fallback
+     return JSON.parse(data) as T
 }
 
 /**
@@ -16,7 +16,7 @@ function getStorage<T>(key: string, fallback: T | null = null): T | null {
  * @param value значение записи по ключу
  */
 function setStorage<T>(key: string, value: T) {
-     localStorage.setItem(key, JSON.stringify(value));
+     localStorage.setItem(key, JSON.stringify(value))
 }
 
 export {

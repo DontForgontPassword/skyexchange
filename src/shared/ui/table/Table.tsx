@@ -1,7 +1,7 @@
-import type { FC } from "react";
-import "./Table.scss";
-import clsx from "clsx";
-import { ITradeOrder } from "@/shared/store/useExchangeStore";
+import type { FC } from 'react'
+import './Table.scss'
+import clsx from 'clsx'
+import { ITradeOrder } from '@/shared/store/useExchangeStore'
 
 export type Column = {
      name: string;
@@ -17,7 +17,7 @@ interface TableProps {
 
 export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) => {
      return (
-          <div className={clsx("table", className)}>
+          <div className={clsx('table', className)}>
                <div className="table__inner">
                     <div className="table__head">
                          <div className="table__row table__row--head">
@@ -34,18 +34,18 @@ export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) =
                               <div className="table__row" key={`${index}-${row.amount}-${row.type}`}>
                                    <div
                                         className={
-                                             clsx("table__cell",
-                                                  "table__cell--body",
-                                                  "table__cell--right",
+                                             clsx('table__cell',
+                                                  'table__cell--body',
+                                                  'table__cell--right',
 
                                              )}
                                    >
                                         {row.coin}
                                    </div>
                                    <div
-                                        className={clsx("table__cell table__cell--body", "table__cell--right", row.type === "buy" ? "table__cell--buy" : row.type === "sell" ? "table__cell--sell" : "")}
+                                        className={clsx('table__cell table__cell--body', 'table__cell--right', row.type === 'buy' ? 'table__cell--buy' : row.type === 'sell' ? 'table__cell--sell' : '')}
                                    >
-                                        ${row.price.toLocaleString("fr-FR")}
+                                        ${row.price.toLocaleString('fr-FR')}
                                    </div>
                                    <div className="table__cell table__cell--body table__cell--right">
                                         {row.amount.toFixed(2)}
@@ -58,5 +58,5 @@ export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) =
                     </div>
                </div>
           </div >
-     );
-};
+     )
+}

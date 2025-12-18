@@ -1,1 +1,1 @@
-export {AddFundsModal} from "./ui/AddFundsModal";
+export { AddFundsModal } from './ui/AddFundsModal'

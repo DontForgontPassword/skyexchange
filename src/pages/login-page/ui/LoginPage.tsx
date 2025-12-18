@@ -1,42 +1,61 @@
-import { useState } from "react"
-import { Lock, Mail, User } from "lucide-react"
-import { Input } from "@/shared/ui/input"
-import { Button } from "@/shared/ui/button"
-import { useUser } from "@/shared/store/useUser"
-import "./LoginPage.scss"
+import { User } from 'lucide-react'
+import { useState } from 'react'
+import { useUser } from '@/shared/store/useUser'
+import { Button } from '@/shared/ui/button'
+import './LoginPage.scss'
+import { LoginInputField } from '@/features/login/ui/LoginInputField'
 
 export const LoginPage = () => {
-    const registerUser = useUser((s) => s.registerUser)
+    const registerUser = useUser((s) => s.register)
 
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
+
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { id, value } = e.target
+
+        switch (id) {
+            case 'input-username':
+                setUsername(value)
+                break
+            case 'input-email':
+                setEmail(value)
+                break
+            case 'input-password':
+                setPassword(value)
+                break
+            case 'input-confirm-password':
+                setConfirmPassword(value)
+                break
+        }
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        setError("")
-        setSuccess("")
+        setError('')
+        setSuccess('')
 
         if (!username.trim() || !email.trim() || !password.trim()) {
-            setError("All fields are required!")
+            setError('All fields are required!')
             return
         }
 
         if (password !== confirmPassword) {
-            setError("Passwords do not match")
+            setError('Passwords do not match')
             return
         }
 
         registerUser(username, email, password)
-        setSuccess("Account created successfully!")
+        setSuccess('Account created successfully!')
 
-        setUsername("")
-        setEmail("")
-        setPassword("")
-        setConfirmPassword("")
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
     }
 
     return (
@@ -48,44 +67,41 @@ export const LoginPage = () => {
 
                 <div className="login-page__header">
                     <h2 className="login-page__header-title">Create Account</h2>
-                    <p className="login-page__header-subtitle">Join Smaragd Coin Platform</p>
+                    <p className="login-page__header-subtitle">
+                        Join Smaragd Coin Platform
+                    </p>
                 </div>
 
                 <form className="login-page__form" onSubmit={handleSubmit}>
-                    <Input
-                        labelIcon={<User width={16} height={16} />}
+                    <LoginInputField
+                        id="input-username"
+                        icon="user"
                         label="Username"
-                        type="text"
                         placeholder="Enter your username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={handleChangeInput}
                     />
-
-                    <Input
-                        labelIcon={<Mail width={16} height={16} />}
+                    <LoginInputField
+                        id="input-email"
+                        icon="email"
                         label="Email"
-                        type="email"
                         placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChangeInput}
                     />
-
-                    <Input
-                        labelIcon={<Lock width={16} height={16} />}
+                    <LoginInputField
+                        id="input-password"
+                        icon="password"
                         label="Password"
                         type="password"
                         placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleChangeInput}
                     />
-
-                    <Input
-                        labelIcon={<Lock width={16} height={16} />}
+                    <LoginInputField
+                        id="input-confirm-password"
+                        icon="password"
                         label="Confirm Password"
                         type="password"
                         placeholder="Confirm your password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={handleChangeInput}
                     />
 
                     {error && <p className="error">{error}</p>}

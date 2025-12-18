@@ -1,0 +1,125 @@
+.chart-panel {
+
+     /* card top section */
+     &__top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+     }
+
+     /* header */
+
+     &__header {
+          display: flex;
+          flex-direction: column;
+     }
+
+     &__header-title {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+     }
+
+     &__header-icon {
+          width: 24px;
+          height: 24px;
+     }
+
+     &__header-pair {
+          font-size: 1.125rem;
+          font-weight: 600;
+     }
+
+     &__header-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 8px;
+     }
+
+     &__header-price {
+          font-size: 1.5rem;
+          color: var(--primary);
+     }
+
+     &__header-change {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          &--positive {
+               color: var(--primary);
+          }
+
+          &--negative {
+               color: var(--destructive);
+          }
+     }
+
+     &__header-change-icon {
+          width: 16px;
+          height: 16px;
+     }
+
+     &__header-change-text {
+          &--positive {
+               color: var(--primary);
+          }
+
+          &--negative {
+               color: var(--destructive);
+          }
+     }
+
+     /* periods buttons */
+
+     &__periods {
+          display: flex;
+          gap: 8px;
+     }
+
+     &__periods-button {
+          padding: 4px 12px;
+          background-color: var(--secondary);
+          color: var(--muted-foreground);
+          border-radius: var(--radius-md);
+
+          &--active {
+               background-color: var(--primary);
+               color: var(--primary-foreground);
+          }
+     }
+
+     /* market data section */
+
+     &__market-data {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          margin-top: 24px;
+          gap: 16px;
+     }
+
+     &__orders,
+     &__trades {
+          display: flex;
+          flex-direction: column;
+          max-height: 300px;
+     }
+
+     &__subtitle {
+          font-weight: 600;
+          margin-bottom: 8px;
+     }
+
+     &__filter {
+          margin-top: 16px;
+     }
+
+     &__table {
+          margin-top: 8px;
+     }
+
+     &__container {
+          margin-top: 24px;
+     }
+}

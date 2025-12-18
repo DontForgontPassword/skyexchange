@@ -1,0 +1,32 @@
+.login-page {
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--foreground);
+    }
+
+    &__input {
+        padding-left: 8px;
+        background-color: var(--input);
+        border: 1px solid var(--border);
+        color: var(--foreground);
+    }
+
+    &__input-wrapper {
+        position: relative;
+    }
+
+    &__password-button {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

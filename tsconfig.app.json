@@ -33,12 +33,6 @@
       "@/*": [
         "src/*"
       ],
-      "@widgets/*": [
-        "src/widgets/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ]
     }
   },
   "include": [

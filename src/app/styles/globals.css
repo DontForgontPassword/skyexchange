@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --secondary: #21262d;
+  --border: #50c87833;
+  --card: #161b22;
+  --muted-foreground: #8b949e;
+  --foreground: #e6edf3;
+  --foreground-shadow: 0 0 10px rgba(80, 200, 120, 0.3);
+  --shadow: 0px 0px 20px 0px rgba(80, 200, 120, 0.3);
+  --primary: #50c878;
+  --destructive: #f85149;
+  --primary-foreground: #0d1117;
+  --background: #0d1117;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  --transition-delay: 0.2s;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter";
+
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  transition-duration: var(--transition-delay);
+  cursor: pointer;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 148, 158, 0.12);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}

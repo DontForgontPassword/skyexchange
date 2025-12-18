@@ -1,0 +1,117 @@
+.nft-card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &__image-wrapper {
+        position: relative;
+        aspect-ratio: 1;
+        overflow: hidden;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__purchased-text {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        backdrop-filter: blur(4px);
+        color: var(--primary-foreground);
+        font-size: 0.75rem;
+        font-weight: 600;
+        background-color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__info {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 4px 12px;
+        border-radius: var(--radius-full);
+        background-color: #000000b3;
+        backdrop-filter: blur(4px);
+        font-size: 0.75rem;
+    }
+
+    &__rarity-text {
+        &--rare {
+            color: #60a5fa;
+        }
+        &--epic {
+            color: #a78bfa;
+        }
+        &--legendary {
+            color: var(--primary);
+        }
+        &--common {
+            color: #9ca3af;
+        }
+    }
+
+    &__type-text {
+        color: var(--muted-foreground);
+    }
+
+    &__order {
+        padding: 16px;
+
+        &-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    }
+
+    &__label {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-bottom: 4px;
+    }
+
+    &__price {
+        color: var(--primary);
+    }
+
+    &__acquire-button {
+        padding: 6px 12px;
+        font-weight: 400;
+        background-color: var(--primary);
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &--owned {
+            color: var(--muted-foreground);
+            background-color: var(--secondary);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+    }
+}

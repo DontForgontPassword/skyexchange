@@ -1,7 +1,7 @@
 import {
      FilterType,
      RarityType
-} from "./filter"
+} from './filter'
 
 export {
      FilterType,

@@ -1,6 +1,6 @@
-import "./TradingPairButton.scss";
-import { formatPrice } from "@/shared/utils/format";
-import clsx from "clsx";
+import './TradingPairButton.scss'
+import clsx from 'clsx'
+import { formatPrice } from '@/shared/utils/format'
 
 interface TradingPairsPanelProps {
      name: string;
@@ -13,7 +13,7 @@ interface TradingPairsPanelProps {
 
 export const TradingPairButton = ({ name, price, change, icon, isActive, onClick }: TradingPairsPanelProps) => {
      return (
-          <button className={clsx("trading-pair", isActive ? "trading-pair--active" : "")} onClick={onClick}>
+          <button className={clsx('trading-pair', isActive ? 'trading-pair--active' : '')} onClick={onClick}>
                <div className="trading-pair__header">
                     <img width={24} height={24} src={icon} alt="Sky Exchange" />
                     <p className="trading-pair__pair-name">{name}</p>
@@ -24,12 +24,12 @@ export const TradingPairButton = ({ name, price, change, icon, isActive, onClick
                               formatPrice(price)
                          }
                     </p>
-                    <p className={clsx("trading-pair__change", change >= 0 ? "trading-pair__change--positive" : "trading-pair__change--negative")}>
+                    <p className={clsx('trading-pair__change', change >= 0 ? 'trading-pair__change--positive' : 'trading-pair__change--negative')}>
                          {
                               change > 0 ? `+${change}%` : `${change}%`
                          }
                     </p>
                </div>
           </button >
-     );
-};
+     )
+}

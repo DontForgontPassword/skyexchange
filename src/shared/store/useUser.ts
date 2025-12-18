@@ -1,140 +1,120 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface INFT {
-     id: string;
-     name: string;
-     image: string;
-     price: number;
-     isSellable: boolean;
-     ownerId: string;
+    id: string;
+    name: string;
 }
-
-interface IBalance {
-     id: "btc" | "smg" | "eth" | "sol";
-     amount: number;
-};
 
 export interface IUser {
-     id: string;
-     username: string;
-     email: string;
-     token?: string | null;
-     avatarNftId: string;
-     balance: IBalance;
-     nfts: INFT[];
-     game: {
-          score: number;
-          rank?: number;
-          playedCount: number;
-     };
-     createdAt: string;
-     lastLogin?: string;
+    id: string;
+    username: string;
+    email: string;
+    token: string | null;
+    avatarNftId: string;
+    balances: {
+        btc: {
+            value: number;
+            name: string;
+        };
+        eth: {
+            value: number;
+            name: string;
+        };
+        sol: {
+            value: number;
+            name: string;
+        };
+        smg: {
+            value: number;
+            name: string;
+        };
+    };
+    defaultCurrency: keyof IUser['balances'];
+    nfts: INFT[];
+    game: { score: number; rank: number };
+    createdAt: string;
 
-     getCurrentProfileCoin: () => IBalance;
-     addBalance: (amount: number) => void;
-     removeBalance: (amount: number) => boolean;
-     saveNft: (nft: INFT) => void;
-     resetUser: () => void;
-     registerUser: (username: string, email: string, password: string) => void;
+    register: (u: string, e: string, p: string) => void;
+    add: (id: string, n: number) => void;
+    getDefaultBalance: () => { value: number; name: string };
+    remove: (id: string, n: number) => boolean;
+    save: (nft: INFT) => void;
+    reset: () => void;
 }
 
-export const useUser = create<IUser>()(
-     persist(
-          (set, get) => ({
-               id: "player-none",
-               username: "Guest",
-               email: "guest@example.com",
-               token: null,
-               avatarNftId: "",
-               balance:
-               {
-                    id: "smg",
-                    amount: 0,
-               },
-               nfts: [],
-               game: { score: 0, rank: 0, playedCount: 0 },
-               createdAt: "",
+const useUser = create<IUser>()(
+    persist(
+        (set, get) => ({
+            id: 'guest',
+            username: 'Guest',
+            email: 'guest@mail.com',
+            token: null,
+            avatarNftId: '',
+            balances: {
+                btc: { value: 0, name: 'btc' },
+                eth: { value: 0, name: 'eth' },
+                sol: { value: 0, name: 'sol' },
+                smg: { value: 0, name: 'smg' },
+            },
+            defaultCurrency: 'smg',
+            nfts: [],
+            game: { score: 0, rank: 0 },
+            createdAt: '',
 
-               registerUser: (username: string, email: string, password: string) => {
-                    const safePassword = btoa(unescape(encodeURIComponent(password)));
+            register: (u, e, p) =>
+                set({
+                    id: crypto.randomUUID(),
+                    username: u,
+                    email: e,
+                    token: `${u}:${btoa(p)}`,
+                    createdAt: new Date().toISOString(),
+                }),
+            add: (id, n) =>
+                set((s) => {
+                    const key = id as keyof IUser['balances'];
+                    return {
+                        balances: {
+                            ...s.balances,
+                            [key]: {
+                                ...s.balances[key],
+                                value: s.balances[key].value + n,
+                            },
+                        },
+                    };
+                }),
 
-                    set(() => ({
-                         id: `player-${crypto.randomUUID()}`,
-                         username,
-                         email,
-                         token: `${username}:${safePassword}`,
-                         avatarNftId: "",
-                         balance: {
-                              id: "smg",
-                              amount: 0
-                         },
-                         nfts: [],
-                         game: { score: 0, rank: 0, playedCount: 0 },
-                         createdAt: new Date().toISOString(),
-                         lastLogin: new Date().toISOString(),
-                    }));
-               },
-               getCurrentProfileCoin: () => {
-                    return get().balance;
-               },
-               addBalance: (amount: number) =>
-                    set((state) => ({
-                         balance: {
-                              id: state.balance.id,
-                              amount: state.balance.amount + amount,
-                         },
-                    })),
+            getDefaultBalance: () => {
+                const state = get();
+                return state.balances[state.defaultCurrency];
+            },
+            save: (nft) => set((s) => ({ nfts: [...s.nfts, nft] })),
 
-               removeBalance: (amount: number) => {
-                    const state = get();
+            remove: (id, n) => {
+                return true;
+            },
 
-                    if (state.balance.amount < amount) return false;
-
-                    set({
-                         balance: {
-                              id: state.balance.id,
-                              amount: state.balance.amount - amount,
-                         }
-                    });
-
-                    return true;
-               },
-
-               saveNft: (nft: INFT) =>
-                    set((state) => ({
-                         nfts: [...state.nfts, nft],
-                    })),
-
-               resetUser: () =>
-                    set(() => ({
-                         id: `player-none`,
-                         username: "Guest",
-                         email: "guest@example.com",
-                         token: null,
-                         avatarNftId: undefined,
-                         balance: {
-                              id: "smg",
-                              amount: 0,
-                         },
-                         nfts: [],
-                         game: { score: 0, rank: 0, playedCount: 0 },
-                         createdAt: new Date().toISOString(),
-                    })),
-          }),
-          {
-               name: "user-storage",
-               partialize: (state) => ({
-                    id: state.id,
-                    username: state.username,
-                    email: state.email,
-                    token: state.token,
-                    avatarNftId: state.avatarNftId,
-                    balance: state.balance,
-                    nfts: state.nfts,
-                    game: state.game,
-                    createdAt: state.createdAt,
-               }),
-          }
-     )
+            reset: () =>
+                set({
+                    id: 'guest',
+                    username: 'Guest',
+                    email: 'guest@mail.com',
+                    token: null,
+                    avatarNftId: '',
+                    balances: {
+                        btc: { value: 0, name: 'Bitcoin' },
+                        eth: { value: 0, name: 'Ethereum' },
+                        sol: { value: 0, name: 'Solana' },
+                        smg: { value: 0, name: 'SMG Coins' },
+                    },
+                    defaultCurrency: 'smg',
+                    nfts: [],
+                    game: { score: 0, rank: 0 },
+                    createdAt: '',
+                }),
+        }),
+        { name: 'user-storage' },
+    ),
 );
+
+export { useUser };

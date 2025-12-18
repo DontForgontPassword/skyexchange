@@ -1,1 +1,1 @@
-export { ExchangePage } from "./ui/ExchangePage/ExchangePage";
+export { ExchangePage } from './ui/ExchangePage'

@@ -4,10 +4,10 @@ interface ILink {
 }
 
 const Links: ILink[] = [
-     { text: "Exchange", to: "/" },
-     { text: "Shop", to: "/shop" },
-     { text: "Game", to: "/game" },
-     { text: "Profile", to: "/profile" },
-];
+     { text: 'Exchange', to: '/' },
+     { text: 'Shop', to: '/shop' },
+     { text: 'Game', to: '/game' },
+     { text: 'Profile', to: '/profile' },
+]
 
-export { Links };
+export { Links }
