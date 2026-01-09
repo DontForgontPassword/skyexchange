@@ -1,35 +1,34 @@
-import clsx from 'clsx'
-import { useState } from 'react'
-import { useExchangeStore } from '../../shared/store/useExchangeStore'
-import { TRADE_FILTER_OPTIONS } from '@/shared/constants/Chart'
-import { useUser } from '@/shared/store/useUser'
-import { FilterType } from '@/shared/types'
-import { Button } from '@/shared/ui/button'
-import { Filter } from '@/shared/ui/filter'
-import { Input } from '@/shared/ui/input'
-import { firstUpper } from '@/shared/utils/string'
-import './TradingPanel.scss'
+import { useState } from "react";
+import { useExchangeStore } from "@/shared/store/useExchangeStore.ts";
+import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart";
+import { useUser } from "@/shared/store/useUser";
+import { FilterType } from "@/shared/types";
+import { Button } from "@/shared/ui/button";
+import { Filter } from "@/shared/ui/filter";
+import { Input } from "@/shared/ui/input";
+import { firstUpper } from "@/shared/utils/string";
+import "./TradingPanel.scss";
 
 const TradingPanel = () => {
-    const coin = useExchangeStore((s) => s.currentCoin)
-    const price = coin.price
-    const user = useUser()
-    const userBalance = user.getDefaultBalance().value
-    const userBalanceName = user.defaultCurrency.toUpperCase()
-    const [amount, setAmount] = useState<number>(0)
-    const [actionType, setActionType] = useState<FilterType>('buy')
+    const coin = useExchangeStore((s) => s.currentCoin);
+    const price = coin.price;
+    const user = useUser();
+    const userBalance = user.getDefaultBalance().value;
+    const userBalanceName = user.defaultCurrency.toUpperCase();
+    const [amount, setAmount] = useState<number>(0);
+    const [actionType, setActionType] = useState<FilterType>("buy");
 
-    const handleBuy = () => {}
+    const handleBuy = () => {};
 
     return (
         <div className="trade-panel">
-            <div className="trade-panel__inner card">
+            <div className="trade-panel__inner">
                 <div className="trade-panel__header">
                     <Filter
                         filters={TRADE_FILTER_OPTIONS}
                         filterType={actionType}
                         setFilterType={setActionType}
-                        defaultValue={'sell'}
+                        defaultValue={"sell"}
                     />
                 </div>
 
@@ -42,7 +41,7 @@ const TradingPanel = () => {
                             Amount
                             <Input
                                 placeholder="0.00"
-                                value={String(amount || '')}
+                                value={String(amount || "")}
                                 onChange={(e) =>
                                     setAmount(Number(e.target.value) || 0)
                                 }
@@ -85,15 +84,12 @@ const TradingPanel = () => {
                     </div>
 
                     <Button
-                        type="submit"
                         onClick={handleBuy}
-                        className={clsx('trade-panel__action-button', {
-                            'trade-panel__action-button--sell':
-                                actionType === 'sell',
-                        })}
+                        className="trade-panel__action-button"
                         variant={
-                            actionType === 'buy' ? 'default' : 'destructive'
+                            actionType === "buy" ? "default" : "destructive"
                         }
+                        size={"default"}
                     >
                         {firstUpper(actionType)} {coin.type}
                     </Button>
@@ -117,7 +113,7 @@ const TradingPanel = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export { TradingPanel }
+export { TradingPanel };

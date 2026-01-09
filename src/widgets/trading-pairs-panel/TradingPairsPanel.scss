@@ -1,4 +1,10 @@
 .trading-pairs {
+    &__inner {
+        padding: var(--card-padding);
+        background-color: var(--card);
+        border-radius: var(--radius);
+    }
+
     &__list {
         display: flex;
         flex-direction: column;

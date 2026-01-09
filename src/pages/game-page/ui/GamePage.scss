@@ -1,7 +1,9 @@
 .game-page {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 16px;
+    &__inner {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 16px;
+    }
 
     &__header {
         display: flex;
@@ -50,25 +52,5 @@
         &-title {
             font-weight: 600;
         }
-    }
-}
-
-.game-over-block {
-    margin-top: 20px;
-    padding: 20px;
-    background: #ffe6e6;
-    border: 2px solid #ff4d4d;
-    border-radius: 10px;
-    text-align: center;
-    color: #b30000;
-
-    h2 {
-        margin: 0 0 10px;
-        font-size: 28px;
-    }
-
-    p {
-        margin: 0;
-        font-size: 18px;
     }
 }

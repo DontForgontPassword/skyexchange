@@ -1,6 +1,9 @@
 .info-card {
+    padding: var(--card-padding);
     display: flex;
     flex-direction: column;
+    background-color: var(--card);
+    border-radius: var(--radius);
 
     &__header {
         display: flex;
@@ -65,7 +68,7 @@
     &__stat {
         padding: 16px;
         background: rgba(33, 38, 45, 0.5);
-        border-radius: var(--radius-md);
+        border-radius: var(--radius);
 
         &:first-child {
             border: 1px solid var(--border);

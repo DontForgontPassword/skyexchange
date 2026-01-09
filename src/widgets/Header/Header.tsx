@@ -4,11 +4,11 @@ import { WalletIcon } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Button } from '@/shared/ui/button';
-import clsx from 'clsx';
+import {clsx } from 'clsx';
 import './Header.scss';
 
 const Header = () => {
-    const user = useUser.getState();
+    const user = useUser((s) => s);;
     const defaultBalance = user.getDefaultBalance();
     useEffect(() => {
         console.log(`User token is ${user.token}`);
@@ -55,7 +55,7 @@ const Header = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Button asChild variant="default">
+                            <Button variant="default">
                                 <Link to="/login">Login</Link>
                             </Button>
                         )}

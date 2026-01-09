@@ -1,21 +1,21 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import beeChlen from '@/shared/assets/images/nfts/bee-chlen-218.jpg';
-import cockGuardian from '@/shared/assets/images/nfts/cocal-guardian-3443.jpg';
-import kitIgor from '@/shared/assets/images/nfts/cyber-guardian-7284.jpg';
-import cyberGuardian from '@/shared/assets/images/nfts/cyber-guardian-9451.png';
-import digitalPhantom from '@/shared/assets/images/nfts/digital-phantom-7392.png';
-import extraterrestrial from '@/shared/assets/images/nfts/extraterrestrial-din-din-madung-4821.png';
-import femboiWarrior from '@/shared/assets/images/nfts/femboi-warrior-8632.png';
-import kirillBarabulka from '@/shared/assets/images/nfts/kirill-barabulka-1205.png';
-import ladyGaga from '@/shared/assets/images/nfts/lady-gaga-4353.jpg';
-import neonSoul from '@/shared/assets/images/nfts/neon-soul-3178.png';
-import quantumRanger from '@/shared/assets/images/nfts/quantum-ranger-5823.png';
-import olga from '@/shared/assets/images/nfts/void-hunter-4709.png';
-import { RarityType } from '@/shared/types/filter';
-import { INFT } from './useUser';
+import beeChlen from "@/shared/assets/images/nfts/bee-chlen-218.jpg";
+import cockGuardian from "@/shared/assets/images/nfts/cocal-guardian-3443.jpg";
+import kitIgor from "@/shared/assets/images/nfts/cyber-guardian-7284.jpg";
+import cyberGuardian from "@/shared/assets/images/nfts/cyber-guardian-9451.png";
+import digitalPhantom from "@/shared/assets/images/nfts/digital-phantom-7392.png";
+import extraterrestrial from "@/shared/assets/images/nfts/extraterrestrial-din-din-madung-4821.png";
+import femboiWarrior from "@/shared/assets/images/nfts/femboi-warrior-8632.png";
+import kirillBarabulka from "@/shared/assets/images/nfts/kirill-barabulka-1205.png";
+import ladyGaga from "@/shared/assets/images/nfts/lady-gaga-4353.jpg";
+import neonSoul from "@/shared/assets/images/nfts/neon-soul-3178.png";
+import quantumRanger from "@/shared/assets/images/nfts/quantum-ranger-5823.png";
+import olga from "@/shared/assets/images/nfts/void-hunter-4709.png";
+import { RarityType } from "@/shared/types/filter";
+import { INFT } from "./useUser";
 
-type NftRarityType = 'all' | 'popular' | 'new' | 'my';
+type NftRarityType = "all" | "popular" | "new" | "my";
 
 interface INft {
     name: string;
@@ -28,87 +28,87 @@ interface INft {
 
 const NFT_COLLECTION: INft[] = [
     {
-        name: 'Extraterrestrial din din madung #4821',
-        rarity: 'Legendary',
+        name: "Extraterrestrial din din madung #4821",
+        rarity: "Legendary",
         price: 898.45,
-        type: 'popular',
+        type: "popular",
         image: extraterrestrial,
     },
     {
-        name: 'Samurai Mashka #7392',
-        rarity: 'Rare',
+        name: "Samurai Mashka #7392",
+        rarity: "Rare",
         price: 112.38,
-        type: 'popular',
+        type: "popular",
         image: digitalPhantom,
     },
     {
-        name: 'Kirill Barabulka #1205',
-        rarity: 'Legendary',
+        name: "Kirill Barabulka #1205",
+        rarity: "Legendary",
         price: 201.77,
-        type: 'new',
+        type: "new",
         image: kirillBarabulka,
     },
     {
-        name: 'Kazah Level Up Super Ultra Max #9451',
-        rarity: 'Common',
+        name: "Kazah Level Up Super Ultra Max #9451",
+        rarity: "Common",
         price: 67.12,
-        type: 'new',
+        type: "new",
         image: cyberGuardian,
     },
     {
-        name: 'Chicken Nuggets #3178',
-        rarity: 'Epic',
+        name: "Chicken Nuggets #3178",
+        rarity: "Epic",
         price: 144.89,
-        type: 'new',
+        type: "new",
         image: neonSoul,
     },
     {
-        name: 'Quantum Ranger #5823',
-        rarity: 'Rare',
+        name: "Quantum Ranger #5823",
+        rarity: "Rare",
         price: 198.45,
-        type: 'popular',
+        type: "popular",
         image: quantumRanger,
     },
     {
-        name: 'Olga #4709',
-        rarity: 'Legendary',
+        name: "Olga #4709",
+        rarity: "Legendary",
         price: 230.12,
-        type: 'popular',
+        type: "popular",
         image: olga,
     },
     {
-        name: 'Femboi Warrior #8632',
-        rarity: 'Common',
+        name: "Femboi Warrior #8632",
+        rarity: "Common",
         price: 91.77,
-        type: 'new',
+        type: "new",
         image: femboiWarrior,
     },
     {
-        name: 'Bee chlen #218',
-        rarity: 'Epic',
+        name: "Bee chlen #218",
+        rarity: "Epic",
         price: 152.34,
-        type: 'popular',
+        type: "popular",
         image: beeChlen,
     },
     {
-        name: 'Kit Igor #7284',
-        rarity: 'Legendary',
+        name: "Kit Igor #7284",
+        rarity: "Legendary",
         price: 123.67,
-        type: 'new',
+        type: "new",
         image: kitIgor,
     },
     {
-        name: 'Cock Guardian #3443',
-        rarity: 'Legendary',
+        name: "Cock Guardian #3443",
+        rarity: "Legendary",
         price: 1222.67,
-        type: 'new',
+        type: "new",
         image: cockGuardian,
     },
     {
-        name: 'Lady Gaga #4353',
-        rarity: 'Legendary',
+        name: "Lady Gaga #4353",
+        rarity: "Legendary",
         price: 543.67,
-        type: 'new',
+        type: "new",
         image: ladyGaga,
     },
 ];
@@ -127,13 +127,15 @@ export const useNftStore = create<INftStore>((set) => ({
     setPurchased: (name, purchased) =>
         set((state) => ({
             nfts: state.nfts.map((nft) =>
-                nft.name === name ? { ...nft, purchased } : nft,
+                nft.name === name ? { ...nft, purchased } : nft
             ),
         })),
     getCost: (name) => {
         if (Array.isArray(name)) {
             return name.reduce((total, nft) => {
-                const nftItem = NFT_COLLECTION.find((nftItem) => nftItem.name === nft.name);
+                const nftItem = NFT_COLLECTION.find(
+                    (nftItem) => nftItem.name === nft.name
+                );
                 return total + (nftItem ? nftItem.price : 0);
             }, 0);
         }

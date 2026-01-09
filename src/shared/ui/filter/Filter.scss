@@ -2,7 +2,7 @@
      display: grid;
      grid-template-columns: repeat(2, 1fr);
      background-color: var(--secondary);
-     border-radius: var(--radius-md);
+     border-radius: var(--radius);
      padding: 0.25rem;
 
      &__button {

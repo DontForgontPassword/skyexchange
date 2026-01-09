@@ -1,7 +1,10 @@
 .profile-card {
+    padding: var(--card-padding);
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    background-color: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
 
     &__avatar {
         margin: auto;
@@ -62,7 +65,7 @@
             gap: 8px;
             padding: 16px;
             background-color: rgba(33, 38, 45, 0.5);
-            border-radius: var(--radius-md);
+            border-radius: var(--radius);
 
             &:first-child {
                 border: 1px solid rgba(80, 200, 120, 0.2);
@@ -99,7 +102,7 @@
             &:nth-child(2) {
                 color: var(--destructive);
                 border-color: var(--border);
-                
+
                 &:hover {
                     background-color: var(--destructive);
                     color: var(--foreground);

@@ -1,21 +1,17 @@
 import type { FC } from 'react'
-import './Table.scss'
-import clsx from 'clsx'
+import { Column } from '@/shared/types';
 import { ITradeOrder } from '@/shared/store/useExchangeStore'
+import {clsx} from 'clsx'
+import './Table.scss'
 
-export type Column = {
-     name: string;
-};
-
-
-interface TableProps {
+interface ITableProps {
      columns: Column[];
      rows: ITradeOrder[];
      className?: string;
      maxHeight?: number;
 }
 
-export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) => {
+export const Table: FC<ITableProps> = ({ columns, rows, className, maxHeight }) => {
      return (
           <div className={clsx('table', className)}>
                <div className="table__inner">
@@ -43,7 +39,7 @@ export const Table: FC<TableProps> = ({ columns, rows, className, maxHeight }) =
                                         {row.coin}
                                    </div>
                                    <div
-                                        className={clsx('table__cell table__cell--body', 'table__cell--right', row.type === 'buy' ? 'table__cell--buy' : row.type === 'sell' ? 'table__cell--sell' : '')}
+                                        className={clsx('table__cell table__cell--body', 'table__cell--right', row.type === 'buy' ? 'table__cell--buy' : row.type === 'sell' && 'table__cell--sell')}
                                    >
                                         ${row.price.toLocaleString('fr-FR')}
                                    </div>

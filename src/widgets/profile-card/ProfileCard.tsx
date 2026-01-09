@@ -1,16 +1,23 @@
-import { Edit, LogOut, Mail, User } from 'lucide-react'
-import { useUser } from '@/shared/store/useUser'
-import './ProfileCard.scss'
-import { Button } from '@/shared/ui/button'
+import { Edit, LogOut, Mail, User } from "lucide-react";
+import { useUser } from "@/shared/store/useUser";
+import { Button } from "@/shared/ui/button";
+import { clsx } from "clsx";
+import "./ProfileCard.scss";
 
-const ProfileCard = () => {
-    const user = useUser.getState()
-    const defaultBalance = user.getDefaultBalance()
+interface IProfileCardProps {
+    className?: string;
+}
 
-    user.add('smg', 1000)
+const ProfileCard = ({ className }: IProfileCardProps) => {
+    const user = useUser((s) => s);
+    const defaultBalance = user.getDefaultBalance();
+
+    const handleLogOut = () => {
+        user.reset();
+    };
 
     return (
-        <div className="profile-card card">
+        <div className={clsx(className, "profile-card")}>
             <div className="profile-card__avatar">
                 <User width={96} height={96} />
             </div>
@@ -62,19 +69,22 @@ const ProfileCard = () => {
             <div className="profile-card__actions">
                 <Button
                     className="profile-card__actions-button"
-                    variant={'default'}
+                    variant={"default"}
                 >
-                    <Edit width={16} height={16} />Edit Profile
+                    <Edit width={16} height={16} />
+                    Edit Profile
                 </Button>
                 <Button
                     className="profile-card__actions-button"
-                    variant={'outline'}
+                    variant={"outline"}
+                    onClick={handleLogOut}
                 >
-                    <LogOut width={16} height={16} />Logout
+                    <LogOut width={16} height={16} />
+                    Logout
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export { ProfileCard }
+export { ProfileCard };

@@ -1,0 +1,41 @@
+$rarities: (
+    legendary: (
+        main: var(--primary),
+        color: rgba(80, 200, 120, 0.3),
+    ),
+    epic: (
+        main: #a78bfa,
+        color: rgba(167, 139, 250, 0.3),
+    ),
+    rare: (
+        main: #60a5fa,
+        color: rgba(96, 165, 250, 0.3),
+    ),
+    common: (
+        main: #9ca3af,
+        color: rgba(156, 163, 175, 0.3),
+    ),
+    all: (
+        main: var(--primary),
+        color: rgba(80, 200, 120, 0.3),
+    ),
+);
+
+:root {
+    --secondary: #21262d;
+    --border: #50c87833;
+    --card: #161b22;
+    --button-border: #1f1f1f;
+    --muted-foreground: #8b949e;
+    --foreground: #e6edf3;
+    --foreground-shadow: 0 0 10px rgba(80, 200, 120, 0.3);
+    --shadow: 0px 0px 20px 0px rgba(80, 200, 120, 0.3);
+    --primary: #50c878;
+    --destructive: #f85149;
+    --primary-foreground: #0d1117;
+    --background: #0d1117;
+    --radius: 8px;
+    --radius-full: 9999px;
+    --card-padding: 16px;
+    --transition-delay: 0.2s;
+}

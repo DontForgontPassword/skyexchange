@@ -3,7 +3,7 @@ import { ICoin } from '@/shared/store/useExchangeStore'
 import { useUser } from '@/shared/store/useUser'
 
 const useAddFunds = () => {
-    const user = useUser.getState()
+    const user = useUser((s) => s);
     const defaultBalance = user.getDefaultBalance()
     const add = user.add
 

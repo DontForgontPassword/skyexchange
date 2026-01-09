@@ -1,67 +1,65 @@
 .trade-panel {
-     &__header {
-          button {
-               text-align: left;
-          }
-     }
+    &__inner {
+        padding: var(--card-padding);
+        background-color: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+    }
 
-     &__order-form {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          margin-top: 16px;
-     }
+    &__header {
+        button {
+            text-align: left;
+        }
+    }
 
-     &__field-group {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-     }
+    &__order-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 16px;
+    }
 
-     &__field-input {
-          padding: 12px 16px;
-          margin-top: 8px;
-          border: 2px solid rgba(80, 200, 120, 0.2);
+    &__field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
 
-          &:focus {
-               border-color: var(--primary);
-          }
-     }
+    &__field-input {
+        padding: 12px 16px;
+        margin-top: 8px;
+        border: 2px solid rgba(80, 200, 120, 0.2);
 
-     &__field-label {
-          font-size: 0.875rem;
-          color: var(--muted-foreground);
-     }
+        &:focus {
+            border-color: var(--primary);
+        }
+    }
 
-     &__action-button {
-          color: var(--primary-foreground);
+    &__field-label {
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+    }
 
-          &--sell {
-               background-color: var(--destructive);
-               color: var(--destructive-foreground);
-          }
-     }
+    &__summary {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-     &__summary {
-          margin-top: 16px;
-          padding-top: 16px;
-          border-top: 1px solid var(--border);
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-     }
+    &__summary-row {
+        display: flex;
+        justify-content: space-between;
+    }
 
-     &__summary-row {
-          display: flex;
-          justify-content: space-between;
-     }
+    &__summary-label {
+        color: var(--muted-foreground);
+    }
 
-     &__summary-label {
-          color: var(--muted-foreground);
-     }
-
-     &__summary-label,
-     &__summary-value {
-          font-size: 0.875rem;
-     }
+    &__summary-label,
+    &__summary-value {
+        font-size: 0.875rem;
+    }
 }

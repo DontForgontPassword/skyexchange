@@ -10,14 +10,7 @@ export default defineConfig([
     globalIgnores(['dist']),
     {
         rules: {
-            quotes: [
-                'error',
-                'single',
-                { avoidEscape: true, allowTemplateLiterals: true },
-            ],
 
-            // Не использовать точку с запятой
-            semi: ['error', 'never'],
         },
         plugins: {
             import: importPlugin,

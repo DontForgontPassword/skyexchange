@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, MouseEvent } from "react";
-import { Heart, Star, Trophy } from "lucide-react";
-import CloudIcon from "@/shared/assets/icons/game/cloud.svg";
-import ThunderIcon from "@/shared/assets/icons/game/thunder.svg";
-import ThunderStormIcon from "@/shared/assets/icons/game/thunderstorm.svg";
-import ClickIconImage from "@/shared/assets/icons/game/hand.svg";
-import BasketIconSVG from "@/shared/assets/icons/game/basket.svg";
-import "./GamePage.scss";
+import { useEffect, useRef, useState, MouseEvent } from 'react';
+import { Heart, Star, Trophy } from 'lucide-react';
+import CloudIcon from '@/shared/assets/icons/game/cloud.svg';
+import ThunderIcon from '@/shared/assets/icons/game/thunder.svg';
+import ThunderStormIcon from '@/shared/assets/icons/game/thunderstorm.svg';
+import ClickIconImage from '@/shared/assets/icons/game/hand.svg';
+import BasketIconSVG from '@/shared/assets/icons/game/basket.svg';
+import './GamePage.scss';
 
 type Cloud = {
     x: number;
@@ -68,31 +68,31 @@ export function GamePage() {
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft" || e.key === "a")
+            if (e.key === 'ArrowLeft' || e.key === 'a')
                 keys.current.left = true;
-            if (e.key === "ArrowRight" || e.key === "d")
+            if (e.key === 'ArrowRight' || e.key === 'd')
                 keys.current.right = true;
         };
         const handleKeyUp = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft" || e.key === "a")
+            if (e.key === 'ArrowLeft' || e.key === 'a')
                 keys.current.left = false;
-            if (e.key === "ArrowRight" || e.key === "d")
+            if (e.key === 'ArrowRight' || e.key === 'd')
                 keys.current.right = false;
         };
 
-        window.addEventListener("keydown", handleKeyDown);
-        window.addEventListener("keyup", handleKeyUp);
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-            window.removeEventListener("keyup", handleKeyUp);
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
         };
     }, []);
 
     useEffect(() => {
         const canvas = canvasRef.current!;
         if (!canvas) return;
-        const ctx = canvas.getContext("2d")!;
+        const ctx = canvas.getContext('2d')!;
         if (!ctx) return;
 
         canvas.width = 800;
@@ -139,7 +139,7 @@ export function GamePage() {
                 c.y += c.speedY;
                 if (c.x < 0 || c.x > canvas.width) c.speedX *= -1;
                 if (c.visible) {
-                    ctx.shadowColor = "rgba(0,0,0,0.3)";
+                    ctx.shadowColor = 'rgba(0,0,0,0.3)';
                     ctx.shadowBlur = 10;
                     ctx.drawImage(cloudIcon, c.x - 30, c.y - 30, 60, 60);
                     ctx.shadowBlur = 0;
@@ -217,19 +217,19 @@ export function GamePage() {
             );
 
             if (gameOver) {
-                ctx.fillStyle = "rgba(0,0,0,0.7)";
+                ctx.fillStyle = 'rgba(0,0,0,0.7)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 32px Arial";
-                ctx.textAlign = "center";
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 32px Arial';
+                ctx.textAlign = 'center';
                 ctx.fillText(
-                    "Вы проиграли!",
+                    'Вы проиграли!',
                     canvas.width / 2,
                     canvas.height / 2 - 20,
                 );
-                ctx.font = "20px Arial";
+                ctx.font = '20px Arial';
                 ctx.fillText(
-                    "Try again later.",
+                    'Try again later.',
                     canvas.width / 2,
                     canvas.height / 2 + 20,
                 );
@@ -279,49 +279,55 @@ export function GamePage() {
     }
 
     return (
-        <section className="game-page container">
-            <div className="game-page__content card">
-                <div className="game-page__header">
-                    <h2 className="game-page__title title">Cloud Catcher</h2>
-                    <div className="game-page__stats">
-                        <div className="game-page__stat">
-                            <Star className="game-page__stat-icon" />
-                            <p className="game-page__stat-value">{points}</p>
-                            <p className="game-page__stat-label primary-text">
-                                Points
-                            </p>
-                        </div>
-                        <div className="game-page__stat">
-                            <Heart className="game-page__stat-icon game-page__stat-icon--heart" />
-                            <p className="game-page__stat-value">{lives}</p>
-                            <p className="game-page__stat-label primary-text">
-                                Lives
-                            </p>
-                        </div>
-                        <div className="game-page__stat">
-                            <p className="game-page__stat-label primary-text">
-                                Combo: {combo}
-                            </p>
-                        </div>
-                        <div className="game-page__stat">
-                            <p className="game-page__stat-label primary-text">
-                                Time: {timer}s
-                            </p>
+        <section className="game-page">
+            <div className="game-page__inner container">
+                <div className="game-page__content">
+                    <div className="game-page__header">
+                        <h2 className="game-page__title title">
+                            Cloud Catcher
+                        </h2>
+                        <div className="game-page__stats">
+                            <div className="game-page__stat">
+                                <Star className="game-page__stat-icon" />
+                                <p className="game-page__stat-value">
+                                    {points}
+                                </p>
+                                <p className="game-page__stat-label primary-text">
+                                    Points
+                                </p>
+                            </div>
+                            <div className="game-page__stat">
+                                <Heart className="game-page__stat-icon game-page__stat-icon--heart" />
+                                <p className="game-page__stat-value">{lives}</p>
+                                <p className="game-page__stat-label primary-text">
+                                    Lives
+                                </p>
+                            </div>
+                            <div className="game-page__stat">
+                                <p className="game-page__stat-label primary-text">
+                                    Combo: {combo}
+                                </p>
+                            </div>
+                            <div className="game-page__stat">
+                                <p className="game-page__stat-label primary-text">
+                                    Time: {timer}s
+                                </p>
+                            </div>
                         </div>
                     </div>
+                    <canvas
+                        ref={canvasRef}
+                        className="game-canvas"
+                        onClick={handleClick}
+                    />
                 </div>
-                <canvas
-                    ref={canvasRef}
-                    className="game-canvas"
-                    onClick={handleClick}
-                />
-            </div>
-            <div className="game-page__leaderboard card">
-                <div className="game-page__leaderboard-header">
-                    <Trophy className="game-page__leaderboard-icon" />
-                    <h3 className="game-page__leaderboard-title">
-                        Leaderboard
-                    </h3>
+                <div className="game-page__leaderboard">
+                    <div className="game-page__leaderboard-header">
+                        <Trophy className="game-page__leaderboard-icon" />
+                        <h3 className="game-page__leaderboard-title">
+                            Leaderboard
+                        </h3>
+                    </div>
                 </div>
             </div>
         </section>

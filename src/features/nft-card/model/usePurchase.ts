@@ -5,7 +5,7 @@ import { useUser } from '@/shared/store/useUser'
 
 const usePurchase = () => {
     const nfts = useNftStore()
-    const user = useUser.getState()
+    const user = useUser((s) => s);
     const navigate = useNavigate()
 
     const purchase = (name: string, price: number) => {

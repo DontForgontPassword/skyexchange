@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import {clsx} from 'clsx'
 import { Check, ShoppingCart } from 'lucide-react'
 import { FC } from 'react'
 import { firstUpper } from '@/shared/utils/string'

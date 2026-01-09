@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface INFT {
     id: string;
@@ -30,12 +30,12 @@ export interface IUser {
             name: string;
         };
     };
-    defaultCurrency: keyof IUser['balances'];
+    defaultCurrency: keyof IUser["balances"];
     nfts: INFT[];
     game: { score: number; rank: number };
     createdAt: string;
 
-    register: (u: string, e: string, p: string) => void;
+    register: (username: string, email: string, password: string) => void;
     add: (id: string, n: number) => void;
     getDefaultBalance: () => { value: number; name: string };
     remove: (id: string, n: number) => boolean;
@@ -46,33 +46,33 @@ export interface IUser {
 const useUser = create<IUser>()(
     persist(
         (set, get) => ({
-            id: 'guest',
-            username: 'Guest',
-            email: 'guest@mail.com',
+            id: "guest",
+            username: "Guest",
+            email: "guest@mail.com",
             token: null,
-            avatarNftId: '',
+            avatarNftId: "",
             balances: {
-                btc: { value: 0, name: 'btc' },
-                eth: { value: 0, name: 'eth' },
-                sol: { value: 0, name: 'sol' },
-                smg: { value: 0, name: 'smg' },
+                btc: { value: 0, name: "btc" },
+                eth: { value: 0, name: "eth" },
+                sol: { value: 0, name: "sol" },
+                smg: { value: 0, name: "smg" },
             },
-            defaultCurrency: 'smg',
+            defaultCurrency: "smg",
             nfts: [],
             game: { score: 0, rank: 0 },
-            createdAt: '',
+            createdAt: "",
 
-            register: (u, e, p) =>
+            register: (username, email, password) =>
                 set({
                     id: crypto.randomUUID(),
-                    username: u,
-                    email: e,
-                    token: `${u}:${btoa(p)}`,
+                    username: username,
+                    email: email,
+                    token: `${username}:${btoa(password)}`,
                     createdAt: new Date().toISOString(),
                 }),
             add: (id, n) =>
                 set((s) => {
-                    const key = id as keyof IUser['balances'];
+                    const key = id as keyof IUser["balances"];
                     return {
                         balances: {
                             ...s.balances,
@@ -96,25 +96,25 @@ const useUser = create<IUser>()(
 
             reset: () =>
                 set({
-                    id: 'guest',
-                    username: 'Guest',
-                    email: 'guest@mail.com',
+                    id: "guest",
+                    username: "Guest",
+                    email: "guest@mail.com",
                     token: null,
-                    avatarNftId: '',
+                    avatarNftId: "",
                     balances: {
-                        btc: { value: 0, name: 'Bitcoin' },
-                        eth: { value: 0, name: 'Ethereum' },
-                        sol: { value: 0, name: 'Solana' },
-                        smg: { value: 0, name: 'SMG Coins' },
+                        btc: { value: 0, name: "Bitcoin" },
+                        eth: { value: 0, name: "Ethereum" },
+                        sol: { value: 0, name: "Solana" },
+                        smg: { value: 0, name: "SMG Coins" },
                     },
-                    defaultCurrency: 'smg',
+                    defaultCurrency: "smg",
                     nfts: [],
                     game: { score: 0, rank: 0 },
-                    createdAt: '',
+                    createdAt: "",
                 }),
         }),
-        { name: 'user-storage' },
-    ),
+        { name: "user-storage" }
+    )
 );
 
 export { useUser };

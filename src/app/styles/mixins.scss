@@ -1,0 +1,32 @@
+@use 'sass:math';
+
+@mixin bg-opacity($color, $opacity) {
+  background-color: color-mix(in oklab, $color $opacity, transparent);
+}
+
+@mixin reset-button {
+  border-radius: var(--radius);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin fluid-font($min, $max) {
+  $minViewport: 360;
+  $maxViewport: 1200;
+
+  $slope: math.div(($max - $min), ($maxViewport - $minViewport));
+  $intercept: $min - $slope * $minViewport;
+
+  font-size: clamp(
+          #{$min}px,
+          calc(#{$intercept}px + #{100 * $slope}vw),
+          #{$max}px
+  );
+}

@@ -1,113 +1,105 @@
-@use "sass:map";
-
-$rarities: (
-     legendary: (main: var(--primary),
-          color: rgba(80, 200, 120, 0.3),
-     ),
-     epic: (main: #a78bfa,
-          color: rgba(167, 139, 250, 0.3),
-     ),
-     rare: (main: #60a5fa,
-          color: rgba(96, 165, 250, 0.3),
-     ),
-     common: (main: #9ca3af,
-          color: rgba(156, 163, 175, 0.3),
-     ),
-     all: (main: var(--primary),
-          color: rgba(80, 200, 120, 0.3),
-     ),
-);
+@use 'sass:map';
 
 .shop-page {
-     &__container {
-          display: grid;
-          grid-template-columns: 9fr 3fr;
-          gap: 24px;
-          padding: 24px;
-     }
+  &__inner {
+    display: grid;
+    grid-template-columns: 9fr 3fr;
+    gap: 24px;
+  }
 
-     &__header {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 16px;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 
-          &-button {
-               border: 1px solid var(--border);
-               background-color: var(--card);
-               color: var(--muted-foreground);
-               transition: all 0.2s ease;
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+  }
 
-               &:hover {
-                    color: var(--foreground);
-                    border-color: var(--primary);
-               }
+  &__header {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
 
-               &--active {
-                    background-color: var(--primary);
-                    color: var(--primary-foreground);
-                    border-color: var(--primary);
-                    box-shadow: var(--shadow);
-               }
-          }
-     }
+  &__header-button {
+    padding: 8px 16px;
+    background-color: var(--card);
+    color: var(--muted-foreground);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
 
-     &__header-button {
-          padding: 8px 16px;
-     }
+    &:hover {
+      border-color: var(--primary);
+      color: var(--foreground);
+    }
 
-     &__filter-card {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 24px;
-          padding: 16px;
-          background-color: var(--card);
-          border-radius: var(--radius);
+    &--active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+      color: var(--primary-foreground);
+    }
+  }
 
-          &-title {
-               display: flex;
-               align-items: center;
-               gap: 8px;
-          }
+  &__filter-card {
+    display: flex;
+    gap: 12px;
 
-          &-buttons {
-               display: flex;
-               gap: 8px;
-          }
-     }
+    margin-bottom: 24px;
+    padding: 16px;
 
-     &__filter-icon {
-          stroke: var(--muted-foreground);
-     }
+    background-color: var(--card);
+    border-radius: var(--radius);
+  }
 
-     &__filter-button {
-          padding: 6px 14px;
-          color: var(--muted-foreground);
+  &__filter-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-          @each $name, $data in $rarities {
-               $main: map.get($data, main);
-               $color: map.get($data, color);
+  &__filter-card-buttons {
+    display: flex;
+    gap: 8px;
+  }
 
-               &--#{$name} {
-                    border: 1px solid $color;
+  &__filter-icon {
+    flex-shrink: 0;
+  }
 
-                    &:hover {
-                         border-color: $main;
-                         color: $main;
-                         box-shadow: 0 0 15px $color;
-                    }
+  &__filter-button {
+    padding: 6px 14px;
+    color: var(--muted-foreground);
 
-                    &.shop-page__filter-button--active {
-                         background-color: $color;
-                         color: $main;
-                         border-color: $main;
-                    }
-               }
-          }
-     }
+    @each $name, $data in $rarities {
+      $main: map.get($data, main);
+      $color: map.get($data, color);
 
-     &__cards {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 24px;
-     }
+      &--#{$name} {
+        border: 1px solid $color;
+
+        &:hover {
+          border-color: $main;
+          box-shadow: 0 0 15px $color;
+
+          color: $main;
+        }
+
+        &--active {
+          background-color: $color;
+          border-color: $main;
+
+          color: $main;
+        }
+      }
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
 }

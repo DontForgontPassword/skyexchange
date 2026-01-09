@@ -1,34 +1,32 @@
-import clsx from 'clsx'
-import { ArrowRight, X } from 'lucide-react'
-import { ICoin, useExchangeStore } from '@/shared/store/useExchangeStore'
-import { FC, useCallback, useState } from 'react'
-import { Button } from '@/shared/ui/button/Button'
-import './AddFundsModal.scss'
-import { useAddFunds } from '../model/useAddFunds'
-import { useUser } from '@/shared/store/useUser'
+import { clsx } from "clsx";
+import { ArrowRight, X } from "lucide-react";
+import { ICoin, useExchangeStore } from "@/shared/store/useExchangeStore";
+import { FC, useCallback, useState } from "react";
+import { Button } from "@/shared/ui/button/Button";
+import "./AddFundsModal.scss";
+import { useAddFunds } from "../model/useAddFunds";
+import { useUser } from "@/shared/store/useUser";
 
 interface AddFundsModalProps {
-    setFundsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    onClose: () => void;
 }
 
-export const AddFundsModal: FC<AddFundsModalProps> = ({
-    setFundsModalOpen,
-}) => {
-    const { exchange } = useAddFunds()
-    const user = useUser.getState()
-    const openCoins = useExchangeStore((s) => s.coins)
+const AddFundsModal = ({ onClose }: AddFundsModalProps) => {
+    const { exchange } = useAddFunds();
+    const user = useUser((s) => s);
+    const openCoins = useExchangeStore((s) => s.coins);
 
-    const [selectedCoin, setSelectedCoin] = useState<ICoin>(() => openCoins[0])
+    const [selectedCoin, setSelectedCoin] = useState<ICoin>(() => openCoins[0]);
 
-    const [exchangeAmount, setExchangeAmount] = useState<number>(0)
+    const [exchangeAmount, setExchangeAmount] = useState<number>(0);
 
     const handleExchange = useCallback(() => {
-        exchange(selectedCoin, exchangeAmount)
-    }, [selectedCoin, exchangeAmount])
+        exchange(selectedCoin, exchangeAmount);
+    }, [selectedCoin, exchangeAmount]);
 
     return (
         <div className="add-funds-modal">
-            <div className="add-funds-modal__content card">
+            <div className="add-funds-modal__content">
                 <div className="add-funds-modal__header">
                     <div className="add-funds-modal__header-wrapper">
                         <h3 className="add-funds-modal__title">Add Funds</h3>
@@ -38,7 +36,7 @@ export const AddFundsModal: FC<AddFundsModalProps> = ({
                     </div>
                     <button
                         className="add-funds-modal__header-close-button"
-                        onClick={() => setFundsModalOpen(false)}
+                        onClick={onClose}
                         aria-label="Close"
                         type="button"
                     >
@@ -53,16 +51,16 @@ export const AddFundsModal: FC<AddFundsModalProps> = ({
                         </p>
                         <div className="add-funds-modal__exchange-grid">
                             {openCoins
-                                .filter((coin) => coin.name !== 'SMG')
+                                .filter((coin) => coin.name !== "SMG")
                                 .map((coin) => (
                                     <Button
                                         key={coin.name}
                                         type="button"
                                         onClick={() => setSelectedCoin(coin)}
                                         className={clsx(
-                                            'add-funds-modal__exchange-button',
+                                            "add-funds-modal__exchange-button",
                                             selectedCoin?.name === coin.name &&
-                                                'add-funds-modal__exchange-button--active',
+                                                "add-funds-modal__exchange-button--active"
                                         )}
                                     >
                                         <div className="add-funds-modal__exchange-button-icon">
@@ -111,7 +109,7 @@ export const AddFundsModal: FC<AddFundsModalProps> = ({
                                 type="number"
                                 id="amount-input"
                                 value={
-                                    exchangeAmount === 0 ? '' : exchangeAmount
+                                    exchangeAmount === 0 ? "" : exchangeAmount
                                 }
                                 className="add-funds-modal__input"
                                 min={0}
@@ -144,7 +142,7 @@ export const AddFundsModal: FC<AddFundsModalProps> = ({
                         className="add-funds-modal__exchange-submit"
                         onClick={handleExchange}
                         disabled={!selectedCoin || exchangeAmount <= 0}
-                        size={'lg'}
+                        size={"lg"}
                         type="button"
                     >
                         Exchange to SMARAGD
@@ -152,5 +150,7 @@ export const AddFundsModal: FC<AddFundsModalProps> = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
+export { AddFundsModal };

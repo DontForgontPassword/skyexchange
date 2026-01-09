@@ -1,70 +1,91 @@
-import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react'
-import { useState } from 'react'
-import { Input } from '@/shared/ui/input'
-import './LoginInputField.scss'
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Input } from "@/shared/ui/input";
+import "./LoginInputField.scss";
+import { Button } from "@/shared/ui/button";
+import { clsx } from "clsx";
 
-interface LoginInputFieldProps extends React.ComponentProps<'input'> {
+interface LoginInputFieldProps extends React.ComponentProps<"input"> {
     label: string;
-    icon: 'user' | 'email' | 'password';
+    icon: "user" | "email" | "password";
+    error: string;
 }
 
-const LoginInputField = ({ icon, label, ...props }: LoginInputFieldProps) => {
-    const [showPassword, setShowPassword] = useState(false)
+const LoginInputField = ({
+    icon,
+    label,
+    error,
+    ...props
+}: LoginInputFieldProps) => {
+    const [showPassword, setShowPassword] = useState(false);
 
     const renderIcon = () => {
         switch (icon) {
-            case 'user':
-                return <User color="var(--primary)" width={16} height={16} />
-            case 'email':
-                return <Mail color="var(--primary)" width={16} height={16} />
-            case 'password':
-                return <Lock color="var(--primary)" width={16} height={16} />
+            case "user":
+                return <User color="var(--primary)" width={16} height={16} />;
+            case "email":
+                return <Mail color="var(--primary)" width={16} height={16} />;
+            case "password":
+                return <Lock color="var(--primary)" width={16} height={16} />;
         }
-    }
+    };
 
     const inputType =
-        props.type === 'password'
+        props.type === "password"
             ? showPassword
-                ? 'text'
-                : 'password'
-            : props.type
+                ? "text"
+                : "password"
+            : props.type;
 
     const input = (
         <Input
-            className="login-page__input"
+            className={clsx(
+                "login-input__input",
+                error && "login-input__input--error"
+            )}
             id={props.id}
             type={inputType}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
         />
-    )
+    );
 
     return (
-        <div className="login-page__group">
-            <label className="login-page__label" htmlFor={props.id}>
+        <div className="login-input__group">
+            <label className="login-input__label" htmlFor={props.id}>
                 {renderIcon()}
                 {label}
             </label>
-            {props.type === 'password' ? (
-                <div className="login-page__input-wrapper">
+            {props.type === "password" ? (
+                <div className="login-input__input-wrapper">
                     {input}
-                    <button
-                        className="login-page__password-button"
+                    <Button
+                        className="login-input__password-button"
+                        variant="default"
                         onClick={() => setShowPassword((prev) => !prev)}
                     >
                         {showPassword ? (
-                            <Eye width={18} height={18} />
+                            <Eye
+                                width={18}
+                                height={18}
+                                className="login-input__icon"
+                            />
                         ) : (
-                            <EyeOff width={18} height={18} />
+                            <EyeOff
+                                width={18}
+                                height={18}
+                                className="login-input__icon"
+                            />
                         )}
-                    </button>
+                    </Button>
                 </div>
             ) : (
                 input
             )}
+            {error && <p className="login-input__error">{error}</p>}
         </div>
-    )
-}
+    );
+};
 
-export { LoginInputField }
+export { LoginInputField };

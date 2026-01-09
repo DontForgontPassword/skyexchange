@@ -1,52 +1,53 @@
-import { Button } from '@/shared/ui/button';
-import { Wallet } from 'lucide-react';
-import { useUser } from '@/shared/store/useUser';
-import { useNavigate } from 'react-router-dom';
-import './InfoCard.scss';
-import { FC, useMemo } from 'react';
-import { useNftStore } from '@/shared/store/useNftStore';
-import { useExchangeStore } from '@/shared/store/useExchangeStore';
+import { Button } from "@/shared/ui/button";
+import { Wallet } from "lucide-react";
+import { useUser } from "@/shared/store/useUser";
+import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { useNftStore } from "@/shared/store/useNftStore";
+import { useExchangeStore } from "@/shared/store/useExchangeStore";
+import "./InfoCard.scss";
+import { clsx } from "clsx";
 
-interface InfoCardProps {
+interface IInfoCardProps {
     setFundsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    className?: string;
 }
 
-const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen }) => {
+const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
     const navigate = useNavigate();
 
-    const user = useUser.getState();
-    const nftStore = useNftStore.getState();
+    const user = useUser((s) => s);
+    const nftStore = useNftStore((s) => s);
     const userNfts = user.nfts;
-    const nftsCost = useMemo(() => nftStore.getCost(userNfts), [userNfts]);
-    const token = user.token;
+    const nftsCost = nftStore.getCost(user.nfts);
     const balance = user.getDefaultBalance().value;
-    const coin = useExchangeStore((state) => state.getCoinByName('SMG'));
+    const coin = useExchangeStore((state) => state.getCoinByName("SMG"));
 
     const stats = useMemo(
         () => [
             {
-                title: 'Balance',
+                title: "Balance",
                 value: balance.toFixed(2),
-                extra: 'SMG',
-                modifier: 'balance',
+                extra: "SMG",
+                modifier: "balance",
             },
             {
-                title: 'Owned NFTs',
+                title: "Owned NFTs",
                 value: 0,
             },
             {
-                title: 'Total Value',
+                title: "Total Value",
                 value: `${nftsCost.toFixed(2)} SMARAGD`,
                 extra: `$${nftsCost * coin?.rate!}`,
             },
         ],
-        [balance, userNfts.length],
+        [balance, userNfts.length]
     );
 
-    const isAuth = Boolean(token);
+    const isAuth = Boolean(user.token);
 
     const handleLogin = () => {
-        navigate('/login');
+        navigate("/login");
     };
 
     const handleAddFunds = () => {
@@ -54,7 +55,7 @@ const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen }) => {
     };
 
     return (
-        <div className="info-card card">
+        <div className={clsx(className, "info-card")}>
             <div className="info-card__header">
                 <div className="info-card__wallet-icon">
                     <Wallet width={24} height={24} />
@@ -62,10 +63,10 @@ const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen }) => {
 
                 <div>
                     <h3 className="info-card__title">
-                        {isAuth ? 'Your Wallet' : 'Wallet Access'}
+                        {isAuth ? "Your Wallet" : "Wallet Access"}
                     </h3>
                     <p className="info-card__status">
-                        {isAuth ? 'Connected' : 'Not Connected'}
+                        {isAuth ? "Connected" : "Not Connected"}
                     </p>
                 </div>
             </div>
@@ -80,7 +81,7 @@ const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen }) => {
                     </p>
 
                     <Button
-                        variant={'default'}
+                        variant={"default"}
                         className="info-card__login-button"
                         onClick={handleLogin}
                     >
@@ -97,9 +98,8 @@ const InfoCard: FC<InfoCardProps> = ({ setFundsModalOpen }) => {
                                 </p>
                                 <span
                                     className={`info-card__stat-value ${
-                                        stat.modifier
-                                            ? `info-card__stat-value--${stat.modifier}`
-                                            : ''
+                                        stat.modifier &&
+                                        `info-card__stat-value--${stat.modifier}`
                                     }`}
                                 >
                                     {stat.value}

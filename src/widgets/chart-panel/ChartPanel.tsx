@@ -1,215 +1,115 @@
-import clsx from 'clsx'
-import { TrendingUp, TrendingDown } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { clsx } from "clsx";
+import { TrendingUp, TrendingDown } from "lucide-react";
+import { useState } from "react";
 import {
-     ResponsiveContainer,
-     LineChart,
-     Line,
-     XAxis,
-     YAxis,
-     CartesianGrid,
-     Tooltip,
-} from 'recharts'
-import {
-     BOOK_FILTER_OPTIONS,
-     CHART_RANGES,
-     ORDER_COLUMNS,
-     TRADE_COLUMNS,
-} from '@/shared/constants/Chart'
-import { useExchangeStore } from '@/shared/store/useExchangeStore'
-import { Filter } from '@/shared/ui/filter/Filter'
-import { Table } from '@/shared/ui/table/Table'
-import { filterByRange, sortRows } from '@/shared/utils/chart'
-import { formatPrice } from '@/shared/utils/format'
-import { getStorage, setStorage } from '@/shared/utils/localStorage'
-import './ChartPanel.scss'
-
-const zoneTime = new Intl.DateTimeFormat('ru-RU', {
-     hour: '2-digit',
-     minute: '2-digit',
-     hour12: false,
-     timeZone: 'Europe/Warsaw'
-})
+    BOOK_FILTER_OPTIONS,
+    CHART_RANGES,
+    HISTORY_COLUMNS,
+} from "@/shared/constants/Chart";
+import { useExchangeStore } from "@/shared/store/useExchangeStore";
+import { formatPrice } from "@/shared/utils/format";
+import { Button } from "@/shared/ui/button";
+import "./ChartPanel.scss";
+import { ChartHistory } from "../chart-history";
 
 const ChartPanel = () => {
-     const [filterType, setFilterType] = useState<'buy' | 'sell' | 'all'>('all')
-     const [activeRange, setActiveRange] = useState('1H')
+    const [activeRange, setActiveRange] = useState<string>(CHART_RANGES[0]);
 
-     const trades = useExchangeStore(s => s.trades)
-     const orders = useExchangeStore(s => s.orders)
-     const currentCoin = useExchangeStore(s => s.currentCoin)
+    const trades = useExchangeStore((s) => s.trades);
+    const orders = useExchangeStore((s) => s.orders);
 
-     const {
-          price,
-          name,
-          change
-     } = currentCoin
+    const currentCoin = useExchangeStore((s) => s.currentCoin);
 
-     const isPositive = change >= 0
+    const isPositive = currentCoin.change >= 0;
 
-     const [chartData, setChartData] = useState<{ time: number; price: number }[]>(() => {
-          const saved = getStorage('chartData')
-          return Array.isArray(saved) ? saved : []
-     })
+    return (
+        <div className="chart-panel">
+            <div className="chart-panel__inner">
+                <div className="chart-panel__card">
+                    <div className="chart-panel__top">
+                        <div className="chart-panel__header">
+                            <div className="chart-panel__header-title">
+                                <img
+                                    src={currentCoin.icon}
+                                    className="chart-panel__header-icon"
+                                />
+                                <h2 className="chart-panel__header-pair">
+                                    {currentCoin.name}
+                                </h2>
+                            </div>
 
-     const lastUpdateTime = useRef(Date.now())
-
-     useEffect(() => {
-          const now = Date.now()
-
-          if (now - lastUpdateTime.current >= 500) {
-               setChartData((prev) => {
-                    const nextData = [
-                         ...prev,
-                         {
-                              time: now, price
-                         }
-                    ]
-
-                    const limitedData = nextData.slice(-100)
-
-                    setStorage('chartData', limitedData)
-
-                    return limitedData
-               })
-
-               lastUpdateTime.current = now
-          }
-     }, [price])
-
-     const formattedData = useMemo(() => {
-          const filtered = filterByRange(chartData, activeRange)
-          return filtered.map((p) => ({
-               ...p,
-               label: zoneTime.format(p.time),
-          }))
-     }, [chartData, activeRange])
-
-     return (
-          <div className="chart-panel">
-               <div className="chart-panel__wrapper">
-                    <div className="chart-panel__card card">
-                         <div className="chart-panel__top">
-                              <div className="chart-panel__header">
-                                   <div className="chart-panel__header-title">
-                                        <img src={currentCoin.icon} className="chart-panel__header-icon" />
-                                        <h2 className="chart-panel__header-pair">{name}</h2>
-                                   </div>
-
-                                   <div className="chart-panel__header-info">
-                                        <span className="chart-panel__header-price">${formatPrice(price)}</span>
-                                        <div
-                                             className={clsx(
-                                                  'chart-panel__header-change',
-                                                  isPositive
-                                                       ? 'chart-panel__header-change--positive'
-                                                       : 'chart-panel__header-change--negative'
-                                             )}
-                                        >
-                                             {isPositive ? (
-                                                  <TrendingUp
-                                                       width={16}
-                                                       height={16}
-                                                       className="chart-panel__header-change-icon"
-                                                  />
-                                             ) : (
-                                                  <TrendingDown
-                                                       width={16}
-                                                       height={16}
-                                                       className="chart-panel__header-change-icon"
-                                                  />
-                                             )}
-                                             <span className="chart-panel__header-change-text">
-                                                  {isPositive ? `+${change}` : `${change}`}%
-                                             </span>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div className="chart-panel__periods">
-                                   {CHART_RANGES.map((range) => (
-                                        <button
-                                             key={range}
-                                             className={clsx(
-                                                  'chart-panel__periods-button',
-                                                  range === activeRange ? 'chart-panel__periods-button--active' : '')}
-                                             onClick={() => setActiveRange(range)}>
-                                             {range}
-                                        </button>
-                                   ))}
-                              </div>
-                         </div>
-
-                         <div className="chart-panel__container">
-                              <ResponsiveContainer width="100%" height={300}>
-                                   <LineChart data={formattedData}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#21262D" />
-                                        <XAxis
-                                             dataKey="label"
-                                             stroke="#8B949E"
-                                             style={{ fontSize: '12px' }}
-                                             tickCount={6}
+                            <div className="chart-panel__header-info">
+                                <span className="chart-panel__header-price">
+                                    ${formatPrice(currentCoin.price)}
+                                </span>
+                                <div
+                                    className={clsx(
+                                        "chart-panel__header-change",
+                                        isPositive
+                                            ? "chart-panel__header-change--positive"
+                                            : "chart-panel__header-change--negative"
+                                    )}
+                                >
+                                    {isPositive ? (
+                                        <TrendingUp
+                                            width={16}
+                                            height={16}
+                                            className="chart-panel__header-change-icon"
                                         />
-                                        <YAxis
-                                             stroke="#8B949E"
-                                             style={{ fontSize: '12px' }}
-                                             domain={['auto', 'auto']}
-                                             tickCount={6}
+                                    ) : (
+                                        <TrendingDown
+                                            width={16}
+                                            height={16}
+                                            className="chart-panel__header-change-icon"
                                         />
-                                        <Tooltip
-                                             contentStyle={{
-                                                  backgroundColor: '#161B22',
-                                                  borderRadius: '8px',
-                                                  color: '#E6EDF3',
-                                             }}
-                                             formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']}
-                                        />
-                                        <Line
-                                             type="monotone"
-                                             dataKey="price"
-                                             stroke="#50C878"
-                                             strokeWidth={2}
-                                             dot={false}
-                                             isAnimationActive={true}
-                                             animationDuration={600}
-                                        />
-                                   </LineChart>
-                              </ResponsiveContainer>
-                         </div>
-                    </div>
-               </div>
+                                    )}
+                                    <span className="chart-panel__header-change-text">
+                                        {isPositive
+                                            ? `+${currentCoin.change}`
+                                            : `${currentCoin.change}`}
+                                        %
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-               <div className="chart-panel__market-data">
-                    <div className="chart-panel__orders card">
-                         <h3 className="chart-panel__subtitle subtitle">Order Book</h3>
-                         <Filter
-                              strict={false}
-                              defaultValue={'all'}
-                              filterType={filterType}
-                              setFilterType={setFilterType}
-                              className="chart-panel__filter"
-                              filters={BOOK_FILTER_OPTIONS}
-                         />
-                         <Table
-                              className="chart-panel__table"
-                              columns={ORDER_COLUMNS}
-                              rows={sortRows(orders, filterType)}
-                              maxHeight={180}
-                         />
+                        <div className="chart-panel__periods">
+                            {CHART_RANGES.map((range) => (
+                                <Button
+                                    key={range}
+                                    size={"sm"}
+                                    variant={"dark"}
+                                    className={clsx(
+                                        "chart-panel__periods-button"
+                                    )}
+                                    onClick={() => setActiveRange(range)}
+                                >
+                                    {range}
+                                </Button>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="chart-panel__trades card">
-                         <h3 className="chart-panel__subtitle subtitle">Recent Trades</h3>
-                         <Table
-                              className="chart-panel__table"
-                              columns={TRADE_COLUMNS}
-                              rows={trades}
-                              maxHeight={240}
-                         />
-                    </div>
-               </div>
-          </div>
-     )
-}
+                    <div className="chart-panel__graph"></div>
+                </div>
 
-export { ChartPanel }
+                <div className="chart-panel__market-data">
+                    <ChartHistory
+                        className="chart-panel__orders-card"
+                        title="Order Book"
+                        data={orders}
+                        filters={BOOK_FILTER_OPTIONS}
+                        columns={HISTORY_COLUMNS}
+                    />
+                    <ChartHistory
+                        className="chart-panel__trades-card"
+                        data={trades}
+                        columns={HISTORY_COLUMNS}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export { ChartPanel };

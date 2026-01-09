@@ -1,54 +1,35 @@
 .login-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: var(--card-padding);
 
-    &__inner {
-        max-width: 500px;
-        max-height: calc(100vh - 120px);
-        margin-top: 50px;
-        box-shadow: var(--shadow);
+    &__content {
         padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    &__icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 80px;
-        aspect-ratio: 1;
-        border: 2px solid var(--primary);
-        border-radius: 50%;
-        background-color: rgba(80, 200, 120, 0.1);
-        color: var(--primary);
+        max-width: 400px;
+        width: 100%;
+        margin-inline: auto;
+        border-radius: var(--radius);
+        background-color: var(--card);
     }
 
     &__header {
-        margin-top: 20px;
-
-        &-title {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(80, 200, 120, 0.3);
-        }
-
-        &-subtitle {
-            font-size: 1rem;
-            color: var(--muted-foreground);
-            margin-top: 4px;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 
-    &__form {
-        width: 100%;
-        margin-top: 32px;
+    &__heading {
+        margin-top: 16px;
+        text-align: center;
+    }
+
+    &__logo {
+        width: 76px;
+        height: 76px;
         display: flex;
-        flex-direction: column;
-        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        background-color: var(--primary);
     }
 }
