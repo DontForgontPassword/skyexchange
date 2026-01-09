@@ -6,4 +6,10 @@
     flex-direction: column;
     gap: 24px;
     border: 1px solid var(--border);
+    
+    &__container {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

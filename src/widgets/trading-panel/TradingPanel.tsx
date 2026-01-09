@@ -8,6 +8,7 @@ import { Filter } from "@/shared/ui/filter";
 import { Input } from "@/shared/ui/input";
 import { firstUpper } from "@/shared/utils/string";
 import "./TradingPanel.scss";
+import { toast } from "sonner";
 
 const TradingPanel = () => {
     const coin = useExchangeStore((s) => s.currentCoin);
@@ -18,7 +19,9 @@ const TradingPanel = () => {
     const [amount, setAmount] = useState<number>(0);
     const [actionType, setActionType] = useState<FilterType>("buy");
 
-    const handleBuy = () => {};
+    const handleBuy = () => {
+        toast.success(`Successfully buyed ${amount} ${coin.fullName}`)
+    };
 
     return (
         <div className="trade-panel">

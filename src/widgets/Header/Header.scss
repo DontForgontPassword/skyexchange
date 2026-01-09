@@ -8,6 +8,12 @@
           justify-content: space-between;
           align-items: center;
      }
+
+     &__logo {
+          width: 250px;
+          height: 60px;
+          background-color: white;
+     }
 }
 
 .wallet {

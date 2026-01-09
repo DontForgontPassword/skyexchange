@@ -4,7 +4,7 @@ import { WalletIcon } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Button } from '@/shared/ui/button';
-import {clsx } from 'clsx';
+import { clsx } from 'clsx';
 import './Header.scss';
 
 const Header = () => {
@@ -17,13 +17,9 @@ const Header = () => {
     return (
         <header className="header">
             <div className="header__inner container">
-                <div className="header__logo logo">
-                    <img />
-                    <div className="logo__wrapper">
-                        <h1 className="logo__title">SKY</h1>
-                        <p className="logo__subtitle">EXCHANGE</p>
-                    </div>
-                </div>
+                <NavLink to={"/"}>
+                    <img src='/logo.png' />
+                </NavLink>
                 <nav className="header__nav nav">
                     <ul className="nav__list">
                         {Links.map((link, index) => (

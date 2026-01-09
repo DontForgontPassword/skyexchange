@@ -11,7 +11,7 @@ export interface IUser {
     username: string;
     email: string;
     token: string | null;
-    avatarNftId: string;
+    avatarImage: string | null;
     balances: {
         btc: {
             value: number;
@@ -35,6 +35,7 @@ export interface IUser {
     game: { score: number; rank: number };
     createdAt: string;
 
+    setAvatar: (image: string) => void;
     register: (username: string, email: string, password: string) => void;
     add: (id: string, n: number) => void;
     getDefaultBalance: () => { value: number; name: string };
@@ -50,18 +51,22 @@ const useUser = create<IUser>()(
             username: "Guest",
             email: "guest@mail.com",
             token: null,
-            avatarNftId: "",
+            avatarImage: null,
             balances: {
                 btc: { value: 0, name: "btc" },
                 eth: { value: 0, name: "eth" },
                 sol: { value: 0, name: "sol" },
-                smg: { value: 0, name: "smg" },
+                smg: { value: 100000, name: "smg" },
             },
             defaultCurrency: "smg",
             nfts: [],
             game: { score: 0, rank: 0 },
             createdAt: "",
-
+            setAvatar: (image) => {
+                set({
+                    avatarImage: image
+                })
+            },
             register: (username, email, password) =>
                 set({
                     id: crypto.randomUUID(),
@@ -100,7 +105,7 @@ const useUser = create<IUser>()(
                     username: "Guest",
                     email: "guest@mail.com",
                     token: null,
-                    avatarNftId: "",
+                    avatarImage: null,
                     balances: {
                         btc: { value: 0, name: "Bitcoin" },
                         eth: { value: 0, name: "Ethereum" },

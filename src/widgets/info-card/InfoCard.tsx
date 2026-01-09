@@ -22,6 +22,7 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
     const nftsCost = nftStore.getCost(user.nfts);
     const balance = user.getDefaultBalance().value;
     const coin = useExchangeStore((state) => state.getCoinByName("SMG"));
+    const coinRate = coin?.rate ?? 0;
 
     const stats = useMemo(
         () => [
@@ -38,7 +39,7 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
             {
                 title: "Total Value",
                 value: `${nftsCost.toFixed(2)} SMARAGD`,
-                extra: `$${nftsCost * coin?.rate!}`,
+                extra: `$${(nftsCost * coinRate).toFixed(2)}`,
             },
         ],
         [balance, userNfts.length]
@@ -97,10 +98,9 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
                                     {stat.title}
                                 </p>
                                 <span
-                                    className={`info-card__stat-value ${
-                                        stat.modifier &&
+                                    className={`info-card__stat-value ${stat.modifier &&
                                         `info-card__stat-value--${stat.modifier}`
-                                    }`}
+                                        }`}
                                 >
                                     {stat.value}
                                 </span>

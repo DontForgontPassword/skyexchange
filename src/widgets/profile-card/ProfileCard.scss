@@ -1,10 +1,10 @@
 .profile-card {
-    padding: var(--card-padding);
-    display: flex;
-    flex-direction: column;
-    background-color: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
+    &__inner {
+        padding: var(--card-padding);
+        background-color: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+    }
 
     &__avatar {
         margin: auto;
@@ -17,6 +17,12 @@
         border: 4px solid var(--primary);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
+
+        &-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
     &__info {
@@ -99,6 +105,7 @@
             &:first-child {
                 box-shadow: var(--shadow);
             }
+
             &:nth-child(2) {
                 color: var(--destructive);
                 border-color: var(--border);

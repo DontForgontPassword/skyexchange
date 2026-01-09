@@ -27,7 +27,7 @@ export const NftCard: FC<NftCardProps> = ({
     purchased,
     className,
 }) => {
-    const { nfts } = useNftStore.getState()
+    const nfts = useNftStore((s) => s.nfts);
 
     const { purchase } = usePurchase()
 

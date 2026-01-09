@@ -20,8 +20,8 @@ export const TradingPairButton = ({ name, price, change, icon, isActive, onClick
                </div>
                <div className="trading-pair__bottom">
                     <p className="trading-pair__price">
-                         ${
-                              formatPrice(price)
+                         {
+                              `$${formatPrice(price)}`
                          }
                     </p>
                     <p className={clsx('trading-pair__change', change >= 0 ? 'trading-pair__change--positive' : 'trading-pair__change--negative')}>

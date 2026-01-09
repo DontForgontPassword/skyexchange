@@ -18,7 +18,10 @@ const ChartPanel = () => {
     const trades = useExchangeStore((s) => s.trades);
     const orders = useExchangeStore((s) => s.orders);
 
-    const currentCoin = useExchangeStore((s) => s.currentCoin);
+    const currentCoin = useExchangeStore(
+        (s) => s.coins.find(c  => c.name === s.currentCoin.name)
+    );
+
 
     const isPositive = currentCoin.change >= 0;
 
@@ -40,7 +43,7 @@ const ChartPanel = () => {
 
                             <div className="chart-panel__header-info">
                                 <span className="chart-panel__header-price">
-                                    ${formatPrice(currentCoin.price)}
+                                    {`$${formatPrice(currentCoin.price)}`}
                                 </span>
                                 <div
                                     className={clsx(

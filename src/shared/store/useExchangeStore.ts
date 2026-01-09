@@ -39,6 +39,7 @@ interface IExchangeStore {
     setOrders: (orders: ITradeOrder[]) => void;
     setCoinPrice: (name: string, price: number) => void;
     getCoinByName: (name: string) => ICoin | undefined;
+    update: () => void;
 }
 
 const initialCoins: ICoin[] = [
@@ -83,6 +84,12 @@ const initialCoins: ICoin[] = [
 const persistedCoins = getStorage<ICoin[]>('coins', null);
 const persistedTrades = getStorage<ITradeOrder[]>('trades', null);
 const persistedOrders = getStorage<ITradeOrder[]>('orders', null);
+
+const getRandomPrice = (currentPrice: number) => {
+    const fluctuation = (Math.random() * 0.1 - 0.05);
+    const newPrice = currentPrice * (1 + fluctuation);
+    return parseFloat(newPrice.toFixed(2));
+};
 
 export const useExchangeStore = create<IExchangeStore>((set, get) => ({
     currentCoin: initialCoins[0],
@@ -156,4 +163,20 @@ export const useExchangeStore = create<IExchangeStore>((set, get) => ({
     },
     getCoinByName: (name: string) =>
         get().coins.find((coin) => coin.name === name),
+    update: () => {
+        set((state) => {
+            const updatedCoins = state.coins.map((coin) => {
+                const newPrice = getRandomPrice(coin.price);
+                return {
+                    ...coin,
+                    price: newPrice,
+                    change: parseFloat((newPrice - coin.price).toFixed(2)),
+                };
+            });
+            setStorage('coins', updatedCoins);
+
+            return { coins: updatedCoins };
+        });
+    }
+
 }));
