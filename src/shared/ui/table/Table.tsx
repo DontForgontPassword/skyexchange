@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { Column } from '@/shared/types';
-import { ITradeOrder } from '@/shared/store/useExchangeStore'
+import { ITradeOrder } from '@/entities/Exchange'
 import {clsx} from 'clsx'
 import './Table.scss'
 

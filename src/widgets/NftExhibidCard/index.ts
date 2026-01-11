@@ -1,0 +1,1 @@
+export { NftExhibidCard } from "./NftExhibitCard";

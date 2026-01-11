@@ -1,8 +1,8 @@
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Input } from "@/shared/ui/input";
+import { Input } from "@/shared/ui/Input";
 import "./LoginInputField.scss";
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
 
 interface LoginInputFieldProps extends React.ComponentProps<"input"> {

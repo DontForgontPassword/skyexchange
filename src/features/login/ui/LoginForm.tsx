@@ -1,5 +1,5 @@
 import { LoginInputField } from "./LoginInputField";
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/shared/ui/Button";
 import { useRegister } from "../model/useRegister";
 import "./LoginForm.scss";
 

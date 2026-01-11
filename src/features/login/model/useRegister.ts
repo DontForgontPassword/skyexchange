@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useUser } from "@/shared/store/useUser";
+import { useUserStore } from "@/entities/User/model/store";
 import { validateRegister } from "./validations";
 import { RegisterErrors } from "./types";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 export const useRegister = () => {
-    const user = useUser((s) => s);
+    const user = useUserStore((s) => s);
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");

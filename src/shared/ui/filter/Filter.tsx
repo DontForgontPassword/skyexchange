@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { FilterOption, FilterType } from "@/shared/types/filter";
-import { Button } from "../button";
+import { Button } from "../Button";
 import "./Filter.scss";
 import clsx from "clsx";
 
