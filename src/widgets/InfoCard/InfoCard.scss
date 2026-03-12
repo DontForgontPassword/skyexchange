@@ -1,9 +1,6 @@
 .info-card {
-    padding: var(--card-padding);
     display: flex;
     flex-direction: column;
-    background-color: var(--card);
-    border-radius: var(--radius);
 
     &__header {
         display: flex;
@@ -91,6 +88,7 @@
     }
 
     &__add-funds {
+        width: 100%;
         margin-top: 32px;
         background: var(--primary);
         color: var(--primary-foreground);

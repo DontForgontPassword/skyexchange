@@ -1,0 +1,16 @@
+.auth-form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__button {
+        margin-top: 24px;
+    }
+}

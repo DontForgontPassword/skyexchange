@@ -1,12 +1,13 @@
 import { ITradeOrder } from "@/entities/Exchange";
 import { Column } from "@/shared/types";
-import { FilterOption } from "@/shared/types/filter";
+import { FilterOption, FilterType } from "@/shared/types/filter";
 import { Filter } from "@/shared/ui/Filter";
 import { Table } from "@/shared/ui/Table";
 import { sortRows } from "@/shared/utils/chart";
 import { useMemo, useState } from "react";
 import "./ChartHistory.scss";
 import { clsx } from "clsx";
+import { Card } from "@/shared/ui/Card";
 
 interface IChartHistoryProps {
     title?: string;
@@ -23,7 +24,7 @@ const ChartHistory = ({
     filters,
     className,
 }: IChartHistoryProps) => {
-    const [filterType, setFilterType] = useState<"buy" | "sell" | "all">("all");
+    const [filterType, setFilterType] = useState<FilterType>("all");
 
     const filteredData = useMemo(
         () => sortRows(data, filterType),
@@ -31,7 +32,10 @@ const ChartHistory = ({
     );
 
     return (
-        <div className={clsx(className, "chart-history")}>
+        <Card
+            className={clsx(className, "chart-history")}
+            innerClassName="chart-history__inner"
+        >
             <h3 className="orders-card__subtitle subtitle">{title}</h3>
 
             {filters && (
@@ -51,7 +55,7 @@ const ChartHistory = ({
                 rows={filteredData}
                 maxHeight={180}
             />
-        </div>
+        </Card>
     );
 };
 

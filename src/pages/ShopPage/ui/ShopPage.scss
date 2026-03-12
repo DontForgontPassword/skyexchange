@@ -1,105 +1,99 @@
-@use 'sass:map';
+@use "sass:map";
 
 .shop-page {
-  &__inner {
-    display: grid;
-    grid-template-columns: 9fr 3fr;
-    gap: 24px;
-  }
-
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__sidebar {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__header {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  &__header-button {
-    padding: 8px 16px;
-    background-color: var(--card);
-    color: var(--muted-foreground);
-    border: 1px solid var(--border);
-    transition: all 0.2s ease;
-
-    &:hover {
-      border-color: var(--primary);
-      color: var(--foreground);
+    &__inner {
+        display: grid;
+        grid-template-columns: 9fr 3fr;
+        gap: 24px;
     }
 
-    &--active {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      box-shadow: var(--shadow);
-      color: var(--primary-foreground);
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
     }
-  }
 
-  &__filter-card {
-    display: flex;
-    gap: 12px;
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+    }
 
-    margin-bottom: 24px;
-    padding: 16px;
+    &__header {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
 
-    background-color: var(--card);
-    border-radius: var(--radius);
-  }
-
-  &__filter-card-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__filter-card-buttons {
-    display: flex;
-    gap: 8px;
-  }
-
-  &__filter-icon {
-    flex-shrink: 0;
-  }
-
-  &__filter-button {
-    padding: 6px 14px;
-    color: var(--muted-foreground);
-
-    @each $name, $data in $rarities {
-      $main: map.get($data, main);
-      $color: map.get($data, color);
-
-      &--#{$name} {
-        border: 1px solid $color;
+    &__header-button {
+        padding: 8px 16px;
+        background-color: var(--card);
+        color: var(--muted-foreground);
+        border: 1px solid var(--border);
 
         &:hover {
-          border-color: $main;
-          box-shadow: 0 0 15px $color;
-
-          color: $main;
+            border-color: var(--primary);
+            color: var(--foreground);
         }
 
         &--active {
-          background-color: $color;
-          border-color: $main;
-
-          color: $main;
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            color: var(--primary-foreground);
         }
-      }
     }
-  }
 
-  &__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
+    &__filter-card {
+        display: flex;
+        gap: 12px;
+    }
+
+    &__filter-card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__filter-card-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__filter-icon {
+        flex-shrink: 0;
+    }
+
+    &__filter-button {
+        padding: 6px 14px;
+        color: var(--muted-foreground);
+
+        @each $name, $data in $rarities {
+            $main: map.get($data, main);
+            $color: map.get($data, color);
+
+            &--#{$name} {
+                border: 1px solid $color;
+
+                &:hover {
+                    border-color: $main;
+                    box-shadow: 0 0 15px $color;
+
+                    color: $main;
+                }
+
+                &--active {
+                    background-color: $color;
+                    border-color: $main;
+
+                    color: $main;
+                }
+            }
+        }
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 24px;
+    }
 }

@@ -1,46 +1,36 @@
-export type Currency = "btc" | "eth" | "sol" | "smg";
-
-export interface Balance {
-    value: number;
-    name: string;
+export interface NFT {
+  id: number;
+  name: string;
 }
 
-export interface NFT {
-    id: string;
-    name: string;
+export enum Currency {
+  BTC = "btc",
+  ETH = "eth",
+  SOL = "sol",
+  SMG = "smg",
+}
+
+export interface Game {
+  score: number;
+  rank: number;
+}
+
+export interface Balance {
+  currency: Currency;
+  value: number;
+  name: string;
 }
 
 export interface User {
-    id: string;
-    username: string;
-    email: string;
-    token: string | null;
-    avatarImage: string | null;
-    balances: Record<Currency, Balance>;
-    defaultCurrency: Currency;
-    nfts: NFT[];
-    game: {
-        score: number;
-        rank: number;
-    };
-    createdAt: string;
-}
+  id: number;
+  username: string;
+  email: string;
+  token?: string | null;
+  avatarImage?: string | null;
 
-export interface UserState extends User {
-    setAvatar: (image: string) => void;
-    addNFT: (nft: NFT) => void;
-
-    /* auth */
-    reset: () => void;
-    register: (username: string, email: string, password: string) => void;
-
-    /* balance */
-    getBalance: (currency: Currency) => Balance;
-    getBalanceValue: (currency: Currency) => number;
-
-    getDefaultBalance: () => Balance;
-    getDefaultBalanceValue: () => number;
-
-    subBalance: (currency: Currency, value: number) => void;
-    addBalance: (currency: Currency, value: number) => void;
+  balances: Balance[];
+  defaultCurrency: Currency;
+  nfts: NFT[];
+  game: Game;
+  createdAt: string;
 }

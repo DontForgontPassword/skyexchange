@@ -1,16 +1,42 @@
-import { LoginForm } from "@/features/login/ui/LoginForm";
+import { AuthorizationForm, IAuthTypes } from "@/entities/Auth";
+import { useState } from "react";
 import { User } from "lucide-react";
 import "./LoginPage.scss";
+import clsx from "clsx";
 
 const LoginPage = () => {
+    const [authorizationType, setAuthorizationType] = useState<IAuthTypes>("register");
+
     return (
         <section className="login-page">
             <div className="login-page__content">
-                <div className="login-page__header">
-                    <User width={40} height={40} />
-                    <h2>Create Account</h2>
-                </div>
-                <LoginForm />
+                <header className="login-page__header">
+                    <div className="login-page__switch">
+                        <button onClick={() => setAuthorizationType("register")} className={clsx(
+                                "login-page__switch-btn",
+                                authorizationType === "register" &&
+                                    "login-page__switch-btn--active"
+                            )}>
+                            Register
+                        </button>
+                        <button onClick={() => setAuthorizationType("login")} className={clsx(
+                                "login-page__switch-btn",
+                                authorizationType === "login" &&
+                                    "login-page__switch-btn--active"
+                            )}>
+                            Login
+                        </button>
+                    </div>
+
+                    <div className="login-page__title">
+                        <div className="login-page__logo">
+                            <User width={40} height={40} />
+                        </div>
+                        <h2 className="login-page__heading">Create Account</h2>
+                    </div>
+                </header>
+
+                <AuthorizationForm type={authorizationType} />
             </div>
         </section>
     );

@@ -1,11 +1,4 @@
 .trading-panel {
-    &__inner {
-        padding: var(--card-padding);
-        background-color: var(--card);
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-    }
-
     &__header {
         button {
             text-align: left;

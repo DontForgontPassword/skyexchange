@@ -1,28 +1,36 @@
-import { Edit, LogOut, Mail, User } from "lucide-react";
+import { Edit, LogOut, Mail, User as UserIcon } from "lucide-react";
 import { useUserStore } from "@/entities/User/model/store";
 import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
 import "./ProfileCard.scss";
+import { Card } from "@/shared/ui/Card";
+import { useAuthStore } from "@/entities/Auth";
 
 interface IProfileCardProps {
     className?: string;
 }
 
 const ProfileCard = ({ className }: IProfileCardProps) => {
-    const user = useUserStore((s) => s);
-    const defaultBalance = user.getDefaultBalance();
+    const user = useUserStore()!;
+    const logout = useAuthStore((state) => state.logout);
 
-    const handleLogOut = () => {
-        user.reset();
-    };
+    const defaultBalance = user.balances.find(
+        (b) => b.currency === user.defaultCurrency
+    );
 
     return (
         <div className={clsx(className, "profile-card")}>
             <div className="profile-card__inner">
                 <div className="profile-card__avatar">
-                    {
-                        user.avatarImage ? (<img className="profile-card__avatar-image" src={user.avatarImage} />) : <User width={96} height={96} />
-                    }
+                    {user.avatarImage ? (
+                        <img
+                            className="profile-card__avatar-image"
+                            src={user.avatarImage}
+                            alt="avatar"
+                        />
+                    ) : (
+                        <UserIcon width={96} height={96} />
+                    )}
                 </div>
 
                 <div className="profile-card__info">
@@ -47,40 +55,42 @@ const ProfileCard = ({ className }: IProfileCardProps) => {
                 </div>
 
                 <div className="profile-card__stats">
-                    <div className="profile-card__stats-item">
+                    <Card className="profile-card__stats-item">
                         <p className="profile-card__stats-item-label primary-text">
-                            <Mail color="var(--primary)" width={16} height={16} />
                             Balance
                         </p>
                         <p className="profile-card__stats-item-value profile-card__stats-item-value--balance">
-                            {defaultBalance.value}
-                            <span className="primary-text">SMARAGD</span>
+                            {defaultBalance?.value ?? 0}
+                            <span className="primary-text">
+                                {defaultBalance?.name ?? user.defaultCurrency}
+                            </span>
                         </p>
-                    </div>
+                    </Card>
 
-                    <div className="profile-card__stats-item">
+                    <Card className="profile-card__stats-item">
                         <p className="profile-card__stats-item-label primary-text">
-                            <Mail color="var(--primary)" width={16} height={16} />
                             High Score
                         </p>
                         <p className="profile-card__stats-item-value">
                             {user.game.score}
                             <span className="primary-text">Points</span>
                         </p>
-                    </div>
+                    </Card>
                 </div>
+
                 <div className="profile-card__actions">
                     <Button
                         className="profile-card__actions-button"
-                        variant={"default"}
+                        variant="default"
                     >
                         <Edit width={16} height={16} />
                         Edit Profile
                     </Button>
+
                     <Button
                         className="profile-card__actions-button"
-                        variant={"outline"}
-                        onClick={handleLogOut}
+                        variant="outline"
+                        onClick={logout}
                     >
                         <LogOut width={16} height={16} />
                         Logout

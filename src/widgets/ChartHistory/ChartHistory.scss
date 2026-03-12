@@ -1,11 +1,10 @@
 .chart-history {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    height: 250px;
-    min-height: 0;
-    padding: var(--card-padding);
-    border-radius: var(--radius);
-    background-color: var(--card);
-    overflow: hidden;
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 250px;
+        min-height: 0;
+        overflow: hidden;
+    }
 }

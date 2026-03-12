@@ -14,6 +14,7 @@ import { useUserStore } from "@/entities/User/model/store";
 import "./ShopPage.scss";
 import { AddFundsModal } from "@/entities/Exchange/ui/add-funds-modal";
 import { useNftStore } from "@/entities/Nft/model/store";
+import { Card } from "@/shared/ui/Card";
 
 export const ShopPage = () => {
     const [currentFilter, setCurrentFilter] = useState<ShopFilterType>("all");
@@ -73,7 +74,7 @@ export const ShopPage = () => {
                             ))}
                         </div>
 
-                        <div className="shop-page__filters">
+                        <Card className="shop-page__filters">
                             <div className="shop-page__filter-card">
                                 <div className="shop-page__filter-card-title">
                                     <Funnel
@@ -107,7 +108,7 @@ export const ShopPage = () => {
                                     ))}
                                 </div>
                             </div>
-                        </div>
+                        </Card>
 
                         <section className="shop-page__results">
                             <ul className="shop-page__cards">

@@ -4,10 +4,10 @@ import { Wallet } from "lucide-react";
 import { useUserStore } from "@/entities/User/model/store";
 import { useNavigate } from "react-router-dom";
 import { useExchangeStore } from "@/entities/Exchange";
-import { useNftStore } from "@/entities/Nft/model/store";
+import { Card } from "@/shared/ui/Card";
+import { getDefaultBalance } from "@/entities/User/model/selectors";
 import "./InfoCard.scss";
-import { useUserFullNfts } from "@/entities/User/hooks/useUserFullNfts";
-import { useUserTotalNftValue } from "@/entities/User/hooks/useUserTotalNftValue";
+import { useAuthStore } from "@/entities/Auth";
 
 interface IInfoCardProps {
     setFundsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,12 +16,15 @@ interface IInfoCardProps {
 
 const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
     const navigate = useNavigate();
-
-    const user = useUserStore((s) => s);
-    const nftsCost = useUserTotalNftValue();
-    const balance = user.getDefaultBalance().value;
+    const user = useUserStore();
+    const isAuth = useAuthStore((state) => state.accessToken) !== null;
     const coin = useExchangeStore((state) => state.getCoin("smg"));
     const coinRate = coin?.rate ?? 0;
+
+    const balance = user ? getDefaultBalance(user)?.value ?? 0 : 0;
+    const nftsCost = user
+        ? user.nfts.reduce((sum) => sum + 0, 0)
+        : 0;
 
     const stats = [
         {
@@ -32,16 +35,14 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
         },
         {
             title: "Owned NFTs",
-            value: 0,
+            value: user?.nfts.length ?? 0,
         },
         {
             title: "Total Value",
-            value: `${nftsCost.toFixed(2)} SMARAGD`,
+            value: `${nftsCost.toFixed(2)} SMG`,
             extra: `$${(nftsCost * coinRate).toFixed(2)}`,
         },
     ];
-
-    const isAuth = Boolean(user.token);
 
     const handleLogin = () => {
         navigate("/login");
@@ -52,7 +53,7 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
     };
 
     return (
-        <div className={clsx(className, "info-card")}>
+        <Card className={clsx(className, "info-card")}>
             <div className="info-card__header">
                 <div className="info-card__wallet-icon">
                     <Wallet width={24} height={24} />
@@ -78,7 +79,7 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
                     </p>
 
                     <Button
-                        variant={"default"}
+                        variant="default"
                         className="info-card__login-button"
                         onClick={handleLogin}
                     >
@@ -94,10 +95,11 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
                                     {stat.title}
                                 </p>
                                 <span
-                                    className={`info-card__stat-value ${
+                                    className={clsx(
+                                        "info-card__stat-value",
                                         stat.modifier &&
-                                        `info-card__stat-value--${stat.modifier}`
-                                    }`}
+                                            `info-card__stat-value--${stat.modifier}`
+                                    )}
                                 >
                                     {stat.value}
                                 </span>
@@ -117,7 +119,7 @@ const InfoCard = ({ setFundsModalOpen, className }: IInfoCardProps) => {
                     </Button>
                 </>
             )}
-        </div>
+        </Card>
     );
 };
 

@@ -107,6 +107,7 @@ const ChartPanel = () => {
                     />
                     <ChartHistory
                         className="chart-panel__trades-card"
+                        title="Recent Trades"
                         data={trades}
                         columns={HISTORY_COLUMNS}
                     />

@@ -2,17 +2,16 @@ import { useUserStore } from "@/entities/User/model/store";
 import { Links } from "@/shared/constants/Menu";
 import { WalletIcon } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
-import { useEffect } from "react";
 import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
+import { useAuthStore } from "@/entities/Auth";
 import "./Header.scss";
+import { getDefaultBalance } from "@/entities/User/model/selectors";
 
 const Header = () => {
-    const user = useUserStore((s) => s);
-    const defaultBalance = user.getDefaultBalance();
-    useEffect(() => {
-        console.log(`User token is ${user.token}`);
-    });
+    const user = useUserStore();
+    const defaultBalance = getDefaultBalance(user);
+    const auth = useAuthStore((s) => s);
 
     return (
         <header className="header">
@@ -40,13 +39,13 @@ const Header = () => {
                                 </NavLink>
                             </li>
                         ))}
-                        {user.token !== null ? (
+                        {auth.accessToken !== null ? (
                             <div className="wallet">
                                 <WalletIcon />
                                 <div>
                                     <p className="wallet__title">Balance</p>
                                     <span className="wallet__balance">
-                                        {defaultBalance.value} SMG
+                                        {user.defaultCurrency} SMG
                                     </span>
                                 </div>
                             </div>
