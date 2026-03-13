@@ -1,11 +1,11 @@
 import { User } from "./types";
 
-const getDefaultBalance = (user: User) => {
+const getDefaultBalance = (user: User | null) => {
     if (!user) {
-        return 0;
+        return null;
     }
 
-    user.balances.find((b) => b.currency === user.defaultCurrency);
+    return user.balances.find((b) => b.currency === user.defaultCurrency);
 };
 
 export { getDefaultBalance };

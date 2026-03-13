@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { ExchangePage } from '@/pages/ExchangePage';
-import { GamePage } from '@/pages/GamePage';
-import { LoginPage } from '@/pages/LoginPage';
-import { ProfilePage } from '@/pages/ProfilePage';
-import { ShopPage } from '@/pages/ShopPage';
+import { ExchangePage } from '@/app/pages/ExchangePage';
+import { GamePage } from '@/app/pages/GamePage';
+import { LoginPage } from '@/app/pages/LoginPage';
+import { ProfilePage } from '@/app/pages/ProfilePage';
+import { ShopPage } from '@/app/pages/ShopPage';
 
 interface IRoute {
     to: string;
