@@ -1,0 +1,15 @@
+.profile-nfts-collection {
+    padding: 24px;
+    background-color: var(--card);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border: 1px solid var(--border);
+
+    &__container {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

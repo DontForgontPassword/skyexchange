@@ -1,11 +1,21 @@
 from pydantic import BaseModel, EmailStr
-from typing import List, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 
-from .balance import BalanceSchema
 from .nft import NFTSchema
 from .game import GameSchema
 from .enums import Currency
+from .balance import BalanceItem
+
+class AvatarSetRequest(BaseModel):
+    imageId: str
+
+class AvatarResponse(BaseModel):
+    avatarImage: Optional[str]
+
+class BalanceResponse(BaseModel):
+    amount: float
+    id: str
 
 class UserResponse(BaseModel):
     id: int
@@ -13,7 +23,8 @@ class UserResponse(BaseModel):
     email: EmailStr
     avatarImage: Optional[str]
 
-    balances: List[BalanceSchema]
+    balances: Dict[str, BalanceItem]
+
     defaultCurrency: Currency
     nfts: List[NFTSchema]
     game: GameSchema
@@ -21,3 +32,4 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
+

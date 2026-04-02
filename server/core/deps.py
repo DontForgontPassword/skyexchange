@@ -3,12 +3,11 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from database import get_db
 from core.security import SECRET_KEY, ALGORITHM
 from models.user import User
+from database import get_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
-
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
@@ -22,7 +21,7 @@ def get_current_user(
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token",
+            detail=f"Invalid token, {token}",
         )
 
     user = db.query(User).filter(User.id == user_id).first()

@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { FilterOption, FilterType } from "@/shared/types/filter";
 import { Button } from "../Button";
 import "./Filter.scss";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 interface IFilterProps {
     filters: FilterOption[];
@@ -38,7 +38,7 @@ export const Filter: FC<IFilterProps> = ({
                     variant="transparent"
                     className={clsx(
                         "filter__button",
-                        filterType === filter.type && "filter__button--active"
+                        filterType === filter.type && "filter__button--active",
                     )}
                     onClick={() => handleClick(filter.type)}
                 >

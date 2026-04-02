@@ -11,11 +11,3 @@ export interface ICoin {
     change: number;
     rate: number;
 }
-
-export interface ITradeOrder {
-    coinId: CoinId;
-    price: number;
-    amount: number;
-    total: number;
-    type: TradeType;
-}

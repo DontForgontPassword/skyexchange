@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getStorage, setStorage } from "@/shared/utils/localStorage";
+import { getStorage, setStorage } from "@/shared/lib/localStorage";
 
 import { ICoin, ITradeOrder, CoinId } from "./types";
 import { coinsMap, coinIds } from "./constants";

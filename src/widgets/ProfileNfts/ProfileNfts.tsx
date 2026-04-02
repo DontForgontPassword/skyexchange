@@ -1,19 +1,22 @@
 import { clsx } from "clsx";
 import "./ProfileNfts.scss";
-import { useUserStore } from "@/entities/User";
+import { useMe } from "@/entities/user";
 
 interface IProfileNftsProps {
     className?: string;
 }
 
 const ProfileNfts = ({ className }: IProfileNftsProps) => {
-    const fullNfts = useUserStore()?.nfts || [];
+    const user = useMe().data;
+    if (!user) {
+        return <div>[ ProfileNfts.tsx ] Loading...</div>;
+    }
 
     return (
         <div className={clsx(className, "profile-nfts")}>
             <div className="profile-nfts__heading">
                 <h2 className="profile-nfts__title title">My NFT Сollection</h2>
-                <p className="profile-nfts__subtitle">{`${fullNfts.length} NFTs owned`}</p>
+                <p className="profile-nfts__subtitle">{`${user.nfts.length} NFTs owned`}</p>
             </div>
             <div className="profile-nfts__container">
                 {/* {fullNfts.map((nft) => (

@@ -1,27 +1,38 @@
 import { useState } from "react";
-import { TRADE_FILTER_OPTIONS } from "@/shared/constants/Chart";
-import { useUserStore } from "@/entities/User";
+import { TRADE_FILTER_OPTIONS } from "@/shared/config/Chart";
 import { FilterType } from "@/shared/types";
 import { Button } from "@/shared/ui/Button";
 import { Filter } from "@/shared/ui/Filter";
 import { Input } from "@/shared/ui/Input";
 import { Card } from "@/shared/ui/Card";
-import { firstUpper } from "@/shared/utils/string";
+import { firstUpper } from "@/shared/lib/string";
 import { toast } from "sonner";
 import { useExchangeStore } from "@/entities/Exchange";
 import "./TradingPanel.scss";
+import { useBalance } from "@/entities/user";
+import { useAuthStore } from "@/features/auth";
 
 const TradingPanel = () => {
     const [amount, setAmount] = useState<number>(0);
     const [actionType, setActionType] = useState<FilterType>("buy");
     const coin = useExchangeStore((s) => s.coins[s.currentCoinId]);
     const price = coin.price;
-    const user = useUserStore();
-    const userBalance = user.defaultCurrency
-    const userBalanceName = user.defaultCurrency.toUpperCase();
+    const accessToken = useAuthStore((s) => s.accessToken);
+    const isAuthorized = !!accessToken;
+    const userBalance = useBalance("smg");
+    const userBalanceName = "smg";
 
     const handleBuy = () => {
-        toast.success(`Successfully buyed ${amount} ${coin.name}`);
+        if (!isAuthorized) {
+            toast.error("You must be logged in to perform this action");
+            return;
+        }
+
+        if (actionType === "buy") {
+            toast.success(`Successfully buyed ${amount} ${coin.name}`);
+        } else if (actionType === "sell") {
+            toast.success(`Successfully selled ${amount} ${coin.name}`);
+        }
     };
 
     return (
@@ -80,7 +91,7 @@ const TradingPanel = () => {
                             placeholder="0.00"
                             className="trading-panel__field-input"
                             type="number"
-                            value={price}
+                            value={price * amount}
                             readOnly
                         />
                     </label>

@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-import { RoutingList } from '@/shared/constants/Routing';
-import { ProtectedRoute } from './ProtectedRoute';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { RoutingList } from "./Config";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export const AppRoutes = () => {
     return (

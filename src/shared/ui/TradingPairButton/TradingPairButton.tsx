@@ -1,6 +1,6 @@
 import "./TradingPairButton.scss";
 import { clsx } from "clsx";
-import { formatPrice } from "@/shared/utils/format";
+import { formatPrice } from "@/shared/lib/price";
 
 interface TradingPairsPanelProps {
     name: string;

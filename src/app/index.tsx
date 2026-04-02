@@ -3,15 +3,10 @@ import { Toaster } from "sonner";
 import { AppRoutes } from "./routes/AppRoutes";
 import { Header } from "../widgets/Header";
 import "./styles/index.scss";
-import { useEffect } from "react";
-import { UserAPI } from "@/entities/User/api/user";
+import { useMe } from "@/entities/user";
 
 function App() {
-    useEffect(() => {
-        UserAPI.getMe().then((res) => {
-            console.log(res);
-        });
-    }, []);
+    useMe();
 
     return (
         <BrowserRouter>

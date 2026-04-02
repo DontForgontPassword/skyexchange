@@ -1,37 +1,32 @@
 import { Edit, LogOut, Mail, User as UserIcon } from "lucide-react";
-import { useUserStore } from "@/entities/User/model/store";
-import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
-import "./ProfileCard.scss";
+
+import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
-import { useAuthStore } from "@/entities/Auth";
+
+import { useAuthStore } from "@/features/auth";
+import { Avatar } from "@/entities/avatar";
+import { useBalance, useMe } from "@/entities/user";
+import "./ProfileCard.scss";
 
 interface IProfileCardProps {
     className?: string;
 }
 
 const ProfileCard = ({ className }: IProfileCardProps) => {
-    const user = useUserStore()!;
     const logout = useAuthStore((state) => state.logout);
 
-    const defaultBalance = user.balances.find(
-        (b) => b.currency === user.defaultCurrency
-    );
+    const { data: user } = useMe();
+    const { data: balance } = useBalance("smg");
+
+    const formattedBalance = balance
+        ? `${balance.amount.toFixed(2)} ${balance.id.toUpperCase()}`
+        : "0.00 SMG";
 
     return (
-        <div className={clsx(className, "profile-card")}>
+        <div className={clsx("profile-card", className)}>
             <div className="profile-card__inner">
-                <div className="profile-card__avatar">
-                    {user.avatarImage ? (
-                        <img
-                            className="profile-card__avatar-image"
-                            src={user.avatarImage}
-                            alt="avatar"
-                        />
-                    ) : (
-                        <UserIcon width={96} height={96} />
-                    )}
-                </div>
+                <Avatar src={user?.avatarImage} />
 
                 <div className="profile-card__info">
                     <div className="profile-card__info-item">
@@ -39,7 +34,7 @@ const ProfileCard = ({ className }: IProfileCardProps) => {
                             Username
                         </p>
                         <p className="profile-card__info-item-value profile-card__info-item-value--username">
-                            {user.username}
+                            {user?.username ?? "N/A"}
                         </p>
                     </div>
 
@@ -49,20 +44,20 @@ const ProfileCard = ({ className }: IProfileCardProps) => {
                             Email / Wallet ID
                         </p>
                         <p className="profile-card__info-item-value profile-card__info-item-value--mail">
-                            {user.email}
+                            {user?.email ?? "N/A"}
                         </p>
                     </div>
                 </div>
 
+                {/* stats */}
                 <div className="profile-card__stats">
                     <Card className="profile-card__stats-item">
                         <p className="profile-card__stats-item-label primary-text">
                             Balance
                         </p>
                         <p className="profile-card__stats-item-value profile-card__stats-item-value--balance">
-                            {defaultBalance?.value ?? 0}
                             <span className="primary-text">
-                                {defaultBalance?.name ?? user.defaultCurrency}
+                                {formattedBalance}
                             </span>
                         </p>
                     </Card>
@@ -72,8 +67,9 @@ const ProfileCard = ({ className }: IProfileCardProps) => {
                             High Score
                         </p>
                         <p className="profile-card__stats-item-value">
-                            {user.game.score}
-                            <span className="primary-text">Points</span>
+                            <span className="primary-text">
+                                {user?.game?.score ?? 0} Points
+                            </span>
                         </p>
                     </Card>
                 </div>

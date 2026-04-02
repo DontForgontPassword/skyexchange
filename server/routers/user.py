@@ -1,60 +1,25 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
 from core.deps import get_current_user
 from models.user import User
-from services.auth import register_user, login_user
-from schemas.user import UserResponse
+from schemas.user import AvatarResponse, AvatarSetRequest, BalanceResponse, UserResponse
+from database import get_db
+from models.balance import Balance
 
-router = APIRouter(prefix="/auth", tags=["Auth"])
-
-
-@router.post("/register")
-def register(
-    username: str,
-    email: str,
-    password: str,
-    db: Session = Depends(get_db),
-):
-    result = register_user(db, username, email, password)
-    if not result:
-        raise HTTPException(400, "User exists")
-
-    user, token = result
-    return {
-        "accessToken": token,
-        "user": UserResponse.from_orm(user),
-    }
-
-
-@router.post("/login")
-def login(
-    email: str,
-    password: str,
-    db: Session = Depends(get_db),
-):
-    result = login_user(db, email, password)
-    if not result:
-        raise HTTPException(401, "Invalid credentials")
-
-    user, token = result
-    return {
-        "accessToken": token,
-        "user": UserResponse.from_orm(user),
-    }
+router = APIRouter(prefix="/api/user", tags=["User"])
 
 @router.get("/me", response_model=UserResponse)
 def me(user: User = Depends(get_current_user)):
-    return user
+    return user.to_dict()
 
-@router.post("/avatar", response_model=UserResponse)
+@router.post("/avatar", response_model=AvatarSetRequest)
 def set_avatar(
-    payload: dict,
+    payload: AvatarSetRequest,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    image = payload.get("image")
+    image = payload.imageId
     if not image:
         raise HTTPException(400, "Image is required")
     
@@ -62,3 +27,26 @@ def set_avatar(
     db.commit()
     db.refresh(user)
     return user
+
+@router.get("/avatar", response_class=AvatarResponse)
+def get_avatar(user: User = Depends(get_current_user)):
+    return AvatarResponse(avatarImage=user.avatarImage)
+
+@router.get("/balance", response_model=BalanceResponse)
+def get_balance(
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    id: str = "smg"
+):
+    balance = (
+        db.query(Balance)
+        .filter(Balance.user_id == user.id, Balance.currency == id)
+        .first()
+    )
+
+    amount = balance.value if balance else 0
+
+    return {
+        "amount": amount,
+        "id": id
+    }

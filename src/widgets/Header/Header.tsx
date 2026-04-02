@@ -1,17 +1,15 @@
-import { useUserStore } from "@/entities/User/model/store";
-import { Links } from "@/shared/constants/Menu";
+import { LINKS } from "@/shared/config";
 import { WalletIcon } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
-import { useAuthStore } from "@/entities/Auth";
+import { useAuthStore } from "@/features/auth";
 import "./Header.scss";
-import { getDefaultBalance } from "@/entities/User/model/selectors";
+import { useBalance } from "@/entities/user";
 
 const Header = () => {
-    const user = useUserStore();
-    const defaultBalance = getDefaultBalance(user);
     const auth = useAuthStore((s) => s);
+    const balance = useBalance("smg").data;
 
     return (
         <header className="header">
@@ -21,7 +19,7 @@ const Header = () => {
                 </NavLink>
                 <nav className="header__nav nav">
                     <ul className="nav__list">
-                        {Links.map((link, index) => (
+                        {LINKS.map((link, index) => (
                             <li
                                 className="nav__item"
                                 key={`${link.to}-${index}`}
@@ -30,7 +28,7 @@ const Header = () => {
                                     className={({ isActive }) =>
                                         clsx(
                                             "nav__link",
-                                            isActive && "nav__link--active"
+                                            isActive && "nav__link--active",
                                         )
                                     }
                                     to={link.to}
@@ -45,7 +43,7 @@ const Header = () => {
                                 <div>
                                     <p className="wallet__title">Balance</p>
                                     <span className="wallet__balance">
-                                        {user.defaultCurrency} SMG
+                                        {balance?.amount} SMG
                                     </span>
                                 </div>
                             </div>

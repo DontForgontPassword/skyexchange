@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/entities/Auth';
+import { useAuthStore } from '@/features/auth';
 import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 

@@ -1,58 +1,66 @@
-import type { FC } from 'react'
-import { Column } from '@/shared/types';
-import { ITradeOrder } from '@/entities/Exchange'
-import {clsx} from 'clsx'
-import './Table.scss'
+import { clsx } from "clsx";
+import { ReactNode } from "react";
+import "./Table.scss";
 
-interface ITableProps {
-     columns: Column[];
-     rows: ITradeOrder[];
-     className?: string;
-     maxHeight?: number;
+export type Column<T> = {
+    key: keyof T;
+    title: string;
+    render?: (value: any, row: T) => ReactNode;
+};
+
+interface TableProps<T> {
+    columns: Column<T>[];
+    rows: T[];
+    className?: string;
+    maxHeight?: number;
 }
 
-export const Table: FC<ITableProps> = ({ columns, rows, className, maxHeight }) => {
-     return (
-          <div className={clsx('table', className)}>
-               <div className="table__inner">
-                    <div className="table__head">
-                         <div className="table__row table__row--head">
-                              {columns.map((column, index) => (
-                                   <div className="table__cell table__head-cell" key={index}>
-                                        {column.name}
-                                   </div>
-                              ))}
-                         </div>
+export const Table = <T,>({
+    columns,
+    rows,
+    className,
+    maxHeight,
+}: TableProps<T>) => {
+    return (
+        <div className={clsx("table", className)}>
+            <div className="table__inner">
+                <div className="table__head">
+                    <div className="table__row table__row--head">
+                        {columns.map((column, i) => (
+                            <div
+                                key={i}
+                                className="table__cell table__head-cell"
+                            >
+                                {column.title}
+                            </div>
+                        ))}
                     </div>
+                </div>
 
-                    <div className="table__body" style={{ maxHeight: maxHeight ?? 250 }}>
-                         {rows.map((row, index) => (
-                              <div className="table__row" key={`${index}-${row.amount}-${row.type}`}>
-                                   <div
-                                        className={
-                                             clsx('table__cell',
-                                                  'table__cell--body',
-                                                  'table__cell--right',
+                <div
+                    className="table__body"
+                    style={{ maxHeight: maxHeight ?? 250 }}
+                >
+                    {rows.map((row, rowIndex) => (
+                        <div className="table__row" key={rowIndex}>
+                            {columns.map((column, colIndex) => {
+                                const value = row[column.key];
 
-                                             )}
-                                   >
-                                        {row.coin}
-                                   </div>
-                                   <div
-                                        className={clsx('table__cell table__cell--body', 'table__cell--right', row.type === 'buy' ? 'table__cell--buy' : row.type === 'sell' && 'table__cell--sell')}
-                                   >
-                                        ${row.price.toLocaleString('fr-FR')}
-                                   </div>
-                                   <div className="table__cell table__cell--body table__cell--right">
-                                        {row.amount.toFixed(2)}
-                                   </div>
-                                   <div className="table__cell table__cell--body table__cell--right">
-                                        {row.total.toFixed(2)}
-                                   </div>
-                              </div>
-                         ))}
-                    </div>
-               </div>
-          </div >
-     )
-}
+                                return (
+                                    <div
+                                        key={colIndex}
+                                        className="table__cell table__cell--body table__cell--right"
+                                    >
+                                        {column.render
+                                            ? column.render(value, row)
+                                            : String(value)}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};

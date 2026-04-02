@@ -1,35 +1,60 @@
-from fastapi import APIRouter, HTTPException
+from typing import List, Dict
+from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 
-from server.constants.nft import NFT_COLLECTION
+from repositories import nft, user_nft
+from models.balance import CurrencyEnum
+from models.user import User
 
-router = APIRouter(prefix="/shop", tags=["Shop"])
 
-@router.get("/nfts")
-def get_nfts():
-    return NFT_COLLECTION
+def list_nfts_with_purchase_flag(db: Session, user: User) -> List[Dict]:
+    nfts = nft.list_nfts(db)
+    owned_ids = set(user_nft.list_user_nft_ids(db, user.id))
 
-@router.post("/buy")
-def buy_nft(item_id: int):
-    nft = next((n for n in NFT_COLLECTION if n["id"] == item_id), None)
+    result = []
+    for item in nfts:
+        result.append(
+            {
+                "id": item.id,
+                "name": item.name,
+                "image": item.image,
+                "price": item.price,
+                "rarity": item.rarity,
+                "type": item.type,
+                "purchased": item.id in owned_ids,
+            }
+        )
+
+    return result
+
+
+def purchase_nft(db: Session, user: User, nft_id: int) -> Dict:
+    nft = nft.get_nft(db, nft_id)
     if not nft:
-        raise HTTPException(404, "NFT not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="NFT not found")
 
-    balance = next(
-        (b for b in FAKE_USER["balances"] if b["currency"] == "btc"),
-        None,
-    )
+    if user_nft.user_owns_nft(db, user.id, nft_id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="NFT already owned")
 
-    if not balance or balance["value"] < nft["price"]:
-        raise HTTPException(400, "Not enough balance")
+    balance = user.balance
+    if not balance:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Balance not found")
 
-    balance["value"] -= nft["price"]
+    if balance.value < nft.price:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough balance")
 
-    FAKE_USER["nfts"].append({
-        "id": nft["id"],
-        "name": nft["name"],
-        "image": nft["image"],
-    })
+    try:
+        balance.value -= nft.price
+        user_nft.create_user_nft(db, user.id, nft.id)
+        db.commit()
+        db.refresh(balance)
+
+    except Exception:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Purchase failed")
 
     return {
-        "user": FAKE_USER,
+        "message": "NFT purchased successfully",
+        "nft": {"id": nft.id, "name": nft.name, "purchased": True},
+        "balance": {"currency": CurrencyEnum.smg.value, "value": balance.value},
     }

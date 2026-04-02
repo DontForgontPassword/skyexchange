@@ -1,22 +1,15 @@
-import { clsx } from "clsx";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import {
-    BOOK_FILTER_OPTIONS,
-    CHART_RANGES,
-    HISTORY_COLUMNS,
-} from "@/shared/constants/Chart";
-import { formatPrice } from "@/shared/utils/format";
+import { CHART_RANGES } from "@/shared/config/Chart";
+import { formatPrice } from "@/shared/lib/price";
 import { Button } from "@/shared/ui/Button";
-import "./ChartPanel.scss";
-import { ChartHistory } from "../ChartHistory";
 import { useExchangeStore } from "@/entities/Exchange";
+import { clsx } from "clsx";
+import "./ChartPanel.scss";
+import { OrderActivity, TradeActivity } from "@/entities/activity";
 
 const ChartPanel = () => {
     const [activeRange, setActiveRange] = useState<string>(CHART_RANGES[0]);
-
-    const trades = useExchangeStore((s) => s.trades);
-    const orders = useExchangeStore((s) => s.orders);
 
     const currentCoin = useExchangeStore((s) => s.coins[s.currentCoinId]);
 
@@ -51,7 +44,7 @@ const ChartPanel = () => {
                                         "chart-panel__header-change",
                                         isPositive
                                             ? "chart-panel__header-change--positive"
-                                            : "chart-panel__header-change--negative"
+                                            : "chart-panel__header-change--negative",
                                     )}
                                 >
                                     {isPositive ? (
@@ -82,9 +75,13 @@ const ChartPanel = () => {
                                 <Button
                                     key={range}
                                     size={"sm"}
-                                    variant={"dark"}
+                                    variant={
+                                        activeRange === range
+                                            ? "default"
+                                            : "dark"
+                                    }
                                     className={clsx(
-                                        "chart-panel__periods-button"
+                                        "chart-panel__periods-button",
                                     )}
                                     onClick={() => setActiveRange(range)}
                                 >
@@ -98,19 +95,8 @@ const ChartPanel = () => {
                 </div>
 
                 <div className="chart-panel__market-data">
-                    <ChartHistory
-                        className="chart-panel__orders-card"
-                        title="Order Book"
-                        data={orders}
-                        filters={BOOK_FILTER_OPTIONS}
-                        columns={HISTORY_COLUMNS}
-                    />
-                    <ChartHistory
-                        className="chart-panel__trades-card"
-                        title="Recent Trades"
-                        data={trades}
-                        columns={HISTORY_COLUMNS}
-                    />
+                    <OrderActivity className="chart-panel__orders-card" />
+                    <TradeActivity className="chart-panel__trades-card" />
                 </div>
             </div>
         </div>

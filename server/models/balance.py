@@ -10,7 +10,6 @@ class CurrencyEnum(Enum):
     sol = "sol"
     smg = "smg"
 
-
 class Balance(Base):
     __tablename__ = "balances"
 
