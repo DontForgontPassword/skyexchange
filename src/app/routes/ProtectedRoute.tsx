@@ -1,13 +1,24 @@
-import { useAuthStore } from '@/features/auth';
-import { FC, ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../provider/context/useAppSelector";
+import { AppSpinner } from "@/widgets/AppSpinner";
 
-interface ProtectedRouteProps {
+interface Props {
     children: ReactNode;
 }
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
-    const isLoggedIn = useAuthStore((s) => Boolean(s.accessToken));
-    if (!isLoggedIn) return <Navigate to="/login" />;
-    return <>{children}</>;
+export const ProtectedRoute = ({ children }: Props) => {
+    const { isAuthenticated, isLoading } = useAppSelector(
+        (state) => state.auth,
+    );
+
+    if (isLoading) {
+        return <AppSpinner />;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/auth" replace />;
+    }
+
+    return children;
 };

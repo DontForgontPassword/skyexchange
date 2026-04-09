@@ -15,11 +15,4 @@ def get_nfts(db: Session = Depends(get_db), user: User = Depends(get_current_use
 
     Business logic lives in `services.shop_service`.
     """
-    time.sleep(3)
     return shop.list_nfts_with_purchase_flag(db, user)
-
-
-@router.post("/purchase")
-def buy_nft(nft_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Buy an NFT for the current user. All business logic is in the service layer."""
-    return shop.purchase_nft(db, user, nft_id)

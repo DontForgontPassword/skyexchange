@@ -1,8 +1,8 @@
 import { type FC } from "react";
-import { FilterOption, FilterType } from "@/shared/types/filter";
+import { FilterOption, FilterType } from "@/shared/model/types/filter";
 import { Button } from "../Button";
-import "./Filter.scss";
 import { clsx } from "clsx";
+import "./Filter.scss";
 
 interface IFilterProps {
     filters: FilterOption[];

@@ -73,6 +73,8 @@ class User(Base):
         return result
 
     def _nfts_list(self):
+        for rel in self.user_nfts:
+            print("REL:", rel.nft_id, rel.nft.image)
         return [
             {
                 "id": rel.nft.id,
@@ -82,3 +84,4 @@ class User(Base):
             for rel in self.user_nfts
             if rel.nft is not None
         ]
+    

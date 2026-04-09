@@ -1,4 +1,9 @@
-export { getBalance } from "./api/get-balance";
-export { getUser } from "./api/get-user";
-export { useMe } from "./hooks/useMe";
-export { useBalance } from "./hooks/useBalance";
+export { UserCard } from "./ui/UserCard";
+export {
+    useGetMeQuery,
+    useGetBalanceQuery,
+    usePerformRegisterMutation,
+    usePerformLoginMutation,
+} from "./api/userApi";
+export { authReducer } from "./model/slice";
+export { clearUser, setLoading, setUser } from "./model/slice";

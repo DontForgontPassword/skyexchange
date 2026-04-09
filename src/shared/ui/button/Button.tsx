@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import "./Button.scss";
 
 interface IButtonProps {
-    variant?: "default" | "dark" | "destructive" | "outline" | "transparent";
+    variant?: "default" | "dark" | "destructive" | "outline" | "transparent" | "outline-destructive";
     size?: "default" | "sm" | "lg";
     className?: string;
 }
@@ -19,7 +19,7 @@ const Button = ({
                 "button",
                 `button--variant-${variant}`,
                 `button--size-${size}`,
-                className
+                className,
             )}
             {...props}
         >

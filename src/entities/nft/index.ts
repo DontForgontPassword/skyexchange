@@ -1,2 +1,2 @@
-export { getNfts } from "../../features/nft/api/get-nfts";
-export { NftCard } from "./ui/nft-card";
+export { NftCard } from "./ui/NftCard";
+export { NftCardSkeleton } from "./ui/NftCardSkeleton";

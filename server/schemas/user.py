@@ -8,7 +8,7 @@ from .enums import Currency
 from .balance import BalanceItem
 
 class AvatarSetRequest(BaseModel):
-    imageId: str
+    avatarImage : str
 
 class AvatarResponse(BaseModel):
     avatarImage: Optional[str]

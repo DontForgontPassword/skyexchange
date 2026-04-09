@@ -1,11 +1,3 @@
-import { RarityType } from "@/shared/types";
+import { RarityType } from "@/shared/model/types";
 
-export type NFT = {
-    id: number;
-    image: string;
-    name: string;
-    price: number;
-    rarity: RarityType;
-    type: string;
-    purchased: boolean;
-};
+

@@ -1,0 +1,14 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__submit {
+        margin-top: 8px;
+    }
+}

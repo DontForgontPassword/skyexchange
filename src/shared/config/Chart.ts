@@ -1,4 +1,4 @@
-import { Column, FilterType } from "../types";
+import { Column, FilterType } from "../model/types";
 
 const HISTORY_COLUMNS: Column[] = [
     { name: "Coin" },

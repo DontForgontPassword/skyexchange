@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from core.deps import get_current_user
@@ -13,20 +14,22 @@ router = APIRouter(prefix="/api/user", tags=["User"])
 def me(user: User = Depends(get_current_user)):
     return user.to_dict()
 
-@router.post("/avatar", response_model=AvatarSetRequest)
+@router.post("/avatar")
 def set_avatar(
     payload: AvatarSetRequest,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    image = payload.imageId
+    image = payload.avatarImage
     if not image:
         raise HTTPException(400, "Image is required")
     
     user.avatarImage = image
     db.commit()
     db.refresh(user)
-    return user
+    return JSONResponse(status_code=200, content={
+        "success": True
+    })
 
 @router.get("/avatar", response_class=AvatarResponse)
 def get_avatar(user: User = Depends(get_current_user)):
@@ -48,5 +51,5 @@ def get_balance(
 
     return {
         "amount": amount,
-        "id": id
+        "id": id.upper(),
     }

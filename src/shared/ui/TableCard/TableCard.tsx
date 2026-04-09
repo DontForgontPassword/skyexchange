@@ -1,4 +1,4 @@
-import { FilterOption, FilterType } from "@/shared/types/filter";
+import { FilterOption, FilterType } from "@/shared/model/types/filter";
 import { Filter } from "@/shared/ui/Filter";
 import { Table } from "@/shared/ui/Table";
 import { Card } from "@/shared/ui/Card";

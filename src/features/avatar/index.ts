@@ -1,1 +1,2 @@
-export { updateAvatar } from "./api/update-avatar";
+export { SetAvatarButton } from "./ui/SetAvatarButton";
+export { useUpdateAvatarMutation } from "./api/avatarApi";

@@ -1,0 +1,60 @@
+.trading-panel {
+    &__header {
+        button {
+            text-align: left;
+        }
+    }
+
+    &__order-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    &__field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__field-input {
+        padding: 12px 16px;
+        margin-top: 8px;
+        border: 2px solid rgba(80, 200, 120, 0.2);
+
+        &:focus {
+            border-color: var(--primary);
+        }
+    }
+
+    &__field-label {
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+    }
+
+    &__summary {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__summary-row {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.summary {
+    &__text {
+        font-size: 0.75rem;
+        color: var(--muted-foreground);
+    }
+
+    &__data {
+        color: var(--foreground);
+    }
+}

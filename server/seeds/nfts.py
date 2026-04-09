@@ -7,6 +7,7 @@ from database import SessionLocal
 
 def seed_nfts():
     db = SessionLocal()
+
     if db.query(NFT).count() > 0:
         print("NFTs already seeded")
         return
@@ -102,7 +103,7 @@ def seed_nfts():
         ),
         NFT(
             id=3443,
-            name="Cock Guardian",
+            name="Willsmoke",
             rarity="Legendary",
             price=1222.67,
             type="new",

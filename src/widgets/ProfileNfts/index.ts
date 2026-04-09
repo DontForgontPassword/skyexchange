@@ -1,1 +1,0 @@
-export { ProfileNfts } from "./ProfileNfts";

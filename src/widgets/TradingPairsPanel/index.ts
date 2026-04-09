@@ -1,1 +1,0 @@
-export { TradingPairsPanel } from './TradingPairsPanel'

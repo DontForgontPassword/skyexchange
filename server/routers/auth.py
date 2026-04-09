@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -15,12 +16,17 @@ router = APIRouter(prefix="/api/auth", tags=["Auth"])
 
 def auth_response(result, error_message: str, status_code: int):
     if not result:
-        raise HTTPException(status_code=status_code, detail=error_message)
+        return {
+            "success": False,
+            "error": error_message,
+        }
 
     user, token = result
+
     return {
         "accessToken": token,
         "user": user.to_dict(),
+        "success": True,
     }
 
 
@@ -38,9 +44,12 @@ def register(
     ).first()
 
     if exists:
-        raise HTTPException(
+        return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User already exists",
+            content={
+                "message": "User already exists",
+                "success": False
+            },
         )
 
     user = User(
@@ -65,6 +74,7 @@ def register(
 @router.post("/login")
 def login(
     payload: LoginRequest,
+    response: Response,
     db: Session = Depends(get_db),
 ):
     email = payload.email
@@ -72,16 +82,29 @@ def login(
 
     user = db.query(User).filter(User.email == email).first()
     if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials",
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "message": "Incorrect password or email",
+                "success": False
+            },
         )
 
     if not verify_password(password, user.password_hash):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials",
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "message": "Incorrect password or email",
+                "success": False
+            },
         )
 
     token = create_access_token(user.id)
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=False,
+        samesite="lax",
+    )
     return auth_response((user, token), "Login failed", 401)

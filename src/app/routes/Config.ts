@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { ExchangePage } from "@/app/pages/exchange";
-import { GamePage } from "@/app/pages/game";
-import { LoginPage } from "@/app/pages/login";
-import { ProfilePage } from "@/app/pages/profile";
-import { ShopPage } from "@/app/pages/shop";
+import { ExchangePage } from "@/pages/exchange";
+import { GamePage } from "@/pages/game";
+import { AuthPage } from "@/pages/auth";
+import { ProfilePage } from "@/pages/profile";
+import { ShopPage } from "@/pages/shop";
 
 interface IRoute {
     to: string;
@@ -16,5 +16,5 @@ export const RoutingList: IRoute[] = [
     { to: "/shop", authRequired: true, page: ShopPage },
     { to: "/game", authRequired: true, page: GamePage },
     { to: "/profile", authRequired: true, page: ProfilePage },
-    { to: "/login", authRequired: false, page: LoginPage },
+    { to: "/auth", authRequired: false, page: AuthPage },
 ];
