@@ -4,7 +4,7 @@
 <ul>
   <li>React</li>
   <li>TypeScript</li>
-  <li>Zustand</li>
+  <li>Redux Toolkit</li>
   <li>FastAPI</li>
   <li>NodeJs</li>
 </ul>
