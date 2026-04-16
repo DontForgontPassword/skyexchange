@@ -14,7 +14,7 @@ const nftApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: { nft_id: nftId },
             }),
-            invalidatesTags: ["NFT", "Balance"],
+            invalidatesTags: ["NFT", "Balance", "User"],
         }),
     }),
 });

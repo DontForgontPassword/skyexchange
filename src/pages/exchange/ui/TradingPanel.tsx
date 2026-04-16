@@ -63,8 +63,7 @@ const TradingPanel = () => {
         }
 
         toast.success(
-            `Successfully ${
-                actionType === "buy" ? "bought" : "sold"
+            `Successfully ${actionType === "buy" ? "bought" : "sold"
             } ${amount} ${coin.name}`,
         );
     };

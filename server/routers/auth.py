@@ -71,6 +71,12 @@ def register(
     return auth_response((user, token), "Registration failed", 400)
 
 
+@router.post("/logout")
+def logout(response: Response,):
+    response.delete_cookie(key="access_token")
+    return {"success": True}
+
+
 @router.post("/login")
 def login(
     payload: LoginRequest,

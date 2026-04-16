@@ -6,17 +6,39 @@ import { clsx } from "clsx";
 import { Button } from "@/shared/ui/Button";
 import { LogoutButton } from "@/features/auth/logout";
 import { User } from "../model/types";
+import { useState } from "react";
+import { Input } from "@/shared/ui/Input";
+import { useEditProfileMutation } from "@/features/edit-profile";
+import { Skeleton } from "@/shared/ui/Skeleton";
 import "./UserCard.scss";
+import { TextSkeleton } from "@/shared/ui/TextSkeleton";
 
-interface IUserCardProps {
+interface Props {
     className?: string;
     user: User;
     balance: Balance;
 }
 
-const UserCard = ({ className, user, balance }: IUserCardProps) => {
+const UserCard = ({ className, user, balance }: Props) => {
+    // todo: Вынести фичи в фич категорию
+    const [isEditing, setEditing] = useState(false);
+    const [username, setUsername] = useState(user.username);
+    const [email, setEmail] = useState(user.email);
+    const [editProfile, { isLoading }] = useEditProfileMutation();
+
+    const handleEditProfile = async () => {
+        if (isEditing) {
+            await editProfile({
+                email,
+                username
+            });
+        }
+
+        setEditing((prev) => !prev);
+    }
+
     return (
-        <div className={clsx("user-card", className)}>
+        <Card className={clsx("user-card", className)}>
             <div className="user-card__inner">
                 <Avatar className="user-card__avatar" src={user?.avatarImage} />
 
@@ -25,9 +47,21 @@ const UserCard = ({ className, user, balance }: IUserCardProps) => {
                         <p className="user-card__info-item-label primary-text">
                             Username
                         </p>
-                        <p className="user-card__info-item-value user-card__info-item-value--username">
-                            {user?.username ?? "N/A"}
-                        </p>
+                        {
+                            isLoading ? (
+                                <TextSkeleton width="40%" height="25px" />
+                            ) : isEditing ? (
+                                <Input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            ) : (
+                                <p className="user-card__info-item-value user-card__info-item-value--username">
+                                    {user.username ?? "N/A"}
+                                </p>
+                            )
+                        }
                     </div>
 
                     <div className="user-card__info-item">
@@ -35,9 +69,13 @@ const UserCard = ({ className, user, balance }: IUserCardProps) => {
                             <Mail width={16} height={16} />
                             Email / Wallet ID
                         </p>
-                        <p className="profile-card__info-item-value profile-card__info-item-value--mail">
-                            {user?.email ?? "N/A"}
-                        </p>
+                        {
+                            !isEditing ? (
+                                <p className="profile-card__info-item-value profile-card__info-item-value--mail">
+                                    {user.email ?? "N/A"}
+                                </p>
+                            ) : <Input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        }
                     </div>
                 </div>
 
@@ -70,6 +108,7 @@ const UserCard = ({ className, user, balance }: IUserCardProps) => {
                     <Button
                         className="user-card__actions-button"
                         variant="default"
+                        onClick={handleEditProfile}
                     >
                         <Edit width={16} height={16} />
                         Edit Profile
@@ -78,7 +117,7 @@ const UserCard = ({ className, user, balance }: IUserCardProps) => {
                     <LogoutButton />
                 </div>
             </div>
-        </div>
+        </Card>
     );
 };
 

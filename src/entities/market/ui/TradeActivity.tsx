@@ -3,9 +3,9 @@ import { TableCard } from "@/shared/ui/TableCard";
 import { Column } from "@/shared/ui/Table";
 import { clsx } from "clsx";
 import { useGetTradesQuery } from "../api/marketApi";
-import { ITrade } from "../model/types";
+import { Trade } from "../model/types";
 
-const activityColumns: Column<ITrade>[] = [
+const activityColumns: Column<Trade>[] = [
     {
         key: "coinId",
         title: "Coin",
@@ -36,11 +36,11 @@ const activityColumns: Column<ITrade>[] = [
     },
 ];
 
-interface ITradeActivityProps {
+interface Props {
     className?: string;
 }
 
-const TradeActivity = ({ className }: ITradeActivityProps) => {
+const TradeActivity = ({ className }: Props) => {
     const { data = [], isLoading } = useGetTradesQuery();
 
     if (isLoading) {

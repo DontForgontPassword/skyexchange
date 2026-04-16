@@ -1,18 +1,22 @@
+import time
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from core.deps import get_current_user
 from models.user import User
-from schemas.user import AvatarResponse, AvatarSetRequest, BalanceResponse, UserResponse
+from schemas.user import AvatarResponse, AvatarSetRequest, BalanceResponse, EditProfileRequest, UserResponse
 from database import get_db
 from models.balance import Balance
 
 router = APIRouter(prefix="/api/user", tags=["User"])
 
+
 @router.get("/me", response_model=UserResponse)
 def me(user: User = Depends(get_current_user)):
     return user.to_dict()
+
 
 @router.post("/avatar")
 def set_avatar(
@@ -23,7 +27,7 @@ def set_avatar(
     image = payload.avatarImage
     if not image:
         raise HTTPException(400, "Image is required")
-    
+
     user.avatarImage = image
     db.commit()
     db.refresh(user)
@@ -31,9 +35,11 @@ def set_avatar(
         "success": True
     })
 
+
 @router.get("/avatar", response_class=AvatarResponse)
 def get_avatar(user: User = Depends(get_current_user)):
     return AvatarResponse(avatarImage=user.avatarImage)
+
 
 @router.get("/balance", response_model=BalanceResponse)
 def get_balance(
@@ -53,3 +59,22 @@ def get_balance(
         "amount": amount,
         "id": id.upper(),
     }
+
+
+@router.post("/edit")
+def edit_profile(payload: EditProfileRequest, user: User = Depends(get_current_user),
+                 db: Session = Depends(get_db),
+                 ):
+    user.username = payload.username
+    user.email = payload.email
+
+    db.commit()
+    db.refresh(user)
+
+    time.sleep(4)
+
+    return JSONResponse(status_code=200, content={
+        "status": True,
+        "username": user.username,
+        "email": user.email
+    })

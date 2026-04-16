@@ -5,13 +5,13 @@ import { AuthPage } from "@/pages/auth";
 import { ProfilePage } from "@/pages/profile";
 import { ShopPage } from "@/pages/shop";
 
-interface IRoute {
+interface Route {
     to: string;
     authRequired: boolean;
     page?: FC;
 }
 
-export const RoutingList: IRoute[] = [
+export const RoutingList: Route[] = [
     { to: "/", authRequired: false, page: ExchangePage },
     { to: "/shop", authRequired: true, page: ShopPage },
     { to: "/game", authRequired: true, page: GamePage },

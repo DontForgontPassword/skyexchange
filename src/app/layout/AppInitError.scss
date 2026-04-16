@@ -1,0 +1,13 @@
+.app-error {
+    @include abs-center;
+    @include flex-center;
+    flex-direction: column;
+    
+    &__message {
+        margin-bottom: 14px;
+    }
+
+    &__reload {
+        width: 100%;
+    }
+}

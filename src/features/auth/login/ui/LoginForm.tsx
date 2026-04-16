@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/shared/ui/Button";
-import { usePerformLoginMutation } from "@/entities/user";
+import { usePerformLoginMutation } from "../api/performLogin";
 import { AuthorizationInput } from "../../shared";
 import { loginSchema } from "../model/schema";
 import { useAppDispatch } from "@/app/provider";
@@ -22,12 +22,12 @@ const LoginForm = () => {
 
     const handleChange =
         (field: keyof typeof fields) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setFields((prev) => ({
-                ...prev,
-                [field]: e.target.value,
-            }));
-        };
+            (e: React.ChangeEvent<HTMLInputElement>) => {
+                setFields((prev) => ({
+                    ...prev,
+                    [field]: e.target.value,
+                }));
+            };
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

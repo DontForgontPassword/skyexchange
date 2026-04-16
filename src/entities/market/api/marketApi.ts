@@ -1,16 +1,16 @@
 import { baseApi } from "@/shared/api";
 import { MarketData } from "./types";
-import { IOrder, ITrade } from "@/shared/model/types";
+import { Order, Trade } from "../model/types";
 
 const marketApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getMarket: builder.query<MarketData, void>({
             query: () => "/exchange/market",
         }),
-        getOrders: builder.query<IOrder[], void>({
+        getOrders: builder.query<Order[], void>({
             query: () => "/exchange/order-activity",
         }),
-        getTrades: builder.query<ITrade[], void>({
+        getTrades: builder.query<Trade[], void>({
             query: () => "/exchange/trade-activity",
         }),
     }),

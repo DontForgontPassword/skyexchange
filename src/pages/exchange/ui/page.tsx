@@ -1,6 +1,6 @@
-import { ChartPanel } from "@/widgets/ChartPanel";
+import { ChartPanel } from "./ChartPanel";
 import { TradingPanel } from "./TradingPanel";
-import { CryptoSelector } from "@/features/crypto-selector";
+import { CryptoSelector } from "@/features/change-crypto-selection";
 import "./page.scss";
 
 export const ExchangePage = () => {

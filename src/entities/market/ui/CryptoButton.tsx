@@ -2,7 +2,8 @@ import { formatPrice } from "@/shared/lib";
 import { clsx } from "clsx";
 import "./CryptoButton.scss";
 import { BASE_URL } from "@/shared/config";
-interface ICryptoButtonProps {
+
+interface Props {
     name: string;
     price: number;
     change: number;
@@ -18,7 +19,7 @@ const CryptoButton = ({
     icon,
     isActive,
     onClick,
-}: ICryptoButtonProps) => {
+}: Props) => {
     return (
         <button
             className={clsx(

@@ -7,11 +7,11 @@ import {
     ShopRarityFilterType,
 } from "@/shared/config";
 import { Button } from "@/shared/ui/Button";
-import { InfoCard } from "@/widgets/InfoCard";
+import { InfoCard } from "./InfoCard";
 import { clsx } from "clsx";
-import { AddFundsModal } from "@/widgets/AddFundsModal";
+import { AddFundsModal } from "./AddFundsModal";
 import { Card } from "@/shared/ui/Card";
-import { NftList } from "@/widgets/NftList";
+import { NftList } from "./NftList";
 import { NftCardSkeleton } from "@/entities/nft";
 import { useGetNftsQuery } from "@/features/nft";
 import "./page.scss";
@@ -63,7 +63,7 @@ export const ShopPage = () => {
                                     className={clsx(
                                         "shop-page__header-button",
                                         currentFilter === filter.type &&
-                                            "shop-page__header-button--active",
+                                        "shop-page__header-button--active",
                                     )}
                                 >
                                     {filter.label}
@@ -97,7 +97,7 @@ export const ShopPage = () => {
                                                 "shop-page__filter-button",
                                                 `shop-page__filter-button--${filter.type}`,
                                                 currentRarity === filter.type &&
-                                                    "shop-page__filter-button--active",
+                                                "shop-page__filter-button--active",
                                             )}
                                         >
                                             {filter.label}

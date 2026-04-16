@@ -1,13 +1,13 @@
 import { clsx } from "clsx";
 import "./Card.scss";
 
-interface ICardProps {
+interface Props {
     children: React.ReactNode;
     className?: string;
     innerClassName?: string;
 }
 
-const Card = ({ children, className, innerClassName }: ICardProps) => {
+const Card = ({ children, className, innerClassName }: Props) => {
     return (
         <div className={clsx(className, "card")}>
             <div className={clsx(innerClassName, "card__inner")}>

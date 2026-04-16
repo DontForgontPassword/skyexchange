@@ -2,9 +2,9 @@ import { TableCard } from "@/shared/ui/TableCard";
 import { Column } from "@/shared/ui/Table";
 import { clsx } from "clsx";
 import { useGetOrdersQuery } from "../api/marketApi";
-import { IOrder } from "../model/types";
+import { Order } from "../model/types";
 
-const activityColumns: Column<IOrder>[] = [
+const activityColumns: Column<Order>[] = [
     {
         key: "coinId",
         title: "Coin",
@@ -35,11 +35,11 @@ const activityColumns: Column<IOrder>[] = [
     },
 ];
 
-interface IOrderActivityProps {
+interface Props {
     className?: string;
 }
 
-const OrderActivity = ({ className }: IOrderActivityProps) => {
+const OrderActivity = ({ className }: Props) => {
     const { data = [], isLoading } = useGetOrdersQuery();
 
     if (isLoading) {

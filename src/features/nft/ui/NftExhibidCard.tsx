@@ -3,7 +3,7 @@ import { SetAvatarButton } from "@/features/avatar";
 import { BASE_URL } from "@/shared/config";
 import "./NftExhibidCard.scss";
 
-interface INftExhibidCardProps {
+interface Props {
     avatarImage: string;
     avatarName: string;
     className?: string;
@@ -13,7 +13,7 @@ const NftExhibidCard = ({
     avatarImage,
     avatarName,
     className,
-}: INftExhibidCardProps) => {
+}: Props) => {
     const image = `${BASE_URL}${avatarImage}`;
     return (
         <div className={clsx(className, "nft-exhibid-card")}>

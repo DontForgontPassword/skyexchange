@@ -3,11 +3,11 @@ import { useCallback } from "react";
 import { useUpdateAvatarMutation } from "../api/avatarApi";
 import { toast } from "sonner";
 
-interface ISetAvatarButtonProps {
+interface Props {
     avatarImage: string;
 }
 
-const SetAvatarButton = ({ avatarImage }: ISetAvatarButtonProps) => {
+const SetAvatarButton = ({ avatarImage }: Props) => {
     const [updateAvatar] = useUpdateAvatarMutation();
 
     const handleSetAvatar = useCallback(async () => {

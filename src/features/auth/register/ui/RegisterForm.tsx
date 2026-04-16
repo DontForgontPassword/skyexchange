@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/shared/ui/Button";
-import { usePerformRegisterMutation } from "@/entities/user";
 import { registerSchema } from "../model/schema";
-import "./RegisterForm.scss";
 import { AuthorizationInput } from "../../shared";
+import { usePerformRegisterMutation } from "../api/performRegister";
+import "./RegisterForm.scss";
 
 const RegisterForm = () => {
     const [registerUser, { isLoading }] = usePerformRegisterMutation();
@@ -19,12 +19,12 @@ const RegisterForm = () => {
 
     const handleChange =
         (field: keyof typeof fields) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setFields((prev) => ({
-                ...prev,
-                [field]: e.target.value,
-            }));
-        };
+            (e: React.ChangeEvent<HTMLInputElement>) => {
+                setFields((prev) => ({
+                    ...prev,
+                    [field]: e.target.value,
+                }));
+            };
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

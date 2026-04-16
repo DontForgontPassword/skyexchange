@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import "./Button.scss";
 
-interface IButtonProps {
+interface Props extends React.ComponentProps < "button" > {
     variant?: "default" | "dark" | "destructive" | "outline" | "transparent" | "outline-destructive";
     size?: "default" | "sm" | "lg";
     className?: string;
@@ -12,7 +12,7 @@ const Button = ({
     size = "default",
     className,
     ...props
-}: IButtonProps & React.ComponentProps<"button">) => {
+}: Props) => {
     return (
         <button
             className={clsx(

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { cryptoReducer } from "@/features/crypto-selector";
+import { cryptoReducer } from "@/features/change-crypto-selection";
 import { authReducer } from "@/entities/user";
 import { baseApi } from "@/shared/api";
 

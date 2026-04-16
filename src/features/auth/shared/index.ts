@@ -1,2 +1,2 @@
 export { AuthorizationInput } from "./ui/AuthorizationInput";
-export { AuthTypes } from "./model/types";
+export type { AuthTypes } from "./model/types";

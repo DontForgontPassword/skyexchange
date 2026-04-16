@@ -4,7 +4,7 @@ import { Button } from "../Button";
 import { clsx } from "clsx";
 import "./Filter.scss";
 
-interface IFilterProps {
+interface Props {
     filters: FilterOption[];
     filterType: FilterType;
     setFilterType: React.Dispatch<React.SetStateAction<FilterType>>;
@@ -13,7 +13,7 @@ interface IFilterProps {
     defaultValue: FilterType;
 }
 
-export const Filter: FC<IFilterProps> = ({
+export const Filter: FC<Props> = ({
     filters,
     className,
     filterType,

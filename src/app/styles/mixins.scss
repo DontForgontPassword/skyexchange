@@ -17,6 +17,13 @@
   align-items: center;
 }
 
+@mixin abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @mixin fluid-font($min, $max) {
   $minViewport: 360;
   $maxViewport: 1200;

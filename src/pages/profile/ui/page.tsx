@@ -1,4 +1,4 @@
-import { ProfileNftsCollection } from "@/widgets/ProfileNftsCollection";
+import { ProfileNftsCollection } from "./ProfileNftsCollection";
 import { UserCard } from "@/entities/user";
 import { useGetBalanceQuery, useGetMeQuery } from "@/entities/user";
 import "./page.scss";

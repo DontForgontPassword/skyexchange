@@ -1,0 +1,1 @@
+export { useGetHistoryQuery } from "./api/chartApi";

@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/Button";
 import { clsx } from "clsx";
 import "./AuthorizationInput.scss";
 
-interface IAuthorizationInputProps extends React.ComponentProps<"input"> {
+interface Props extends React.ComponentProps<"input"> {
     label: string;
     icon: "user" | "email" | "password";
     error: string;
@@ -16,7 +16,7 @@ const AuthorizationInput = ({
     label,
     error,
     ...props
-}: IAuthorizationInputProps) => {
+}: Props) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const renderIcon = () => {

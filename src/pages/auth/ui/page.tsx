@@ -8,7 +8,7 @@ import "./page.scss";
 
 const AuthPage = () => {
     const [authorizationType, setAuthorizationType] =
-        useState<AuthTypes>("register");
+        useState<AuthTypes>("login");
 
     return (
         <section className="login-page">
@@ -16,24 +16,24 @@ const AuthPage = () => {
                 <header className="login-page__header">
                     <div className="login-page__switch">
                         <button
-                            onClick={() => setAuthorizationType("register")}
-                            className={clsx(
-                                "login-page__switch-btn",
-                                authorizationType === "register" &&
-                                    "login-page__switch-btn--active",
-                            )}
-                        >
-                            Register
-                        </button>
-                        <button
                             onClick={() => setAuthorizationType("login")}
                             className={clsx(
                                 "login-page__switch-btn",
                                 authorizationType === "login" &&
-                                    "login-page__switch-btn--active",
+                                "login-page__switch-btn--active",
                             )}
                         >
                             Login
+                        </button>
+                        <button
+                            onClick={() => setAuthorizationType("register")}
+                            className={clsx(
+                                "login-page__switch-btn",
+                                authorizationType === "register" &&
+                                "login-page__switch-btn--active",
+                            )}
+                        >
+                            Register
                         </button>
                     </div>
 
@@ -45,10 +45,10 @@ const AuthPage = () => {
                     </div>
                 </header>
 
-                {authorizationType === "register" ? (
-                    <RegisterForm />
-                ) : (
+                {authorizationType === "login" ? (
                     <LoginForm />
+                ) : (
+                    <RegisterForm />
                 )}
             </div>
         </section>

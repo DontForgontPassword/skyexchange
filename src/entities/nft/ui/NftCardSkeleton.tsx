@@ -1,11 +1,11 @@
 import { clsx } from "clsx";
 import "./NftCardSkeleton.scss";
 
-interface INftCardSkeletonProps {
+interface Props {
     className?: string;
 }
 
-const NftCardSkeleton = ({ className }: INftCardSkeletonProps) => {
+const NftCardSkeleton = ({ className }: Props) => {
     return <div className={clsx("nft-card-skeleton", className)}></div>;
 };
 

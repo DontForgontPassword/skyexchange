@@ -1,4 +1,4 @@
-export type IOrder = {
+export type Order = {
     id: number;
     coinId: string;
     price: number;
@@ -7,7 +7,7 @@ export type IOrder = {
     type: "buy" | "sell";
 };
 
-export type ITrade = {
+export type Trade = {
     id: number;
     coinId: string;
     price: number;

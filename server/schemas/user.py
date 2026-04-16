@@ -7,15 +7,24 @@ from .game import GameSchema
 from .enums import Currency
 from .balance import BalanceItem
 
+
 class AvatarSetRequest(BaseModel):
-    avatarImage : str
+    avatarImage: str
+
+
+class EditProfileRequest(BaseModel):
+    username: str
+    email: EmailStr
+
 
 class AvatarResponse(BaseModel):
     avatarImage: Optional[str]
 
+
 class BalanceResponse(BaseModel):
     amount: float
     id: str
+
 
 class UserResponse(BaseModel):
     id: int
@@ -32,4 +41,3 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
-

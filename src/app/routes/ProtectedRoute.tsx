@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../provider/context/useAppSelector";
-import { AppSpinner } from "@/widgets/AppSpinner";
+import { Skeleton } from "@/shared/ui/Skeleton";
 
 interface Props {
     children: ReactNode;
@@ -13,7 +13,7 @@ export const ProtectedRoute = ({ children }: Props) => {
     );
 
     if (isLoading) {
-        return <AppSpinner />;
+        return <Skeleton />;
     }
 
     if (!isAuthenticated) {
