@@ -4,7 +4,7 @@ import { usePerformLoginMutation } from "../api/performLogin";
 import { AuthorizationInput } from "../../shared";
 import { loginSchema } from "../model/schema";
 import { useAppDispatch } from "@/app/provider";
-import { setUser } from "@/entities/user";
+import { setUser, useGetMeQuery } from "@/entities/user";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.scss";
 
@@ -12,10 +12,9 @@ const LoginForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [loginUser, { isLoading }] = usePerformLoginMutation();
-
     const [fields, setFields] = useState({
         email: "543gre@gmail.com",
-        password: "Beeswarm2001",
+        password: "543gre@gmail.com",
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -62,6 +61,7 @@ const LoginForm = () => {
                 return;
             }
 
+            await useGetMeQuery();
             dispatch(setUser(response.user));
             navigate("/");
         } catch (e) {

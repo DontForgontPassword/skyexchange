@@ -2,16 +2,16 @@ import { Balance } from "@/shared/model";
 import { Avatar } from "./Avatar";
 import { Edit, Mail } from "lucide-react";
 import { Card } from "@/shared/ui/Card";
-import { clsx } from "clsx";
 import { Button } from "@/shared/ui/Button";
 import { LogoutButton } from "@/features/auth/logout";
 import { User } from "../model/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/shared/ui/Input";
 import { useEditProfileMutation } from "@/features/edit-profile";
-import { Skeleton } from "@/shared/ui/Skeleton";
-import "./UserCard.scss";
 import { TextSkeleton } from "@/shared/ui/TextSkeleton";
+import { toast } from "sonner";
+import { clsx } from "clsx";
+import "./UserCard.scss";
 
 interface Props {
     className?: string;
@@ -20,22 +20,43 @@ interface Props {
 }
 
 const UserCard = ({ className, user, balance }: Props) => {
-    // todo: Вынести фичи в фич категорию
     const [isEditing, setEditing] = useState(false);
+
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
+
     const [editProfile, { isLoading }] = useEditProfileMutation();
+
+    useEffect(() => {
+        setUsername(user.username);
+        setEmail(user.email);
+    }, [user]);
 
     const handleEditProfile = async () => {
         if (isEditing) {
-            await editProfile({
-                email,
-                username
-            });
+            try {
+                const response = await editProfile({
+                    email,
+                    username,
+                }).unwrap();
+
+                if (!response.success) {
+                    toast.error("Failed to edit profile");
+                    return;
+                }
+
+                setUsername(response.username);
+                setEmail(response.email);
+
+                toast.success("Profile updated");
+            } catch (error) {
+                console.error("Failed to edit profile", error);
+                toast.error("Something went wrong");
+            }
         }
 
         setEditing((prev) => !prev);
-    }
+    };
 
     return (
         <Card className={clsx("user-card", className)}>
@@ -47,21 +68,20 @@ const UserCard = ({ className, user, balance }: Props) => {
                         <p className="user-card__info-item-label primary-text">
                             Username
                         </p>
-                        {
-                            isLoading ? (
-                                <TextSkeleton width="40%" height="25px" />
-                            ) : isEditing ? (
-                                <Input
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            ) : (
-                                <p className="user-card__info-item-value user-card__info-item-value--username">
-                                    {user.username ?? "N/A"}
-                                </p>
-                            )
-                        }
+
+                        {isLoading ? (
+                            <TextSkeleton width="40%" height="25px" />
+                        ) : isEditing ? (
+                            <Input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        ) : (
+                            <p className="user-card__info-item-value user-card__info-item-value--username">
+                                {username ?? "N/A"}
+                            </p>
+                        )}
                     </div>
 
                     <div className="user-card__info-item">
@@ -69,13 +89,20 @@ const UserCard = ({ className, user, balance }: Props) => {
                             <Mail width={16} height={16} />
                             Email / Wallet ID
                         </p>
-                        {
-                            !isEditing ? (
-                                <p className="profile-card__info-item-value profile-card__info-item-value--mail">
-                                    {user.email ?? "N/A"}
-                                </p>
-                            ) : <Input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        }
+
+                        {isLoading ? (
+                            <TextSkeleton width="40%" height="25px" />
+                        ) : isEditing ? (
+                            <Input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        ) : (
+                            <p className="user-card__info-item-value user-card__info-item-value--mail">
+                                {email ?? "N/A"}
+                            </p>
+                        )}
                     </div>
                 </div>
 
@@ -111,7 +138,7 @@ const UserCard = ({ className, user, balance }: Props) => {
                         onClick={handleEditProfile}
                     >
                         <Edit width={16} height={16} />
-                        Edit Profile
+                        {isEditing ? "Save" : "Edit Profile"}
                     </Button>
 
                     <LogoutButton />

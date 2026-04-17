@@ -35,7 +35,7 @@ const Header = () => {
                                                 clsx(
                                                     "nav__link",
                                                     isActive &&
-                                                        "nav__link--active",
+                                                    "nav__link--active",
                                                 )
                                             }
                                             to={link.to}
@@ -56,14 +56,15 @@ const Header = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Button variant="default">
-                                <Link to="/auth">Login</Link>
+                            <Link to="/auth"><Button variant="default">
+                                Login
                             </Button>
+                            </Link>
                         )}
                     </ul>
                 </nav>
             </div>
-        </header>
+        </header >
     );
 };
 

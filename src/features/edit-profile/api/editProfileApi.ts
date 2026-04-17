@@ -15,6 +15,7 @@ const editProfileApi = baseApi.injectEndpoints({
                     "Content-Type": "application/json"
                 }
             }),
+            invalidatesTags: ["User"]
         }),
     })
 })

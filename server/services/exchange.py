@@ -8,8 +8,8 @@ from models.user import User
 from schemas.nft import PurchaseNFTSchema
 from database import get_db
 from models.candle import PriceCandle
-from services.nft import get_nft
-from services.user_nft import user_owns_nft, create_user_nft
+from repositories.nft import get_nft
+from repositories.user_nft import user_owns_nft, create_user_nft
 
 
 def get_order_activity():
@@ -72,69 +72,6 @@ def get_market_data():
                 "icon": "/static/crypto/smg.png"
             },
         ]
-    }
-
-
-def purchase_nft(db: Session, user: User, payload: PurchaseNFTSchema) -> Dict[str, Any]:
-    nft = get_nft(db, payload.nft_id)
-    if not nft:
-        return JSONResponse(
-            status_code=status.HTTP_404_NOT_FOUND,
-            content={"message": "NFT not found", "success": False},
-        )
-
-    if user_owns_nft(db, user.id, payload.nft_id):
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={"message": "NFT already owned", "success": False},
-        )
-
-    balance = (
-        db.query(Balance)
-        .filter(
-            Balance.user_id == user.id,
-            Balance.currency == CurrencyEnum.smg,
-        )
-        .first()
-    )
-
-    if not balance:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={"message": "Balance not found", "success": False},
-        )
-
-    if balance.value < nft.price:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={"message": "Not enough balance", "success": False},
-        )
-
-    try:
-        balance.value -= nft.price
-        create_user_nft(db, user.id, nft.id)
-
-        db.commit()
-        db.refresh(balance)
-
-    except Exception:
-        db.rollback()
-        return JSONResponse(
-            status_code=500,
-            content={"message": "Purchase failed", "success": False},
-        )
-
-    return {
-        "message": "NFT purchased successfully",
-        "nft": {
-            "id": nft.id,
-            "name": nft.name,
-            "purchased": True,
-        },
-        "balance": {
-            "currency": CurrencyEnum.smg.value,
-            "value": balance.value,
-        },
     }
 
 

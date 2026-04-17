@@ -10,7 +10,7 @@ const nftApi = baseApi.injectEndpoints({
         }),
         performPurchaseNft: builder.mutation<NftPurchaseResponse, number>({
             query: (nftId) => ({
-                url: "/exchange/purchase",
+                url: "/shop/purchase",
                 method: "POST",
                 body: { nft_id: nftId },
             }),

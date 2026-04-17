@@ -45,7 +45,7 @@ const InfoCard = ({ setFundsModalOpen, className }: Props) => {
         },
     ];
 
-    const handleLogin = () => {
+    const handleNavigateLogin = () => {
         navigate("/login");
     };
 
@@ -82,7 +82,7 @@ const InfoCard = ({ setFundsModalOpen, className }: Props) => {
                     <Button
                         variant="default"
                         className="info-card__login-button"
-                        onClick={handleLogin}
+                        onClick={handleNavigateLogin}
                     >
                         Login
                     </Button>

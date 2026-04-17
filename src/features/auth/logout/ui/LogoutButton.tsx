@@ -4,8 +4,10 @@ import { Button } from "@/shared/ui/Button";
 import { LogOut } from "lucide-react";
 import { usePerformLogoutMutation } from "../api/logoutApi";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
+    const navigator = useNavigate();
     const dispatch = useAppDispatch();
     const [performLogout, { isLoading }] = usePerformLogoutMutation();
 
@@ -13,16 +15,20 @@ const LogoutButton = () => {
         try {
             const response = await performLogout().unwrap();
 
-            if (!response?.success) {
+            if (!response.success) {
                 toast.error("Logout failed");
                 return;
             }
 
             dispatch(clearUser());
-            toast.success("Logged out successfully");
-        } catch (error) {
-            console.error("Logout error.")
-            toast.error("Network error. Try again.");
+            navigator("/login");
+
+        } catch (error: any) {
+            console.error(error);
+
+            toast.error(
+                error?.data?.message ?? "Request failed"
+            );
         }
     };
 
