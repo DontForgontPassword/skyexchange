@@ -10,7 +10,7 @@ import "./styles/index.scss";
 const App = () => {
     return (
         <ReduxProvider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename="/skyexchange/">
                 <AppInit>
                     <Header />
                     <AppRoutes />

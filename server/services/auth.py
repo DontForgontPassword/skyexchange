@@ -64,8 +64,8 @@ def register(payload: RegisterRequest, response: Response, db: Session):
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,
-        samesite="lax",
+        secure=True,
+        samesite="none",
         path="/",
     )
     return response
@@ -96,8 +96,8 @@ def login(payload: LoginRequest, response: Response, db: Session):
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,
-        samesite="lax",
+        secure=True,
+        samesite="none",
         path="/",
     )
     return response

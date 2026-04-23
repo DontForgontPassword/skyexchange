@@ -16,7 +16,7 @@ const Header = () => {
         <header className="header">
             <div className="header__inner container">
                 <NavLink to={"/"}>
-                    <img src="/logo.png" width={150} height={80} />
+                    <img src="/skyexchange/logo.png" width={150} height={80} />
                 </NavLink>
                 <nav className="header__nav nav">
                     <ul className="nav__list">

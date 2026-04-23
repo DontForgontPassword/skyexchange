@@ -41,6 +41,7 @@ const AddFundsModal = ({ setFundsModalOpen }: AddFundsModalProps) => {
                         onClick={handleModalClose}
                         aria-label="Close"
                         type="button"
+                        disabled={true}
                     >
                         <X color="white" width={24} height={24} />
                     </button>

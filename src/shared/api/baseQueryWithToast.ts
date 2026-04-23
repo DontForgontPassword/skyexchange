@@ -7,7 +7,7 @@ import {
 import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api",
+    baseUrl: "https://skyexchange-4b68.onrender.com/api",
     credentials: "include",
 });
 
