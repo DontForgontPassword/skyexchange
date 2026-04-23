@@ -7,7 +7,7 @@ import {
 import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "https://skyexchange-4b68.onrender.com/api",
+    baseUrl: import.meta.env.PUBLIC_API_URL,
     credentials: "include",
 });
 
