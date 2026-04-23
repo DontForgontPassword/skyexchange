@@ -41,19 +41,16 @@ interface Props {
 }
 
 const TradeActivity = ({ className }: Props) => {
-    const { data = [], isLoading } = useGetTradesQuery(undefined, {
+    const { data = [] } = useGetTradesQuery(undefined, {
         pollingInterval: 10000,
     });
-
-    if (isLoading) {
-        return <div>Loading</div>;
-    }
 
     return (
         <TableCard
             title="Trade Activity"
             data={data}
             columns={activityColumns}
+            className={className}
         />
     );
 };

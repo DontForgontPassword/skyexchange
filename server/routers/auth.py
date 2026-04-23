@@ -16,22 +16,16 @@ router = APIRouter(prefix="/api/auth", tags=["Auth"])
 
 @router.post("/register")
 def register(
-    payload: RegisterRequest,
-    response: Response,
-    db: Session = Depends(get_db)
+    payload: RegisterRequest, response: Response, db: Session = Depends(get_db)
 ):
     return auth.register(payload, response, db)
 
 
 @router.post("/logout")
 def logout(request: Request, response: Response):
-    return auth.logout(request, response)
+    return auth.logout(request)
 
 
 @router.post("/login")
-def login(
-    payload: LoginRequest,
-    response: Response,
-    db: Session = Depends(get_db)
-):
+def login(payload: LoginRequest, response: Response, db: Session = Depends(get_db)):
     return auth.login(payload, response, db)

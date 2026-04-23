@@ -7,7 +7,6 @@ const logoutApi = baseApi.injectEndpoints({
                 url: "/auth/logout",
                 method: "POST",
             }),
-            invalidatesTags: ["User", "Balance"]
         }),
     }),
 });

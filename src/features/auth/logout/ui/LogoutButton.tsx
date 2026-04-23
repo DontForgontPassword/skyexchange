@@ -22,18 +22,20 @@ const LogoutButton = () => {
 
             dispatch(clearUser());
             navigator("/auth");
-
         } catch (error: any) {
             console.error(error);
 
-            toast.error(
-                error?.data?.message ?? "Request failed"
-            );
+            toast.error(error?.data?.message ?? "Request failed");
         }
     };
 
     return (
-        <Button className="logout-button" variant="outline-destructive" onClick={logout} disabled={isLoading} >
+        <Button
+            className="logout-button"
+            variant="outline-destructive"
+            onClick={logout}
+            disabled={isLoading}
+        >
             <LogOut width={16} height={16} />
             {!isLoading ? "Logout" : "Logging out..."}
         </Button>

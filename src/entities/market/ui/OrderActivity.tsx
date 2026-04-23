@@ -40,16 +40,17 @@ interface Props {
 }
 
 const OrderActivity = ({ className }: Props) => {
-    const { data = [], isLoading } = useGetOrdersQuery(undefined, {
+    const { data = [] } = useGetOrdersQuery(undefined, {
         pollingInterval: 10000,
     });
 
-    if (isLoading) {
-        return <div>Loading</div>;
-    }
-
     return (
-        <TableCard title="Order Book" data={data} columns={activityColumns} />
+        <TableCard
+            title="Order Book"
+            data={data}
+            columns={activityColumns}
+            className={className}
+        />
     );
 };
 

@@ -9,12 +9,9 @@ import "./Header.scss";
 
 const Header = () => {
     const isAuthorized = useAppSelector((state) => state.auth.isAuthenticated);
-    const { data: balance, isLoading: isBalanceLoading } = useGetBalanceQuery(
-        undefined,
-        {
-            skip: !isAuthorized,
-        },
-    );
+    const { data: balance } = useGetBalanceQuery(undefined, {
+        skip: !isAuthorized,
+    });
     return (
         <header className="header">
             <div className="header__inner container">
@@ -35,7 +32,7 @@ const Header = () => {
                                                 clsx(
                                                     "nav__link",
                                                     isActive &&
-                                                    "nav__link--active",
+                                                        "nav__link--active",
                                                 )
                                             }
                                             to={link.to}
@@ -56,15 +53,14 @@ const Header = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link to="/auth"><Button variant="default">
-                                Login
-                            </Button>
+                            <Link to="/auth">
+                                <Button variant="default">Login</Button>
                             </Link>
                         )}
                     </ul>
                 </nav>
             </div>
-        </header >
+        </header>
     );
 };
 

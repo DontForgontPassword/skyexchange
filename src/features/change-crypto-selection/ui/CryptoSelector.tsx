@@ -10,7 +10,7 @@ import "./CryptoSelector.scss";
 
 const CryptoSelector = () => {
     const dispatch = useAppDispatch();
-    const { data, isLoading } = useGetMarketQuery();
+    const { data } = useGetMarketQuery();
 
     const coins = data?.coins;
 

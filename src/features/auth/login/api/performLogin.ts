@@ -8,9 +8,17 @@ export const loginApi = baseApi.injectEndpoints({
             query: (body) => ({
                 url: "/auth/login",
                 method: "POST",
-                body
+                body,
             }),
-            invalidatesTags: ["User", "Balance"]
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+
+                    dispatch(baseApi.util.invalidateTags(["User", "Balance"]));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
     }),
 });

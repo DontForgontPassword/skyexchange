@@ -4,7 +4,7 @@ import { usePerformLoginMutation } from "../api/performLogin";
 import { AuthorizationInput } from "../../shared";
 import { loginSchema } from "../model/schema";
 import { useAppDispatch } from "@/app/provider";
-import { setUser, useGetMeQuery } from "@/entities/user";
+import { setUser } from "@/entities/user";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.scss";
 

@@ -59,7 +59,7 @@ def register(payload: RegisterRequest, response: Response, db: Session):
     token = create_access_token(user.id)
     content = auth_response((user, token))
     response = JSONResponse(content=content)
-    
+
     response.set_cookie(
         key="access_token",
         value=token,
@@ -103,16 +103,14 @@ def login(payload: LoginRequest, response: Response, db: Session):
     return response
 
 
-def logout(request: Request, response: Response):
-    token = request.cookies.get("access_token")
-
-    if not token:
-        return JSONResponse(
-            status_code=400, content={"success": False, "message": "No token found"}
-        )
-
-    response.delete_cookie(key="access_token", httponly=True, samesite="lax", path="/")
-
-    return JSONResponse(
+def logout(request: Request):
+    response = JSONResponse(
         status_code=200, content={"success": True, "message": "Logged out"}
     )
+
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+    )
+
+    return response

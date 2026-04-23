@@ -1,4 +1,4 @@
-import { RarityType } from "@/shared/model/types";
+import { RarityType } from "./filter";
 
 export interface Nft {
     id: number;

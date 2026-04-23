@@ -53,7 +53,7 @@ const GameInterface = () => {
     const [saveScore] = useSaveScoreMutation();
     const { refetch: refetchLeaderboard } = useGetLeaderboardQuery();
 
-    const requestRef = useRef<number>();
+    const requestRef = useRef<number | null>(null);
     const playerX = useRef(500);
     const playerY = useRef(500);
     const objects = useRef<GameObject[]>([]);
@@ -522,7 +522,7 @@ const GameInterface = () => {
                             </p>
                             <Button
                                 onClick={startGame}
-                                size="lg"
+                                size="default"
                                 className="game-overlay__btn"
                             >
                                 {gameState === "idle"

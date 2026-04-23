@@ -14,9 +14,17 @@ const registerApi = baseApi.injectEndpoints({
                     password,
                 },
             }),
-            invalidatesTags: ["User", "Balance"]
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+
+                    dispatch(baseApi.util.invalidateTags(["User", "Balance"]));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
-    })
+    }),
 });
 
 export const { usePerformRegisterMutation } = registerApi;
