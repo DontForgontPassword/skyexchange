@@ -9,6 +9,7 @@ from routers.user import router as user_router
 from routers.auth import router as auth_router
 from routers.shop import router as shop_router
 from routers.exchange import router as exchange_router
+from routers.game import router as game_router
 from seeds.nfts import seed_nfts
 from functions.MarketSimulator import MarketSimulator
 
@@ -30,6 +31,7 @@ app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(shop_router)
 app.include_router(exchange_router)
+app.include_router(game_router)
 
 sim = MarketSimulator()
 
@@ -39,3 +41,5 @@ async def startup():
     seed_nfts()
     asyncio.create_task(sim.run("BTC"))
     asyncio.create_task(sim.run("ETH"))
+    asyncio.create_task(sim.run("SOL"))
+    asyncio.create_task(sim.run("SMG"))

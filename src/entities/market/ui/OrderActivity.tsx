@@ -40,7 +40,9 @@ interface Props {
 }
 
 const OrderActivity = ({ className }: Props) => {
-    const { data = [], isLoading } = useGetOrdersQuery();
+    const { data = [], isLoading } = useGetOrdersQuery(undefined, {
+        pollingInterval: 10000,
+    });
 
     if (isLoading) {
         return <div>Loading</div>;

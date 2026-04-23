@@ -49,7 +49,7 @@ const CryptoButton = ({
                             : "crypto-button__change--negative",
                     )}
                 >
-                    {change > 0 ? `+${change}%` : `${change}%`}
+                    {`${change > 0 ? "+" : ""}${change.toFixed(2)}%`}
                 </p>
             </div>
         </button>

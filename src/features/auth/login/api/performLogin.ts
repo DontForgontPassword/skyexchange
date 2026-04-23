@@ -10,6 +10,7 @@ export const loginApi = baseApi.injectEndpoints({
                 method: "POST",
                 body
             }),
+            invalidatesTags: ["User", "Balance"]
         }),
     }),
 });

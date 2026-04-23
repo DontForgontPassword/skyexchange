@@ -8,7 +8,7 @@ import { Card } from "@/shared/ui/Card";
 import { firstUpper } from "@/shared/lib/string";
 import { toast } from "sonner";
 import { useGetBalanceQuery } from "@/entities/user";
-import { useGetMarketQuery } from "@/entities/market";
+import { useGetMarketQuery, useCreateTradeMutation } from "@/entities/market";
 import { useAppSelector } from "@/app/provider";
 import "./TradingPanel.scss";
 
@@ -24,7 +24,9 @@ const TradingPanel = () => {
         data: marketData,
         isError: isMarketError,
         isLoading: isMarketLoading,
-    } = useGetMarketQuery();
+    } = useGetMarketQuery(undefined, { pollingInterval: 10000 });
+
+    const [createTrade, { isLoading: isTrading }] = useCreateTradeMutation();
 
     const {
         data: balance,
@@ -46,7 +48,7 @@ const TradingPanel = () => {
 
     const fee = useMemo(() => total * FEE_PERCENT, [total]);
 
-    const handleTrade = () => {
+    const handleTrade = async () => {
         if (!isAuthorized) {
             toast.error("You must be logged in");
             return;
@@ -62,10 +64,22 @@ const TradingPanel = () => {
             return;
         }
 
-        toast.success(
-            `Successfully ${actionType === "buy" ? "bought" : "sold"
-            } ${amount} ${coin.name}`,
-        );
+        try {
+            await createTrade({
+                coin_id: coin.id,
+                amount,
+                action: actionType as "buy" | "sell",
+            }).unwrap();
+
+            toast.success(
+                `Successfully ${
+                    actionType === "buy" ? "bought" : "sold"
+                } ${amount} ${coin.name}`,
+            );
+            setAmount(0);
+        } catch (error) {
+            toast.error("Trade failed");
+        }
     };
 
     if (isMarketLoading || (isAuthorized && isBalanceLoading)) {
@@ -109,7 +123,7 @@ const TradingPanel = () => {
                 <Button
                     onClick={handleTrade}
                     variant={actionType === "buy" ? "default" : "destructive"}
-                    disabled={!isAuthorized || !coin}
+                    disabled={!isAuthorized || !coin || isTrading}
                 >
                     {coin?.symbol
                         ? `${firstUpper(actionType)} ${coin.symbol}`

@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/app/provider";
 import { NftCard } from "@/entities/nft";
-import { usePerformPurchaseNftMutation } from "@/features/nft";
+import { usePerformPurchaseNftMutation } from "@/features/shop";
 import { Nft } from "@/shared/model";
 import { toast } from "sonner";
 import "./NftList.scss";

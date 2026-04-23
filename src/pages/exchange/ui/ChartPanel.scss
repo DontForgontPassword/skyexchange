@@ -14,6 +14,7 @@
     &__header {
         display: flex;
         flex-direction: column;
+        margin-bottom: 16px;
     }
 
     &__header-title {
@@ -104,5 +105,29 @@
 
     &__container {
         margin-top: 24px;
+    }
+}
+
+.chart-tooltip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    &__time {
+        font-size: 0.75rem;
+        color: var(--muted-foreground);
+        margin-bottom: 4px;
+    }
+
+    &__price {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--foreground);
+
+        span {
+            color: var(--primary);
+        }
     }
 }

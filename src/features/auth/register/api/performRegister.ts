@@ -1,10 +1,10 @@
 import { baseApi } from "@/shared/api";
 import { RegisterRequest } from "./types";
-import { User } from "@/entities/user";
+import { ResultResponse } from "../../shared/model/types";
 
 const registerApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        performRegister: builder.mutation<User, RegisterRequest>({
+        performRegister: builder.mutation<ResultResponse, RegisterRequest>({
             query: ({ email, username, password }) => ({
                 url: "/auth/register",
                 method: "POST",
@@ -13,10 +13,8 @@ const registerApi = baseApi.injectEndpoints({
                     username,
                     password,
                 },
-                headers: {
-                    "Content-Type": "application/json",
-                },
             }),
+            invalidatesTags: ["User", "Balance"]
         }),
     })
 });

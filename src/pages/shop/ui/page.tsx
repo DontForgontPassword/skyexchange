@@ -13,7 +13,7 @@ import { AddFundsModal } from "./AddFundsModal";
 import { Card } from "@/shared/ui/Card";
 import { NftList } from "./NftList";
 import { NftCardSkeleton } from "@/entities/nft";
-import { useGetNftsQuery } from "@/features/nft";
+import { useGetNftsQuery } from "@/features/shop";
 import "./page.scss";
 
 export const ShopPage = () => {

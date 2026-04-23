@@ -51,7 +51,7 @@ const Header = () => {
                                 <div>
                                     <p className="wallet__title">Balance</p>
                                     <span className="wallet__balance">
-                                        {`${balance?.amount.toFixed(2)} SMG`}
+                                        {`${balance?.amount?.toFixed(2) ?? "0.00"} SMG`}
                                     </span>
                                 </div>
                             </div>

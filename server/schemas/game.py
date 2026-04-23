@@ -1,6 +1,14 @@
 from pydantic import BaseModel
 
 
-class GameSchema(BaseModel):
+class SaveScoreRequest(BaseModel):
     score: int
-    rank: int
+    validation_hash: str
+
+
+class GameSchema(BaseModel):
+    user_id: int
+    score: int
+
+    class Config:
+        from_attributes = True

@@ -9,11 +9,11 @@ from models.user import User
 from schemas.auth import LoginRequest, RegisterRequest
 
 
-def auth_response(result, error_message: str, status_code: int):
+def auth_response(result):
     if not result:
         return {
             "success": False,
-            "error": error_message,
+            "error": "Authentication failed",
         }
 
     user, token = result
@@ -25,23 +25,21 @@ def auth_response(result, error_message: str, status_code: int):
     }
 
 
-def register(payload: RegisterRequest,
-             db: Session):
+def register(payload: RegisterRequest, response: Response, db: Session):
     username = payload.username
     email = payload.email
     password = payload.password
 
-    exists = db.query(User).filter(
-        (User.username == username) | (User.email == email)
-    ).first()
+    exists = (
+        db.query(User)
+        .filter((User.username == username) | (User.email == email))
+        .first()
+    )
 
     if exists:
         return JSONResponse(
             status_code=400,
-            content={
-                "message": "User already exists",
-                "success": False
-            },
+            content={"message": "User already exists", "success": False},
         )
 
     user = User(
@@ -50,8 +48,7 @@ def register(payload: RegisterRequest,
         password_hash=hash_password(password),
         defaultCurrency=CurrencyEnum.smg,
         balances=[
-            Balance(currency=c, value=10000.0, name=c.value)
-            for c in CurrencyEnum
+            Balance(currency=c, value=10000.0, name=c.value) for c in CurrencyEnum
         ],
     )
 
@@ -60,12 +57,21 @@ def register(payload: RegisterRequest,
     db.refresh(user)
 
     token = create_access_token(user.id)
-    return auth_response((user, token), "Registration failed", 400)
+    content = auth_response((user, token))
+    response = JSONResponse(content=content)
+    
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=False,
+        samesite="lax",
+        path="/",
+    )
+    return response
 
 
-def login(payload: LoginRequest,
-          response: Response,
-          db: Session):
+def login(payload: LoginRequest, response: Response, db: Session):
     email = payload.email
     password = payload.password
 
@@ -73,30 +79,28 @@ def login(payload: LoginRequest,
     if not user:
         return JSONResponse(
             status_code=400,
-            content={
-                "message": "Incorrect password or email",
-                "success": False
-            },
+            content={"message": "Incorrect password or email", "success": False},
         )
 
     if not verify_password(password, user.password_hash):
         return JSONResponse(
             status_code=400,
-            content={
-                "message": "Incorrect password or email",
-                "success": False
-            },
+            content={"message": "Incorrect password or email", "success": False},
         )
 
     token = create_access_token(user.id)
+    content = auth_response((user, token))
+    response = JSONResponse(content=content)
+
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
         secure=False,
         samesite="lax",
+        path="/",
     )
-    return auth_response((user, token), "Login failed", 401)
+    return response
 
 
 def logout(request: Request, response: Response):
@@ -104,17 +108,11 @@ def logout(request: Request, response: Response):
 
     if not token:
         return JSONResponse(
-            status_code=400,
-            content={"success": False, "message": "No token found"}
+            status_code=400, content={"success": False, "message": "No token found"}
         )
 
-    response.delete_cookie(
-        key="access_token",
-        httponly=True,
-        samesite="lax",
-    )
+    response.delete_cookie(key="access_token", httponly=True, samesite="lax", path="/")
 
     return JSONResponse(
-        status_code=200,
-        content={"success": True, "message": "Logged out"}
+        status_code=200, content={"success": True, "message": "Logged out"}
     )

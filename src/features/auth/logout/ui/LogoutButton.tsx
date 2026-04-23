@@ -21,7 +21,7 @@ const LogoutButton = () => {
             }
 
             dispatch(clearUser());
-            navigator("/login");
+            navigator("/auth");
 
         } catch (error: any) {
             console.error(error);

@@ -14,15 +14,25 @@ const CryptoSelector = () => {
 
     const coins = data?.coins;
 
-    useEffect(() => {
-        if (coins?.length) {
-            dispatch(selectCrypto(coins[0]));
-        }
-    }, [data]);
-
     const selectedCrypto = useAppSelector(
         (state) => state.crypto.selectedCrypto,
     );
+
+    useEffect(() => {
+        if (!coins?.length) return;
+
+        if (!selectedCrypto) {
+            dispatch(selectCrypto(coins[0]));
+        } else {
+            const updatedCoin = coins.find((c) => c.id === selectedCrypto.id);
+            if (
+                updatedCoin &&
+                JSON.stringify(updatedCoin) !== JSON.stringify(selectedCrypto)
+            ) {
+                dispatch(selectCrypto(updatedCoin));
+            }
+        }
+    }, [coins, selectedCrypto, dispatch]);
 
     return (
         <Card className="crypto-selector">
@@ -31,20 +41,20 @@ const CryptoSelector = () => {
             </h3>
             <div className="crypto-selector__list">
                 {coins
-                    ? coins.map((coin) => (
-                        <CryptoButton
-                            key={coin.name}
-                            name={coin.symbol}
-                            price={coin.price}
-                            icon={coin.icon}
-                            change={coin.change}
-                            isActive={coin.id === selectedCrypto?.id}
-                            onClick={() => dispatch(selectCrypto(coin))}
-                        />
-                    ))
+                    ? coins.map((coin, index) => (
+                          <CryptoButton
+                              key={index}
+                              name={coin.symbol}
+                              price={coin.price}
+                              icon={coin.icon}
+                              change={coin.change}
+                              isActive={coin.id === selectedCrypto?.id}
+                              onClick={() => dispatch(selectCrypto(coin))}
+                          />
+                      ))
                     : Array.from({ length: 4 }).map((_) => {
-                        return <CryptoButtonSkeleton />;
-                    })}
+                          return <CryptoButtonSkeleton />;
+                      })}
             </div>
         </Card>
     );

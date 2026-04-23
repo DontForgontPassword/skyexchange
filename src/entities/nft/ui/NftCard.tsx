@@ -90,8 +90,8 @@ export const NftCard = ({
                         {purchased
                             ? "Owned"
                             : isAuthorized
-                              ? "Buy"
-                              : "Auth to buy"}
+                                ? "Buy"
+                                : "Auth to buy"}
                     </Button>
                 </div>
             </div>

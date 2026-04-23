@@ -3,9 +3,14 @@ import { Button } from "@/shared/ui/Button";
 import { registerSchema } from "../model/schema";
 import { AuthorizationInput } from "../../shared";
 import { usePerformRegisterMutation } from "../api/performRegister";
+import { useAppDispatch } from "@/app/provider";
+import { setUser } from "@/entities/user";
+import { useNavigate } from "react-router-dom";
 import "./RegisterForm.scss";
 
 const RegisterForm = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [registerUser, { isLoading }] = usePerformRegisterMutation();
 
     const [fields, setFields] = useState({
@@ -19,12 +24,12 @@ const RegisterForm = () => {
 
     const handleChange =
         (field: keyof typeof fields) =>
-            (e: React.ChangeEvent<HTMLInputElement>) => {
-                setFields((prev) => ({
-                    ...prev,
-                    [field]: e.target.value,
-                }));
-            };
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFields((prev) => ({
+                ...prev,
+                [field]: e.target.value,
+            }));
+        };
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,12 +51,17 @@ const RegisterForm = () => {
         setErrors({});
 
         try {
-            await registerUser({
+            const response = await registerUser({
                 username: result.data.username,
                 email: result.data.email,
                 password: result.data.password,
             }).unwrap();
-        } catch (e) {
+
+            if (response.success) {
+                dispatch(setUser(response.user));
+                navigate("/");
+            }
+        } catch (e: any) {
             console.error(e);
         }
     };

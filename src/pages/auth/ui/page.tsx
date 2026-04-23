@@ -20,7 +20,7 @@ const AuthPage = () => {
                             className={clsx(
                                 "login-page__switch-btn",
                                 authorizationType === "login" &&
-                                "login-page__switch-btn--active",
+                                    "login-page__switch-btn--active",
                             )}
                         >
                             Login
@@ -30,7 +30,7 @@ const AuthPage = () => {
                             className={clsx(
                                 "login-page__switch-btn",
                                 authorizationType === "register" &&
-                                "login-page__switch-btn--active",
+                                    "login-page__switch-btn--active",
                             )}
                         >
                             Register
@@ -39,7 +39,11 @@ const AuthPage = () => {
 
                     <div className="login-page__title">
                         <div className="login-page__logo">
-                            <User width={40} height={40} />
+                            <User
+                                width={40}
+                                height={40}
+                                color="var(--muted-foreground)"
+                            />
                         </div>
                         <h2 className="login-page__heading">Create Account</h2>
                     </div>

@@ -41,7 +41,9 @@ interface Props {
 }
 
 const TradeActivity = ({ className }: Props) => {
-    const { data = [], isLoading } = useGetTradesQuery();
+    const { data = [], isLoading } = useGetTradesQuery(undefined, {
+        pollingInterval: 10000,
+    });
 
     if (isLoading) {
         return <div>Loading</div>;

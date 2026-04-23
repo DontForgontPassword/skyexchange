@@ -113,8 +113,8 @@ const UserCard = ({ className, user, balance }: Props) => {
                         </p>
                         <p className="user-card__stats-item-value user-card__stats-item-value--balance">
                             <span className="primary-text">
-                                {balance.amount.toFixed(2)}{" "}
-                                {balance.id.toUpperCase()}
+                                {balance?.amount?.toFixed(2) ?? "0.00"}{" "}
+                                {balance?.id?.toUpperCase() ?? "SMG"}
                             </span>
                         </p>
                     </Card>

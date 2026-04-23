@@ -11,5 +11,5 @@ export const formatPrice = (
     return value.toLocaleString(locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-    })
+    });
 }

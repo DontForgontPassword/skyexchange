@@ -5,5 +5,5 @@ export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithToast,
     endpoints: () => ({}),
-    tagTypes: ["NFT", "Balance", "User"],
+    tagTypes: ["NFT", "Balance", "User", "Market", "Orders", "Trades", "History"],
 });

@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { NftExhibidCard } from "@/features/nft";
+import { NftExhibidCard } from "@/features/shop";
 import { useGetMeQuery } from "@/entities/user";
 import { Nft } from "@/shared/model";
 import "./ProfileNftsCollection.scss";

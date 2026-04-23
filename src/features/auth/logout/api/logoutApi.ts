@@ -6,8 +6,8 @@ const logoutApi = baseApi.injectEndpoints({
             query: () => ({
                 url: "/auth/logout",
                 method: "POST",
-                credentials: "include"
             }),
+            invalidatesTags: ["User", "Balance"]
         }),
     }),
 });

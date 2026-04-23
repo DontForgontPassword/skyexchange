@@ -13,20 +13,20 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const [loginUser, { isLoading }] = usePerformLoginMutation();
     const [fields, setFields] = useState({
-        email: "543gre@gmail.com",
-        password: "543gre@gmail.com",
+        email: "",
+        password: "",
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const handleChange =
         (field: keyof typeof fields) =>
-            (e: React.ChangeEvent<HTMLInputElement>) => {
-                setFields((prev) => ({
-                    ...prev,
-                    [field]: e.target.value,
-                }));
-            };
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFields((prev) => ({
+                ...prev,
+                [field]: e.target.value,
+            }));
+        };
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -61,10 +61,9 @@ const LoginForm = () => {
                 return;
             }
 
-            await useGetMeQuery();
             dispatch(setUser(response.user));
             navigate("/");
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
         }
     };
