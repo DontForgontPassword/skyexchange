@@ -46,7 +46,7 @@ def edit_profile(payload, user: User, db: Session):
     db.refresh(user)
 
     return {
-        "status": True,
+        "success": True,
         "username": user.username,
         "email": user.email,
     }
