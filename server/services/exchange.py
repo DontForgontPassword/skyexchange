@@ -170,9 +170,9 @@ def create_trade(db: Session, user: User, trade: TradeRequest):
     market = get_market_data(db)
     coin = next((c for c in market["coins"] if c["id"] == trade.coin_id), None)
     if not coin:
-        return {"error": "Coin not found"}
+        return {"status": False, "message": "Coin not found"}
 
     price = coin["price"]
     total_cost = price * trade.amount
 
-    return {"status": "success", "total": total_cost}
+    return {"status": True, "total": total_cost}

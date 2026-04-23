@@ -8,7 +8,7 @@ export const AppRoutes = () => {
             {RoutingList.map(({ to, authRequired, page: Page }) =>
                 Page ? (
                     <Route
-                        key={to}
+                        key={to || "index"}
                         path={to}
                         element={
                             authRequired ? (

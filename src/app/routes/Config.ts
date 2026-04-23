@@ -12,7 +12,7 @@ interface Route {
 }
 
 export const RoutingList: Route[] = [
-    { to: "/", authRequired: false, page: ExchangePage },
+    { to: "", authRequired: false, page: ExchangePage },
     { to: "/shop", authRequired: true, page: ShopPage },
     { to: "/game", authRequired: true, page: GamePage },
     { to: "/profile", authRequired: true, page: ProfilePage },

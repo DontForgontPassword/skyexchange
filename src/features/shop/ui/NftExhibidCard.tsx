@@ -9,12 +9,10 @@ interface Props {
     className?: string;
 }
 
-const NftExhibidCard = ({
-    avatarImage,
-    avatarName,
-    className,
-}: Props) => {
+const NftExhibidCard = ({ avatarImage, avatarName, className }: Props) => {
     const image = `${BASE_URL}${avatarImage}`;
+
+    console.log(image);
     return (
         <div className={clsx(className, "nft-exhibid-card")}>
             <div className="nft-exhibid-card__image-wrapper">
