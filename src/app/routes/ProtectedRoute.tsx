@@ -1,23 +1,17 @@
-import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
-import { useAppSelector } from "../provider/context/useAppSelector";
-import { Skeleton } from "@/shared/ui/Skeleton";
+import { Navigate, useLocation } from "react-router-dom";
+import { JSX } from "react";
+import { useAppSelector } from "../provider";
 
-interface Props {
-    children: ReactNode;
-}
-
-export const ProtectedRoute = ({ children }: Props) => {
-    const { isAuthenticated, isLoading } = useAppSelector(
-        (state) => state.auth,
-    );
+export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+    const { isAuthenticated, isLoading } = useAppSelector((state: any) => state.auth);
+    const location = useLocation();
 
     if (isLoading) {
-        return <Skeleton />;
+        return null;
     }
 
     if (!isAuthenticated) {
-        return <Navigate to="/auth" replace />;
+        return <Navigate to="/auth" replace state={{ from: location }} />;
     }
 
     return children;
