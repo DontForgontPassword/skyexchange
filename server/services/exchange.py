@@ -94,7 +94,7 @@ def get_market_data(db: Session):
         },
         {
             "id": "smg",
-            "name": "Smoge",
+            "name": "Smaragd",
             "symbol": "SMG",
             "icon": "/static/crypto/smg.png",
         },
@@ -170,9 +170,9 @@ def create_trade(db: Session, user: User, trade: TradeRequest):
     market = get_market_data(db)
     coin = next((c for c in market["coins"] if c["id"] == trade.coin_id), None)
     if not coin:
-        return {"status": False, "message": "Coin not found"}
+        return {"success": False, "message": "Coin not found"}
 
     price = coin["price"]
     total_cost = price * trade.amount
 
-    return {"status": True, "total": total_cost}
+    return {"success": True, "total": total_cost}

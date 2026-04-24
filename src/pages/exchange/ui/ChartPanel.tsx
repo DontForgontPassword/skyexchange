@@ -19,22 +19,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { useGetHistoryQuery } from "@/features/load-chart-history";
-
-const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="chart-tooltip">
-                <p className="chart-tooltip__time">
-                    {new Date(payload[0].payload.time).toLocaleString()}
-                </p>
-                <p className="chart-tooltip__price">
-                    Price: <span>${formatPrice(payload[0].value)}</span>
-                </p>
-            </div>
-        );
-    }
-    return null;
-};
+import { ChartTooltip } from "@/entities/chart";
 
 const ChartPanel = () => {
     const { range, setRange } = useChartRange();
@@ -189,7 +174,7 @@ const ChartPanel = () => {
                                         }
                                     />
 
-                                    <Tooltip content={<CustomTooltip />} />
+                                    <Tooltip content={<ChartTooltip />} />
 
                                     <Area
                                         type="linear"

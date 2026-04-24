@@ -1,11 +1,11 @@
+import os
 from sqlalchemy.orm import Session
 from models.user import User
 import hashlib
 
-GAME_SECRET = "sky-game-secret-2024"
+GAME_SECRET = os.getenv("GAME_SECRET")
 
 def save_score(payload, user: User, db: Session):
-    # Verify score integrity using SHA-256
     data_to_hash = f"{payload.score}{GAME_SECRET}"
     expected_hash = hashlib.sha256(data_to_hash.encode()).hexdigest()
     
